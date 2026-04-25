@@ -83,9 +83,12 @@ export default function AdminDashboard() {
       {/* SIDEBAR */}
       <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-black text-white transition-all duration-300 flex flex-col border-r border-gray-800`}>
         {/* LOGO */}
-        <div className="h-20 flex items-center justify-center border-b border-gray-800">
+        <div className="h-20 flex items-center justify-center border-b border-gray-800 gap-3">
           {sidebarOpen ? (
-            <h2 className="text-xl font-light tracking-widest">ADMIN</h2>
+            <>
+              <span className="text-3xl">🎯</span>
+              <h2 className="text-xl font-light tracking-widest">ADMIN</h2>
+            </>
           ) : (
             <span className="text-2xl">🎯</span>
           )}
@@ -98,12 +101,18 @@ export default function AdminDashboard() {
               key={item.id}
               onClick={() => setActiveTab(item.id)}
               className={`w-full flex items-center gap-4 px-4 py-3 rounded-lg transition ${
-                activeTab === item.id
+                item.id === 'whatsapp'
+                  ? activeTab === item.id
+                    ? 'bg-green-500 text-white shadow-lg'
+                    : 'bg-green-600 text-white hover:bg-green-500'
+                  : activeTab === item.id
                   ? 'bg-white text-black'
                   : 'text-gray-400 hover:text-white hover:bg-gray-900'
               }`}
             >
-              <span className="text-xl">{item.icon}</span>
+              <span className={`text-xl ${item.id === 'whatsapp' ? 'text-2xl' : ''}`}>
+                {item.id === 'whatsapp' ? '💬' : item.icon}
+              </span>
               {sidebarOpen && <span className="text-sm font-light">{item.label}</span>}
             </button>
           ))}
@@ -496,12 +505,18 @@ export default function AdminDashboard() {
               {/* LEFT SIDEBAR - CONTACTS */}
               <div className="w-80 border-r border-gray-200 flex flex-col">
                 {/* HEADER */}
-                <div className="border-b border-gray-200 p-4">
-                  <h2 className="text-xl font-light mb-4">💬 WhatsApp Chat</h2>
+                <div className="border-b border-gray-200 p-4 bg-gradient-to-r from-green-50 to-white">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="text-3xl">💬</div>
+                    <div>
+                      <h2 className="text-xl font-light text-gray-900">WhatsApp</h2>
+                      <p className="text-xs text-green-600">Clients & Suppliers</p>
+                    </div>
+                  </div>
                   <input
                     type="text"
-                    placeholder="Cerca contatto..."
-                    className="w-full px-3 py-2 bg-gray-100 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                    placeholder="🔍 Cerca contatto..."
+                    className="w-full px-3 py-2 bg-white border border-green-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                   />
                 </div>
 
@@ -571,20 +586,22 @@ export default function AdminDashboard() {
               {/* RIGHT SIDE - CHAT */}
               <div className="flex-1 flex flex-col">
                 {/* CHAT HEADER */}
-                <div className="border-b border-gray-200 p-6 flex justify-between items-center bg-gray-50">
+                <div className="border-b border-gray-200 p-6 flex justify-between items-center bg-gradient-to-r from-green-50 to-white">
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">👤</span>
                     <div>
                       <h3 className="text-lg font-light text-gray-900">Marco Rossi</h3>
-                      <p className="text-sm text-gray-600">+39 333 1234567</p>
+                      <p className="text-sm text-green-600 flex items-center gap-1">
+                        <span>🟢</span> Disponibile
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
                     <span className="px-3 py-1 rounded-full text-sm font-light bg-blue-100 text-blue-700">
                       👤 Cliente
                     </span>
-                    <button className="p-2 hover:bg-white rounded-lg transition">☎️</button>
-                    <button className="p-2 hover:bg-white rounded-lg transition">ℹ️</button>
+                    <button className="p-2 hover:bg-green-100 rounded-lg transition text-lg">☎️</button>
+                    <button className="p-2 hover:bg-green-100 rounded-lg transition text-lg">ℹ️</button>
                   </div>
                 </div>
 
