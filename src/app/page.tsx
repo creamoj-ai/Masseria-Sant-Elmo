@@ -13,6 +13,7 @@ export default function Home() {
     event_type: 'matrimonio',
     notes: ''
   });
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -30,8 +31,9 @@ export default function Home() {
         body: JSON.stringify(formData)
       });
       if (response.ok) {
-        alert('Prenotazione inviata! Ti contatteremo presto.');
+        setShowConfirmation(true);
         setFormData({ first_name: '', last_name: '', email: '', phone: '', event_date: '', guest_count: '', event_type: 'matrimonio', notes: '' });
+        setTimeout(() => setShowConfirmation(false), 5000);
       }
     } catch (error) {
       console.error('Booking error:', error);
@@ -40,6 +42,14 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white text-black">
+      {/* CONFIRMATION MESSAGE */}
+      {showConfirmation && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-black text-white py-6 px-6 text-center animate-pulse">
+          <h3 className="text-2xl font-light mb-2">✓ Prenotazione Inviata!</h3>
+          <p className="font-light">Grazie per la prenotazione. Ti contatteremo entro 24 ore per confermare.</p>
+        </div>
+      )}
+
       {/* MINIMALIST HEADER */}
       <header className="sticky top-0 z-50 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 flex justify-between items-center">
