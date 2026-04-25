@@ -20,12 +20,21 @@ interface Booking {
   };
 }
 
+interface AuditLog {
+  timestamp: string;
+  action: string;
+  user: string;
+  severity: 'high' | 'medium' | 'low';
+}
+
 export default function AdminDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [privacyMode, setPrivacyMode] = useState(false);
+  const [showAuditLog, setShowAuditLog] = useState(false);
 
   useEffect(() => {
     fetchBookings();
@@ -46,6 +55,11 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const maskData = (text: string) => {
+    if (!privacyMode) return text;
+    return '█'.repeat(Math.min(text.length, 10));
   };
 
   const totalBookings = bookings.length;
@@ -121,50 +135,220 @@ export default function AdminDashboard() {
           {/* DASHBOARD TAB */}
           {activeTab === 'dashboard' && (
             <div className="space-y-8">
-              {/* STATS GRID */}
-              <div className="grid md:grid-cols-4 gap-6">
-                <div className="border-t border-gray-300 pt-8">
-                  <p className="text-5xl font-light text-gray-900 mb-4">{totalBookings}</p>
-                  <p className="text-sm uppercase tracking-[0.2em] text-gray-600">Prenotazioni Totali</p>
+              {/* PRIVACY & AUDIT CONTROLS */}
+              <div className="flex justify-end gap-4">
+                <button
+                  onClick={() => setPrivacyMode(!privacyMode)}
+                  className="px-4 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 transition flex items-center gap-2"
+                >
+                  {privacyMode ? '🔒' : '👁️'} {privacyMode ? 'Privacy ON' : 'Privacy Mode'}
+                </button>
+                <button
+                  onClick={() => setShowAuditLog(!showAuditLog)}
+                  className="px-4 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 transition"
+                >
+                  📋 Audit Log
+                </button>
+              </div>
+
+              {/* TOP 3 STATS */}
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="border border-gray-200 rounded-lg p-8 hover:shadow-lg transition">
+                  <p className="text-sm uppercase tracking-[0.2em] text-gray-600 mb-4">Prenotazioni Attive</p>
+                  <p className="text-5xl font-light text-gray-900 mb-2">{totalBookings}</p>
+                  <div className="flex items-center gap-2 text-sm text-green-600">
+                    <span>↑ 12%</span>
+                    <span className="text-gray-600">vs mese scorso</span>
+                  </div>
                 </div>
-                <div className="border-t border-gray-300 pt-8">
-                  <p className="text-5xl font-light text-gray-900 mb-4">{pendingBookings}</p>
-                  <p className="text-sm uppercase tracking-[0.2em] text-gray-600">In Sospeso</p>
+
+                <div className="border border-gray-200 rounded-lg p-8 hover:shadow-lg transition">
+                  <p className="text-sm uppercase tracking-[0.2em] text-gray-600 mb-4">Vendite Oli (Mese)</p>
+                  <p className="text-5xl font-light text-gray-900 mb-2">€{maskData('2400')}</p>
+                  <div className="flex items-center gap-2 text-sm text-green-600">
+                    <span>↑ 8%</span>
+                    <span className="text-gray-600">vs mese scorso</span>
+                  </div>
                 </div>
-                <div className="border-t border-gray-300 pt-8">
-                  <p className="text-5xl font-light text-gray-900 mb-4">{totalGuests}</p>
-                  <p className="text-sm uppercase tracking-[0.2em] text-gray-600">Ospiti Totali</p>
-                </div>
-                <div className="border-t border-gray-300 pt-8">
-                  <p className="text-5xl font-light text-gray-900 mb-4">€{estimatedRevenue.toLocaleString()}</p>
-                  <p className="text-sm uppercase tracking-[0.2em] text-gray-600">Ricavi Stimati</p>
+
+                <div className="border border-gray-200 rounded-lg p-8 hover:shadow-lg transition">
+                  <p className="text-sm uppercase tracking-[0.2em] text-gray-600 mb-4">Nuovi Contatti CRM</p>
+                  <p className="text-5xl font-light text-gray-900 mb-2">{bookings.length}</p>
+                  <div className="flex items-center gap-2 text-sm text-blue-600">
+                    <span>👥</span>
+                    <span className="text-gray-600">questa settimana</span>
+                  </div>
                 </div>
               </div>
 
-              {/* RECENT BOOKINGS */}
-              <div>
-                <h2 className="text-3xl font-light mb-8">Prenotazioni Recenti</h2>
-                {bookings.slice(0, 5).length > 0 ? (
-                  <div className="space-y-4">
-                    {bookings.slice(0, 5).map((booking) => (
-                      <div key={booking.id} className="border-b border-gray-100 pb-6 flex justify-between items-center hover:bg-gray-50 p-4 rounded transition">
+              {/* AUDIT LOG */}
+              {showAuditLog && (
+                <div className="border border-gray-200 rounded-lg p-8 bg-gray-50">
+                  <h3 className="text-xl font-light mb-6">📋 Attività di Sistema</h3>
+                  <div className="space-y-3">
+                    {[
+                      { timestamp: '14:32', action: 'Admin ha modificato prenotazione #123', user: 'Admin', severity: 'medium' },
+                      { timestamp: '14:15', action: 'Nuovo ordine creato (#456)', user: 'Sistema', severity: 'low' },
+                      { timestamp: '13:48', action: 'Admin ha cancellato prenotazione #122', user: 'Admin', severity: 'high' },
+                    ].map((log, i) => (
+                      <div key={i} className="flex items-start justify-between p-4 bg-white rounded border border-gray-100">
                         <div>
-                          <p className="font-light text-lg">{booking.clients.first_name} {booking.clients.last_name}</p>
-                          <p className="text-sm text-gray-600">{new Date(booking.event_date).toLocaleDateString('it-IT')} • {booking.guest_count} ospiti</p>
+                          <p className="font-light text-sm">{maskData(log.action)}</p>
+                          <p className="text-xs text-gray-600 mt-1">Utente: {log.user}</p>
                         </div>
-                        <span className={`px-4 py-2 rounded-full text-xs uppercase tracking-widest font-light ${
-                          booking.booking_status === 'pending'
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : 'bg-green-100 text-green-800'
+                        <span className={`inline-block px-2 py-1 text-xs rounded ${
+                          log.severity === 'high' ? 'bg-red-100 text-red-700' :
+                          log.severity === 'medium' ? 'bg-yellow-100 text-yellow-700' :
+                          'bg-green-100 text-green-700'
                         }`}>
-                          {booking.booking_status === 'pending' ? 'In Sospeso' : 'Confermata'}
+                          {log.severity === 'high' ? '⚠️ Alto' : log.severity === 'medium' ? '⚡ Medio' : '✓ Basso'}
                         </span>
                       </div>
                     ))}
                   </div>
-                ) : (
-                  <p className="text-gray-600">Nessuna prenotazione</p>
-                )}
+                </div>
+              )}
+
+              {/* BOOKING ENGINE: CALENDAR */}
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="border border-gray-200 rounded-lg p-8">
+                  <h3 className="text-xl font-light mb-6">📅 Calendario Prenotazioni</h3>
+                  <div className="grid grid-cols-7 gap-2 mb-6">
+                    {['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'].map(day => (
+                      <div key={day} className="text-center text-sm uppercase tracking-widest text-gray-600 font-light py-2">
+                        {day}
+                      </div>
+                    ))}
+                    {Array.from({ length: 35 }).map((_, i) => {
+                      const isBooked = Math.random() > 0.6;
+                      const isCancelled = Math.random() > 0.85;
+                      return (
+                        <div
+                          key={i}
+                          className={`aspect-square rounded-lg flex items-center justify-center text-sm font-light cursor-pointer hover:scale-105 transition ${
+                            isCancelled ? 'bg-gray-300 text-gray-700' :
+                            isBooked ? 'bg-[#C9A876] text-white' :
+                            'bg-[#4A6741] text-white hover:opacity-80'
+                          }`}
+                        >
+                          {i + 1 <= 30 ? i + 1 : ''}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="flex gap-4 text-sm flex-wrap">
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 bg-[#4A6741] rounded"></div>
+                      <span className="text-gray-600">Disponibile</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 bg-[#C9A876] rounded"></div>
+                      <span className="text-gray-600">Confermato</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 bg-gray-300 rounded"></div>
+                      <span className="text-gray-600">Cancellato</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* QUICK ACTIONS & TAGGING */}
+                <div className="space-y-8">
+                  <div className="border border-gray-200 rounded-lg p-8">
+                    <h3 className="text-xl font-light mb-6">⚡ Azioni Rapide</h3>
+                    <div className="space-y-3">
+                      <button className="w-full bg-black text-white px-6 py-3 rounded-lg font-light hover:bg-gray-800 transition text-sm">
+                        + Aggiungi Prenotazione Manuale
+                      </button>
+                      <button className="w-full border border-gray-300 px-6 py-3 rounded-lg font-light hover:bg-gray-50 transition text-sm">
+                        📞 Registra Chiamata Cliente
+                      </button>
+                      <button className="w-full border border-gray-300 px-6 py-3 rounded-lg font-light hover:bg-gray-50 transition text-sm">
+                        🛍️ Nuovo Ordine Oli
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="border border-gray-200 rounded-lg p-8">
+                    <h3 className="text-xl font-light mb-6">👥 Tagging Clienti</h3>
+                    <div className="space-y-3">
+                      {[
+                        { name: 'Amante Lavanda', color: '#B8E6D5', count: 12 },
+                        { name: 'Business', color: '#D8C5E8', count: 8 },
+                        { name: 'VIP', color: '#C9A876', count: 5 },
+                        { name: 'Local', color: '#A8A8A8', count: 15 },
+                      ].map((tag, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center justify-between p-4 border border-gray-100 rounded-lg cursor-pointer hover:shadow-md transition"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="w-3 h-3 rounded-full" style={{backgroundColor: tag.color}}></div>
+                            <span className="font-light text-sm">{tag.name}</span>
+                          </div>
+                          <span className="text-sm text-gray-600">{tag.count}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* INVENTORY */}
+              <div className="border border-gray-200 rounded-lg p-8">
+                <h3 className="text-xl font-light mb-6">📦 Stock Oli Essenziali</h3>
+                <div className="grid md:grid-cols-2 gap-8">
+                  {[
+                    { name: 'Olio Lavanda Premium', stock: 35, maxStock: 50, price: 45 },
+                    { name: 'Olio Eucalipto', stock: 12, maxStock: 30, price: 35 },
+                    { name: 'Olio Rosa Damascena', stock: 8, maxStock: 25, price: 55 },
+                    { name: 'Olio Menta', stock: 42, maxStock: 60, price: 28 },
+                  ].map((essence, i) => {
+                    const percentage = (essence.stock / essence.maxStock) * 100;
+                    const stockColor = percentage > 70 ? '#4A6741' : percentage > 40 ? '#C9A876' : '#8B8B8B';
+                    return (
+                      <div key={i}>
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="font-light text-sm">{essence.name}</span>
+                          <span className="text-sm text-gray-600">{essence.stock}L / {essence.maxStock}L</span>
+                        </div>
+                        <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                          <div
+                            className="h-full transition-all duration-300"
+                            style={{width: `${percentage}%`, backgroundColor: stockColor}}
+                          ></div>
+                        </div>
+                        <p className="text-xs text-gray-600 mt-1">€{essence.price}/L</p>
+                      </div>
+                    );
+                  })}
+                </div>
+                <button className="w-full mt-6 border border-gray-300 px-4 py-2 rounded-lg text-sm font-light hover:bg-gray-50 transition">
+                  🔔 Ordina Restock
+                </button>
+              </div>
+
+              {/* RECENT ACTIVITIES */}
+              <div className="border border-gray-200 rounded-lg p-8">
+                <h3 className="text-xl font-light mb-6">📊 Ultime Attività</h3>
+                <div className="space-y-3">
+                  {bookings.slice(0, 5).map((booking, i) => (
+                    <div key={booking.id} className="flex items-center justify-between p-4 border-b border-gray-100 last:border-b-0">
+                      <div className="flex items-center gap-4 flex-1">
+                        <span className="text-xl">📅</span>
+                        <div>
+                          <p className="font-light text-sm">{maskData(booking.clients.first_name + ' ' + booking.clients.last_name)}</p>
+                          <p className="text-xs text-gray-600 mt-1">{new Date(booking.created_at).toLocaleDateString('it-IT')} • {booking.guest_count} ospiti</p>
+                        </div>
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-xs font-light ${
+                        booking.booking_status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'
+                      }`}>
+                        {booking.booking_status === 'pending' ? 'In Sospeso' : 'Confermata'}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
