@@ -41,13 +41,33 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white text-gray-800">
+      <style>{`
+        .wavy-image {
+          clip-path: polygon(
+            0% 5%, 1% 4.5%, 2% 4%, 3% 3.8%, 4% 3.5%, 5% 3%, 6% 3%, 7% 3.2%, 8% 3.5%, 9% 4%, 10% 4.5%,
+            15% 6%, 20% 7%, 25% 7.5%, 30% 7.8%, 35% 7.5%, 40% 7%, 45% 6.5%, 50% 6%, 55% 6.5%, 60% 7%,
+            65% 7.5%, 70% 7.8%, 75% 7.5%, 80% 7%, 85% 6%, 90% 4.5%, 91% 4%, 92% 3.8%, 93% 3.5%, 94% 3%,
+            95% 3%, 96% 3.2%, 97% 3.5%, 98% 4%, 99% 4.5%, 100% 5%,
+            100% 95%, 99% 95.5%, 98% 96%, 97% 96.2%, 96% 96.5%, 95% 97%, 94% 97%, 93% 96.8%, 92% 96.5%,
+            91% 96%, 90% 95.5%, 85% 94%, 80% 93%, 75% 92.5%, 70% 92.2%, 65% 92.5%, 60% 93%, 55% 93.5%,
+            50% 94%, 45% 93.5%, 40% 93%, 35% 92.5%, 30% 92.2%, 25% 92.5%, 20% 93%, 15% 94%, 10% 95.5%,
+            9% 96%, 8% 96.5%, 7% 96.8%, 6% 97%, 5% 97%, 4% 96.5%, 3% 96.2%, 2% 96%, 1% 95.5%, 0% 95%
+          );
+        }
+
+        .accent-circle {
+          position: absolute;
+          border-radius: 50%;
+          z-index: 1;
+        }
+      `}
+      </style>
+
       {/* PURPLE HEADER */}
       <header className="sticky top-0 z-50 bg-[#6B5B7F] text-white h-16 flex items-center px-4">
-        <div className="max-w-7xl w-full mx-auto flex justify-between items-center">
+        <div className="max-w-full w-full mx-auto flex justify-between items-center">
           <div className="text-xs text-gray-300">09:26</div>
-          <div className="w-12 h-12 flex items-center justify-center">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='60' font-size='48' text-anchor='middle' fill='white' font-weight='bold'%3EKIMIRA%3C/text%3E%3C/svg%3E" alt="KIMIRA" className="w-10" />
-          </div>
+          <div className="text-xl font-bold">KIMIRA</div>
           <div className="flex gap-4 items-center">
             <button className="text-2xl">🛒</button>
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-2xl">☰</button>
@@ -59,107 +79,100 @@ export default function Home() {
       <main className="max-w-2xl mx-auto px-4 py-8">
 
         {/* HERO SECTION */}
-        <section className="mb-16">
-          <h1 className="text-4xl font-serif font-bold text-center mb-6 leading-tight">
-            Un piccolo paradiso nel cuore del Parco Nazionale del Vesuvio
+        <section className="mb-12">
+          <h1 className="text-3xl font-bold text-center mb-4 leading-tight">
+            Un piccolo paradiso nel<br />cuore del Parco<br />Nazionale del Vesuvio
           </h1>
 
-          <p className="text-center text-gray-700 mb-6 text-sm leading-relaxed">
+          <p className="text-center text-gray-700 mb-4 text-sm leading-relaxed">
             Benvenuti in un angolo di tranquillità. Scopri il luogo perfetto per rilassarti e rigenerarti.
           </p>
 
           <p className="text-center text-gray-600 text-sm leading-relaxed mb-8">
-            Visita la nostra Azienda Agrituristica e Produttiva: ti offriamo comfort ed ospitalità, coltiviamo lavanda e altre colture autoctone, produciamo oli essenziali e altri prodotti.
+            Visita la nostra Azienda Agrituristica e Produttiva: ti offriamo comfort ed ospitalità, coltiviamo lavanda, produciamo oli essenziali.
           </p>
 
-          <div className="flex justify-center mb-8">
-            <div className="w-64 h-64 bg-cover bg-center rounded-full overflow-hidden shadow-lg"
-              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop")'}}
-            >
-            </div>
+          {/* WAVY IMAGE WITH ACCENT CIRCLES */}
+          <div className="relative flex justify-center mb-8">
+            <div
+              className="wavy-image w-64 h-60 bg-cover bg-center shadow-lg"
+              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=600&fit=crop")'}}
+            />
+            {/* Mint accent circle */}
+            <div className="accent-circle w-12 h-12 bg-[#B8E6D5] top-20 right-0"></div>
           </div>
         </section>
 
         {/* DOT DIVIDER */}
-        <div className="flex justify-center gap-2 mb-12">
+        <div className="flex justify-center gap-1 mb-8">
           {[1, 2, 3, 4, 5, 6, 7].map(i => (
-            <div key={i} className="w-2 h-2 rounded-full bg-[#B8E6D5]"></div>
+            <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#B8E6D5]"></div>
           ))}
         </div>
 
-        {/* EXPERIENCE SECTION */}
-        <section className="mb-16">
-          <p className="text-center text-gray-700 text-sm leading-relaxed mb-6">
-            Immergiti nella magia delle serate uniche organizzate presso la Masseria Sant'Elmo. Nel cuore della natura, circondato dai profumi di lavanda e erbe officinali, vivrai momenti indimenticabili in un'atmosfera incantevole.
-          </p>
-
-          <p className="text-center text-gray-700 text-sm leading-relaxed mb-8">
-            Ogni evento è curato nei minimi dettagli, offrendo esperienze straordinarie e personalizzate per ogni occasione. Che si tratti di una festa intima, un matrimonio da sogno o una celebrazione speciale, il nostro team di esperti eventi e wedding planner sarà al tuo fianco per realizzare tutto.
-          </p>
-
-          <div className="flex justify-center">
-            <button className="bg-[#D8C5E8] text-gray-800 px-8 py-3 rounded-full font-semibold text-sm hover:bg-[#C8B5D8] transition">
-              Scopri di più sui nostri eventi
-            </button>
+        {/* ACTIVITIES SECTION 1 */}
+        <section className="mb-12">
+          <div className="relative flex justify-center mb-8">
+            <div
+              className="wavy-image w-72 h-96 bg-cover bg-center shadow-lg"
+              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1519046904884-53103b34b206?w=500&h=700&fit=crop")'}}
+            />
+            {/* Purple accent circle */}
+            <div className="accent-circle w-16 h-16 bg-[#D8C5E8] -top-4 left-8"></div>
           </div>
-        </section>
 
-        {/* ACTIVITIES SECTION */}
-        <section className="mb-16">
-          <div className="flex justify-center gap-2 mb-8">
-            {[1, 2, 3, 4, 5, 6].map(i => (
-              <div key={i} className="w-2 h-2 rounded-full bg-[#B8E6D5]"></div>
+          <h2 className="text-2xl font-bold text-center mb-2">Attività di Ospitalità</h2>
+
+          <div className="flex justify-center gap-1 mb-6">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+              <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#B8E6D5]"></div>
             ))}
           </div>
 
-          <h2 className="text-3xl font-serif font-bold text-center mb-8">Attività di Ospitalità</h2>
+          <p className="text-center text-gray-700 text-sm leading-relaxed">
+            Il nostro obiettivo è di rendere ogni evento speciale, pieno di emozioni e ricordi indelebili.
+          </p>
+        </section>
 
-          <div className="flex justify-center mb-8">
-            <div className="w-72 h-96 bg-cover bg-center rounded-3xl overflow-hidden shadow-lg"
-              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1519671482677-1f37e4c73e27?w=500&h=600&fit=crop")'}}
-            >
-            </div>
-          </div>
-
-          <p className="text-center text-gray-700 text-sm leading-relaxed mb-4 italic">
-            Tutte le attività vengono organizzate nei dettagli di ogni occasione. Questo approccio aiuta a sviluppare e valorizzare il momento al meglio.
+        {/* EXPERIENCE SECTION */}
+        <section className="mb-12">
+          <p className="text-center text-gray-700 text-sm leading-relaxed mb-6">
+            Immergiti nella magia delle serate uniche organizzate presso la Masseria Sant'Elmo. Nel cuore della natura, circondato dai profumi di lavanda e erbe officinali, vivrai momenti indimenticabili.
           </p>
 
-          <h3 className="text-2xl font-serif text-center mb-6">Per ogni occasione</h3>
+          <div className="relative flex justify-center mb-8">
+            <div
+              className="wavy-image w-72 h-96 bg-cover bg-center shadow-lg"
+              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1464207687429-7505649dae38?w=500&h=700&fit=crop")'}}
+            />
+            {/* Purple accent circle */}
+            <div className="accent-circle w-20 h-20 bg-[#D8C5E8] top-1/3 -right-6"></div>
+          </div>
 
-          <div className="flex justify-center gap-2 mb-8">
+          <h3 className="text-2xl font-bold text-center mb-2">La nostra missione è rendere ogni tua cerimonia unica</h3>
+
+          <div className="flex justify-center gap-1 mb-6">
             {[1, 2, 3, 4, 5].map(i => (
-              <div key={i} className="w-2 h-2 rounded-full bg-[#B8E6D5]"></div>
+              <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#B8E6D5]"></div>
             ))}
           </div>
 
           <p className="text-center text-gray-600 text-sm leading-relaxed">
-            Tutte le attività vengono organizzate con passione e dedizione per renderle indimenticabili.
+            Ogni evento è curato nei minimi dettagli, offrendo esperienze straordinarie e personalizzate.
           </p>
         </section>
 
-        {/* BOOKING SECTION */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-serif font-bold text-center mb-2">Prenota per uno dei nostri eventi esclusivi</h2>
+        {/* BOOKING FORM SECTION */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold text-center mb-2">Prenota il Tuo Evento</h2>
 
-          <div className="flex justify-center gap-2 mb-8">
+          <div className="flex justify-center gap-1 mb-8">
             {[1, 2, 3, 4, 5].map(i => (
-              <div key={i} className="w-2 h-2 rounded-full bg-[#B8E6D5]"></div>
+              <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#B8E6D5]"></div>
             ))}
           </div>
 
-          <div className="flex justify-center mb-12">
-            <div className="w-72 h-96 bg-cover bg-center rounded-3xl overflow-hidden shadow-lg"
-              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1464207687429-7505649dae38?w=500&h=600&fit=crop")'}}
-            >
-            </div>
-          </div>
-
-          <p className="text-center text-gray-700 text-sm leading-relaxed mb-12 italic">
-            Vivi l'incanto delle serate tematiche organizzate dalla Masseria Sant'Elmo. Ogni evento è una festa per i sensi, dove la qualità e l'attenzione ai dettagli trasformano ogni momento in un'esperienza indimenticabile.
-          </p>
-
-          <form onSubmit={handleSubmit} className="space-y-4 bg-gray-50 p-6 rounded-2xl mb-12">
+          <form onSubmit={handleSubmit} className="space-y-4 bg-gray-50 p-6 rounded-2xl">
             <div className="grid grid-cols-2 gap-3">
               <input
                 type="text"
@@ -230,7 +243,6 @@ export default function Home() {
               <option value="matrimonio">Matrimonio & Cerimonie</option>
               <option value="corporate">Corporate & Wellness</option>
               <option value="enogastronomico">Degustazione Esperienziale</option>
-              <option value="altro">Altro</option>
             </select>
 
             <textarea
@@ -251,98 +263,22 @@ export default function Home() {
           </form>
         </section>
 
-        {/* TESTIMONIALS SECTION */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-serif font-bold text-center mb-2">Cosa dicono i nostri clienti</h2>
-
-          <div className="flex justify-center gap-2 mb-8">
-            {[1, 2, 3, 4].map(i => (
-              <div key={i} className="w-2 h-2 rounded-full bg-[#B8E6D5]"></div>
-            ))}
-          </div>
-
-          <div className="space-y-8">
-            {[
-              {
-                name: 'Jane DOE',
-                title: 'CEO di MyCompany',
-                quote: 'Un evento perfetto! La Masseria Sant\'Elmo ha superato tutte le mie aspettative. Ogni dettaglio è stato curato con passione e professionalità.',
-                image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop'
-              },
-              {
-                name: 'Marco Rossi',
-                title: 'Wedding Planner',
-                quote: 'Un evento straordinario. Ogni dettaglio è stato curato con passione e professionalità per garantire momenti indimenticabili.',
-                image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop'
-              },
-              {
-                name: 'Anna Bianchi',
-                title: 'Direttore Corporate Events',
-                quote: 'Siamo entusiasti di accoglierti e farti vivere esperienze che rimarranno impresse nel cuore. Un\'esperienza indimenticabile.',
-                image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop'
-              }
-            ].map((testimonial, i) => (
-              <div key={i} className="bg-white border border-gray-200 rounded-2xl p-6 text-center">
-                <img src={testimonial.image} alt={testimonial.name} className="w-16 h-16 rounded-full mx-auto mb-4 object-cover" />
-                <p className="text-gray-700 text-sm italic mb-4 leading-relaxed">"{testimonial.quote}"</p>
-                <h4 className="font-bold text-gray-900">{testimonial.name}</h4>
-                <p className="text-xs text-gray-500">{testimonial.title}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* PARTNERS SECTION */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-serif font-bold text-center mb-2">I nostri partner di valore</h2>
-
-          <p className="text-center text-gray-600 text-sm mb-8">Siamo in ottima compagnia.</p>
-
-          <div className="space-y-6">
-            {[
-              {
-                name: 'Caffetteria Leopardi',
-                desc: 'Catering partner ufficiale',
-                image: 'https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=100&h=100&fit=crop'
-              },
-              {
-                name: 'Florist Studio',
-                desc: 'Allestimenti floreali',
-                image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=100&h=100&fit=crop'
-              },
-              {
-                name: 'DJ Premium Events',
-                desc: 'Intrattenimento musicale',
-                image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=100&h=100&fit=crop'
-              }
-            ].map((partner, i) => (
-              <div key={i} className="bg-gray-100 rounded-2xl p-6 text-center">
-                <img src={partner.image} alt={partner.name} className="w-16 h-16 rounded-full mx-auto mb-4 object-cover" />
-                <h4 className="font-bold text-gray-900 mb-1">{partner.name}</h4>
-                <p className="text-xs text-gray-600">{partner.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* FOOTER */}
-        <footer className="bg-[#6B5B7F] text-white py-12 px-4 rounded-t-3xl -mx-4">
+        <footer className="bg-[#6B5B7F] text-white py-8 px-4 rounded-t-3xl -mx-4">
           <div className="max-w-2xl mx-auto">
-            <div className="grid grid-cols-2 gap-6 mb-8 text-sm">
+            <div className="grid grid-cols-2 gap-6 mb-6 text-sm">
               <div>
-                <h4 className="font-bold mb-3">Essenze di Natura</h4>
+                <h4 className="font-bold mb-2">Essenze di Natura</h4>
                 <p className="text-gray-300 text-xs">Masseria Sant'Elmo</p>
-                <p className="text-gray-300 text-xs">Parco Nazionale Vesuvio</p>
               </div>
               <div>
-                <h4 className="font-bold mb-3">Contatti</h4>
-                <p className="text-gray-300 text-xs">✉ creamoj@gmail.com</p>
+                <h4 className="font-bold mb-2">Contatti</h4>
                 <p className="text-gray-300 text-xs">☎ +39 373 790 2538</p>
               </div>
             </div>
 
-            <div className="border-t border-[#8B7BA8] pt-6 text-center text-xs text-gray-300">
-              <p>&copy; 2025 Essenze di Natura. Tutti i diritti riservati.</p>
+            <div className="border-t border-[#8B7BA8] pt-4 text-center text-xs text-gray-300">
+              <p>&copy; 2025 Essenze di Natura</p>
             </div>
           </div>
         </footer>
