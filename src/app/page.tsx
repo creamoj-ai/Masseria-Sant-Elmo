@@ -40,164 +40,131 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-[#2C2C2C]">
+    <div className="min-h-screen bg-white text-gray-800">
       {/* PURPLE HEADER */}
       <header className="sticky top-0 z-50 bg-[#6B5B7F] text-white h-16 flex items-center px-4">
         <div className="max-w-7xl w-full mx-auto flex justify-between items-center">
-          <div className="text-sm text-gray-300">09:26</div>
-          <div className="text-2xl font-bold">KIMIRA</div>
-          <div className="flex gap-4">
-            <button className="text-xl">🛒</button>
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-xl">☰</button>
+          <div className="text-xs text-gray-300">09:26</div>
+          <div className="w-12 h-12 flex items-center justify-center">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='60' font-size='48' text-anchor='middle' fill='white' font-weight='bold'%3EKIMIRA%3C/text%3E%3C/svg%3E" alt="KIMIRA" className="w-10" />
+          </div>
+          <div className="flex gap-4 items-center">
+            <button className="text-2xl">🛒</button>
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-2xl">☰</button>
           </div>
         </div>
       </header>
 
       {/* MAIN CONTENT */}
-      <main className="max-w-4xl mx-auto px-4 py-6">
+      <main className="max-w-2xl mx-auto px-4 py-8">
 
         {/* HERO SECTION */}
         <section className="mb-16">
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold text-center text-[#2C2C2C] mb-4">
-              Un piccolo paradiso nel cuore del Parco Nazionale del Vesuvio
-            </h1>
-            <p className="text-center text-gray-700 mb-8">
-              Benvenuti in un angolo di tranquillità. Scopri il luogo perfetto per rilassarti e rigenerarti.
-            </p>
-            <p className="text-center text-gray-600 text-sm mb-8">
-              Visita la nostra Azienda Agrituristica e Produttiva: ti offriamo comfort ed ospitalità, coltiviamo lavanda e altre colture autoctone, produciamo oli essenziali e altri prodotti.
-            </p>
-          </div>
+          <h1 className="text-4xl font-serif font-bold text-center mb-6 leading-tight">
+            Un piccolo paradiso nel cuore del Parco Nazionale del Vesuvio
+          </h1>
 
-          {/* HERO IMAGE WITH WAVY BORDER */}
-          <div className="mb-8 flex justify-center">
-            <div className="relative w-full max-w-sm h-64 bg-gradient-to-br from-[#6B5B7F] to-[#8B7BA8] rounded-full flex items-center justify-center text-white text-center">
-              [Immagine Hero - Vesuvio panorama]
+          <p className="text-center text-gray-700 mb-6 text-sm leading-relaxed">
+            Benvenuti in un angolo di tranquillità. Scopri il luogo perfetto per rilassarti e rigenerarti.
+          </p>
+
+          <p className="text-center text-gray-600 text-sm leading-relaxed mb-8">
+            Visita la nostra Azienda Agrituristica e Produttiva: ti offriamo comfort ed ospitalità, coltiviamo lavanda e altre colture autoctone, produciamo oli essenziali e altri prodotti.
+          </p>
+
+          <div className="flex justify-center mb-8">
+            <div className="w-64 h-64 bg-gradient-to-br from-[#6B5B7F] to-[#8B7BA8] rounded-full flex items-center justify-center text-white text-center text-sm">
+              [Immagine panorama]
             </div>
           </div>
         </section>
 
-        {/* ACTIVITY SECTION 1 */}
+        {/* DOT DIVIDER */}
+        <div className="flex justify-center gap-2 mb-12">
+          {[1, 2, 3, 4, 5, 6, 7].map(i => (
+            <div key={i} className="w-2 h-2 rounded-full bg-[#B8E6D5]"></div>
+          ))}
+        </div>
+
+        {/* EXPERIENCE SECTION */}
         <section className="mb-16">
-          <div className="flex justify-center gap-2 mb-6">
-            {[1, 2, 3, 4, 5, 6, 7].map(i => (
-              <div key={i} className="w-2 h-2 rounded-full bg-[#B8E6D5]"></div>
-            ))}
-          </div>
-
-          <h2 className="text-2xl font-bold text-center mb-6 text-[#2C2C2C]">
-            Scopri di più sui nostri eventi
-          </h2>
-
-          <div className="mb-8 bg-[#D8C5E8] rounded-full py-4 px-6 text-center font-semibold text-[#2C2C2C]">
-            Attività di Ospitalità
-          </div>
-
-          <div className="mb-8 flex justify-center">
-            <div className="relative w-72 h-96 bg-[#B8E6D5] rounded-3xl flex items-center justify-center overflow-hidden">
-              <div className="text-center text-[#6B5B7F]">[Immagine attività - allestimento tavola]</div>
-            </div>
-          </div>
-
-          <p className="text-center text-gray-700 mb-8 text-sm">
-            Tutte le attività vengono organizzate nei dettagli di ogni bambino. Questo approccio aiutera a sviluppare le proprie abilità al meglio.
+          <p className="text-center text-gray-700 text-sm leading-relaxed mb-6">
+            Immergiti nella magia delle serate uniche organizzate presso la Masseria Sant'Elmo. Nel cuore della natura, circondato dai profumi di lavanda e erbe officinali, vivrai momenti indimenticabili in un'atmosfera incantevole.
           </p>
 
-          <h3 className="text-2xl font-bold text-center mb-4">Per ogni bambino</h3>
+          <p className="text-center text-gray-700 text-sm leading-relaxed mb-8">
+            Ogni evento è curato nei minimi dettagli, offrendo esperienze straordinarie e personalizzate per ogni occasione. Che si tratti di una festa intima, un matrimonio da sogno o una celebrazione speciale, il nostro team di esperti eventi e wedding planner sarà al tuo fianco per realizzare tutto.
+          </p>
 
+          <div className="flex justify-center">
+            <button className="bg-[#D8C5E8] text-gray-800 px-8 py-3 rounded-full font-semibold text-sm hover:bg-[#C8B5D8] transition">
+              Scopri di più sui nostri eventi
+            </button>
+          </div>
+        </section>
+
+        {/* ACTIVITIES SECTION */}
+        <section className="mb-16">
           <div className="flex justify-center gap-2 mb-8">
             {[1, 2, 3, 4, 5, 6].map(i => (
               <div key={i} className="w-2 h-2 rounded-full bg-[#B8E6D5]"></div>
             ))}
           </div>
 
-          <p className="text-center text-gray-700 text-sm mb-8">
-            Tutte le attività vengono organizzate nei dettagli di ogni bambino.
-          </p>
-        </section>
+          <h2 className="text-3xl font-serif font-bold text-center mb-8">Attività di Ospitalità</h2>
 
-        {/* EXPERIENCE SECTION */}
-        <section className="mb-16">
-          <h2 className="text-xl font-bold mb-6 text-[#2C2C2C]">
-            Immergiti nella magia delle serate uniche organizzate presso la Masseria Sant'Elmo
-          </h2>
-
-          <p className="text-gray-700 text-sm mb-8">
-            Nel cuore della natura, circondato dai profumi di lavanda e erbe officinali, vivrai momenti indimenticabili in un'atmosfera incantevole.
-          </p>
-
-          <p className="text-gray-700 text-sm mb-8">
-            Ogni evento è curato nei minimi dettagli, offrendo esperienze straordinarie e personalizzate per ogni occasione. Che si tratti di una festa intima, un matrimonio da sogno o una celebrazione speciale, il nostro team di esperti eventi e wedding planner sarà al tuo fianco per realizzare tutto.
-          </p>
-
-          <h3 className="text-2xl font-bold text-center mb-8">Prenota per uno dei nostri eventi esclusivi</h3>
-
-          <div className="mb-8 flex justify-center">
-            <div className="relative w-72 h-96 bg-[#B8E6D5] rounded-3xl flex items-center justify-center overflow-hidden">
-              <div className="text-center text-[#6B5B7F]">[Immagine bar/catering]</div>
+          <div className="flex justify-center mb-8">
+            <div className="w-72 h-96 bg-gradient-to-br from-[#B8E6D5] to-[#A0D4C1] rounded-3xl flex items-center justify-center text-center">
+              [Immagine attività]
             </div>
           </div>
 
-          <p className="text-center text-gray-700 text-sm mb-8">
-            Vivi l'incanto delle serate tematiche organizzate dalla Masseria Sant'Elmo. Ogni evento è una festa per i sensi, dove la qualità e l'attenzione ai dettagli trasformano ogni momento in un'esperienza indimenticabile.
+          <p className="text-center text-gray-700 text-sm leading-relaxed mb-4 italic">
+            Tutte le attività vengono organizzate nei dettagli di ogni occasione. Questo approccio aiuta a sviluppare e valorizzare il momento al meglio.
           </p>
-        </section>
 
-        {/* SERVICES GRID */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-center mb-12">I Nostri Servizi</h2>
+          <h3 className="text-2xl font-serif text-center mb-6">Per ogni occasione</h3>
 
-          <div className="space-y-12">
-            {[
-              {
-                title: 'Matrimoni & Cerimonie',
-                desc: 'Il giorno più importante circondati dalla natura e dal Vesuvio',
-                price: '€5.000+',
-                color: 'bg-[#D8C5E8]'
-              },
-              {
-                title: 'Corporate & Team-Building',
-                desc: 'Rigenerazione sensoriale nel cuore della natura',
-                price: '€3.500+',
-                color: 'bg-[#B8E6D5]'
-              },
-              {
-                title: 'Degustazioni Esperienziali',
-                desc: 'Viaggio sensoriale tra lavanda e cucina locale',
-                price: '€50/pp',
-                color: 'bg-[#D8C5E8]'
-              }
-            ].map((service, i) => (
-              <div key={i}>
-                <div className={`${service.color} rounded-3xl py-6 px-6 text-center mb-4`}>
-                  <h3 className="text-xl font-bold text-[#2C2C2C]">{service.title}</h3>
-                  <p className="text-[#6B5B7F] font-semibold mt-2">{service.price}</p>
-                </div>
-                <p className="text-center text-gray-700 text-sm">{service.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* BOOKING FORM */}
-        <section id="booking" className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-2">Prenota il Tuo Evento</h2>
           <div className="flex justify-center gap-2 mb-8">
             {[1, 2, 3, 4, 5].map(i => (
               <div key={i} className="w-2 h-2 rounded-full bg-[#B8E6D5]"></div>
             ))}
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6 bg-gray-50 p-8 rounded-2xl">
-            <div className="grid grid-cols-2 gap-4">
+          <p className="text-center text-gray-600 text-sm leading-relaxed">
+            Tutte le attività vengono organizzate con passione e dedizione per renderle indimenticabili.
+          </p>
+        </section>
+
+        {/* BOOKING SECTION */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-serif font-bold text-center mb-2">Prenota per uno dei nostri eventi esclusivi</h2>
+
+          <div className="flex justify-center gap-2 mb-8">
+            {[1, 2, 3, 4, 5].map(i => (
+              <div key={i} className="w-2 h-2 rounded-full bg-[#B8E6D5]"></div>
+            ))}
+          </div>
+
+          <div className="flex justify-center mb-12">
+            <div className="w-72 h-96 bg-gradient-to-br from-[#D8C5E8] to-[#C8B5D8] rounded-3xl flex items-center justify-center text-center">
+              [Immagine evento]
+            </div>
+          </div>
+
+          <p className="text-center text-gray-700 text-sm leading-relaxed mb-12 italic">
+            Vivi l'incanto delle serate tematiche organizzate dalla Masseria Sant'Elmo. Ogni evento è una festa per i sensi, dove la qualità e l'attenzione ai dettagli trasformano ogni momento in un'esperienza indimenticabile.
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-4 bg-gray-50 p-6 rounded-2xl mb-12">
+            <div className="grid grid-cols-2 gap-3">
               <input
                 type="text"
                 name="first_name"
                 value={formData.first_name}
                 onChange={handleInputChange}
                 placeholder="Nome"
-                className="px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6B5B7F]"
+                className="px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#6B5B7F]"
                 required
               />
               <input
@@ -206,7 +173,7 @@ export default function Home() {
                 value={formData.last_name}
                 onChange={handleInputChange}
                 placeholder="Cognome"
-                className="px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6B5B7F]"
+                className="px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#6B5B7F]"
                 required
               />
             </div>
@@ -217,7 +184,7 @@ export default function Home() {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="Email"
-              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6B5B7F]"
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#6B5B7F]"
               required
             />
 
@@ -227,17 +194,17 @@ export default function Home() {
               value={formData.phone}
               onChange={handleInputChange}
               placeholder="Telefono"
-              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6B5B7F]"
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#6B5B7F]"
               required
             />
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <input
                 type="date"
                 name="event_date"
                 value={formData.event_date}
                 onChange={handleInputChange}
-                className="px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6B5B7F]"
+                className="px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#6B5B7F]"
                 required
               />
               <input
@@ -246,7 +213,7 @@ export default function Home() {
                 value={formData.guest_count}
                 onChange={handleInputChange}
                 placeholder="Ospiti"
-                className="px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6B5B7F]"
+                className="px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#6B5B7F]"
                 required
               />
             </div>
@@ -255,7 +222,7 @@ export default function Home() {
               name="event_type"
               value={formData.event_type}
               onChange={handleInputChange}
-              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6B5B7F]"
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#6B5B7F]"
             >
               <option value="matrimonio">Matrimonio & Cerimonie</option>
               <option value="corporate">Corporate & Wellness</option>
@@ -267,41 +234,95 @@ export default function Home() {
               name="notes"
               value={formData.notes}
               onChange={handleInputChange}
-              placeholder="Dettagli dell'evento (facoltativo)"
-              rows={4}
-              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6B5B7F] resize-none"
+              placeholder="Dettagli dell'evento"
+              rows={3}
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#6B5B7F] resize-none"
             ></textarea>
 
             <button
               type="submit"
-              className="w-full bg-[#6B5B7F] text-white py-4 rounded-lg font-bold hover:bg-[#5A4A6E] transition"
+              className="w-full bg-[#6B5B7F] text-white py-3 rounded-lg font-bold text-sm hover:bg-[#5A4A6E] transition"
             >
               Invia Richiesta
             </button>
-
-            <p className="text-center text-xs text-gray-600">
-              Ti contatteremo entro 24 ore per confermare la disponibilità
-            </p>
           </form>
         </section>
 
+        {/* TESTIMONIALS SECTION */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-serif font-bold text-center mb-2">Cosa dicono i nostri clienti</h2>
+
+          <div className="flex justify-center gap-2 mb-8">
+            {[1, 2, 3, 4].map(i => (
+              <div key={i} className="w-2 h-2 rounded-full bg-[#B8E6D5]"></div>
+            ))}
+          </div>
+
+          <div className="space-y-8">
+            {[
+              {
+                name: 'Jane DOE',
+                title: 'CEO di MyCompany',
+                quote: 'Scrivi una citazione proveniente da un cliente. Le citazioni sono un ottimo modo per costruire la fiducia nei prodotti o nei servizi.',
+                image: '👤'
+              },
+              {
+                name: 'Marco Rossi',
+                title: 'Wedding Planner',
+                quote: 'Un evento straordinario. Ogni dettaglio è stato curato con passione e professionalità per garantire momenti indimenticabili.',
+                image: '👤'
+              },
+              {
+                name: 'Anna Bianchi',
+                title: 'Direttore Corporate Events',
+                quote: 'Siamo entusiasti di accoglierti e farti vivere esperienze che rimarranno impresse nel cuore. Ti aspettiamo per condividere insieme emozioni, sorrisi e ricordi preziosi.',
+                image: '👤'
+              }
+            ].map((testimonial, i) => (
+              <div key={i} className="bg-white border border-gray-200 rounded-2xl p-6 text-center">
+                <div className="text-4xl mb-4">{testimonial.image}</div>
+                <p className="text-gray-700 text-sm italic mb-4 leading-relaxed">"{testimonial.quote}"</p>
+                <h4 className="font-bold text-gray-900">{testimonial.name}</h4>
+                <p className="text-xs text-gray-500">{testimonial.title}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* PARTNERS SECTION */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-serif font-bold text-center mb-2">I nostri partner di valore</h2>
+
+          <p className="text-center text-gray-600 text-sm mb-8">Siamo in ottima compagnia.</p>
+
+          <div className="space-y-6">
+            {[
+              { name: 'Caffetteria Leopardi', desc: 'Catering partner ufficiale' },
+              { name: 'Florist Studio', desc: 'Allestimenti floreali' },
+              { name: 'DJ Premium Events', desc: 'Intrattenimento musicale' }
+            ].map((partner, i) => (
+              <div key={i} className="bg-gray-100 rounded-2xl p-6 text-center">
+                <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl">🏢</div>
+                <h4 className="font-bold text-gray-900 mb-1">{partner.name}</h4>
+                <p className="text-xs text-gray-600">{partner.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* FOOTER */}
-        <footer className="bg-[#6B5B7F] text-white py-12 px-6 rounded-t-3xl -mx-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-3 gap-6 mb-8 text-sm">
+        <footer className="bg-[#6B5B7F] text-white py-12 px-4 rounded-t-3xl -mx-4">
+          <div className="max-w-2xl mx-auto">
+            <div className="grid grid-cols-2 gap-6 mb-8 text-sm">
               <div>
                 <h4 className="font-bold mb-3">Essenze di Natura</h4>
-                <p className="text-gray-300 text-xs">Masseria Sant'Elmo nel Parco del Vesuvio</p>
+                <p className="text-gray-300 text-xs">Masseria Sant'Elmo</p>
+                <p className="text-gray-300 text-xs">Parco Nazionale Vesuvio</p>
               </div>
               <div>
                 <h4 className="font-bold mb-3">Contatti</h4>
                 <p className="text-gray-300 text-xs">✉ creamoj@gmail.com</p>
                 <p className="text-gray-300 text-xs">☎ +39 373 790 2538</p>
-              </div>
-              <div>
-                <h4 className="font-bold mb-3">Stagione</h4>
-                <p className="text-gray-300 text-xs">Marzo — Ottobre</p>
-                <p className="text-gray-300 text-xs">Su prenotazione</p>
               </div>
             </div>
 
