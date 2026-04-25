@@ -73,8 +73,9 @@ export default function Home() {
           </p>
 
           <div className="flex justify-center mb-8">
-            <div className="w-64 h-64 bg-gradient-to-br from-[#6B5B7F] to-[#8B7BA8] rounded-full flex items-center justify-center text-white text-center text-sm">
-              [Immagine panorama]
+            <div className="w-64 h-64 bg-cover bg-center rounded-full overflow-hidden shadow-lg"
+              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop")'}}
+            >
             </div>
           </div>
         </section>
@@ -114,8 +115,9 @@ export default function Home() {
           <h2 className="text-3xl font-serif font-bold text-center mb-8">Attività di Ospitalità</h2>
 
           <div className="flex justify-center mb-8">
-            <div className="w-72 h-96 bg-gradient-to-br from-[#B8E6D5] to-[#A0D4C1] rounded-3xl flex items-center justify-center text-center">
-              [Immagine attività]
+            <div className="w-72 h-96 bg-cover bg-center rounded-3xl overflow-hidden shadow-lg"
+              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1519671482677-1f37e4c73e27?w=500&h=600&fit=crop")'}}
+            >
             </div>
           </div>
 
@@ -147,8 +149,9 @@ export default function Home() {
           </div>
 
           <div className="flex justify-center mb-12">
-            <div className="w-72 h-96 bg-gradient-to-br from-[#D8C5E8] to-[#C8B5D8] rounded-3xl flex items-center justify-center text-center">
-              [Immagine evento]
+            <div className="w-72 h-96 bg-cover bg-center rounded-3xl overflow-hidden shadow-lg"
+              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1464207687429-7505649dae38?w=500&h=600&fit=crop")'}}
+            >
             </div>
           </div>
 
@@ -263,24 +266,24 @@ export default function Home() {
               {
                 name: 'Jane DOE',
                 title: 'CEO di MyCompany',
-                quote: 'Scrivi una citazione proveniente da un cliente. Le citazioni sono un ottimo modo per costruire la fiducia nei prodotti o nei servizi.',
-                image: '👤'
+                quote: 'Un evento perfetto! La Masseria Sant\'Elmo ha superato tutte le mie aspettative. Ogni dettaglio è stato curato con passione e professionalità.',
+                image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop'
               },
               {
                 name: 'Marco Rossi',
                 title: 'Wedding Planner',
                 quote: 'Un evento straordinario. Ogni dettaglio è stato curato con passione e professionalità per garantire momenti indimenticabili.',
-                image: '👤'
+                image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop'
               },
               {
                 name: 'Anna Bianchi',
                 title: 'Direttore Corporate Events',
-                quote: 'Siamo entusiasti di accoglierti e farti vivere esperienze che rimarranno impresse nel cuore. Ti aspettiamo per condividere insieme emozioni, sorrisi e ricordi preziosi.',
-                image: '👤'
+                quote: 'Siamo entusiasti di accoglierti e farti vivere esperienze che rimarranno impresse nel cuore. Un\'esperienza indimenticabile.',
+                image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop'
               }
             ].map((testimonial, i) => (
               <div key={i} className="bg-white border border-gray-200 rounded-2xl p-6 text-center">
-                <div className="text-4xl mb-4">{testimonial.image}</div>
+                <img src={testimonial.image} alt={testimonial.name} className="w-16 h-16 rounded-full mx-auto mb-4 object-cover" />
                 <p className="text-gray-700 text-sm italic mb-4 leading-relaxed">"{testimonial.quote}"</p>
                 <h4 className="font-bold text-gray-900">{testimonial.name}</h4>
                 <p className="text-xs text-gray-500">{testimonial.title}</p>
@@ -297,12 +300,24 @@ export default function Home() {
 
           <div className="space-y-6">
             {[
-              { name: 'Caffetteria Leopardi', desc: 'Catering partner ufficiale' },
-              { name: 'Florist Studio', desc: 'Allestimenti floreali' },
-              { name: 'DJ Premium Events', desc: 'Intrattenimento musicale' }
+              {
+                name: 'Caffetteria Leopardi',
+                desc: 'Catering partner ufficiale',
+                image: 'https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=100&h=100&fit=crop'
+              },
+              {
+                name: 'Florist Studio',
+                desc: 'Allestimenti floreali',
+                image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=100&h=100&fit=crop'
+              },
+              {
+                name: 'DJ Premium Events',
+                desc: 'Intrattenimento musicale',
+                image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=100&h=100&fit=crop'
+              }
             ].map((partner, i) => (
               <div key={i} className="bg-gray-100 rounded-2xl p-6 text-center">
-                <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl">🏢</div>
+                <img src={partner.image} alt={partner.name} className="w-16 h-16 rounded-full mx-auto mb-4 object-cover" />
                 <h4 className="font-bold text-gray-900 mb-1">{partner.name}</h4>
                 <p className="text-xs text-gray-600">{partner.desc}</p>
               </div>
