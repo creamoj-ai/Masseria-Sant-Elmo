@@ -101,6 +101,84 @@ export function parseSmsCommand(text: string): {
 }
 
 /**
+ * Parse /avvisa command from message text
+ * Format: /avvisa @slug Message text here
+ * @param text - Raw message text from Telegram
+ * @returns Parsed command object or null if invalid
+ */
+export function parseAvvisaCommand(text: string): {
+  slug?: string;
+  message?: string;
+  error?: string;
+} | null {
+  // Regex pattern: /avvisa [space] [@]slug [space] [message]
+  const pattern = /^\/avvisa\s+@(\w+)\s+(.+)$/i;
+  const match = text.match(pattern);
+
+  if (!match) {
+    return null;
+  }
+
+  const slug = match[1]?.trim() || '';
+  const message = match[2]?.trim() || '';
+
+  if (!slug || !message) {
+    return {
+      error: 'Invalid format. Use: /avvisa @slug [message]',
+    };
+  }
+
+  return {
+    slug,
+    message,
+  };
+}
+
+/**
+ * Parse /pagamento command from message text
+ * Format: /pagamento @slug amount description
+ * @param text - Raw message text from Telegram
+ * @returns Parsed command object or null if invalid
+ */
+export function parsePagamentoCommand(text: string): {
+  slug?: string;
+  amount?: number;
+  description?: string;
+  error?: string;
+} | null {
+  // Regex pattern: /pagamento [space] [@]slug [space] [number] [space] [description]
+  const pattern = /^\/pagamento\s+@(\w+)\s+([\d.]+)\s+(.+)$/i;
+  const match = text.match(pattern);
+
+  if (!match) {
+    return null;
+  }
+
+  const slug = match[1]?.trim() || '';
+  const amountStr = match[2]?.trim() || '';
+  const description = match[3]?.trim() || '';
+
+  if (!slug || !amountStr || !description) {
+    return {
+      error: 'Invalid format. Use: /pagamento @slug [amount] [description]',
+    };
+  }
+
+  const amount = parseFloat(amountStr);
+  if (isNaN(amount) || amount <= 0) {
+    return {
+      error: 'Amount must be a positive number (e.g., 150 or 150.50)',
+    };
+  }
+
+  return {
+    slug,
+    amount,
+    description,
+  };
+}
+
+/**
  * Format SMS status message for Telegram
  */
 export function formatSmsStatusMessage(status: 'success' | 'error', details: {
@@ -162,6 +240,24 @@ Invia un SMS a un numero di telefono
 
 Esempio:
 \`/sms +393737902538 Ciao! Confermiamo per domani?\`
+
+---
+
+/avvisa @slug [messaggio]
+Invia un SMS a un cliente del database usando il suo slug
+
+Esempio:
+\`/avvisa @mario Ciao! Confermiamo per domani?\`
+
+---
+
+/pagamento @slug [importo] [descrizione]
+Invia un link Stripe di pagamento via SMS al cliente
+
+Esempio:
+\`/pagamento @mario 150 Soggiorno\`
+
+---
 
 /help
 Mostra questo messaggio

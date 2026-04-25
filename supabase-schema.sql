@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS clients (
   last_name VARCHAR(100) NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
   phone VARCHAR(20) NOT NULL,
+  slug VARCHAR(100) UNIQUE, -- @mario for Telegram commands
+  tipo VARCHAR(50), -- tipo di cliente: buyer, supplier, partner
   company_name VARCHAR(255),
   event_type VARCHAR(100), -- matrimonio, aziendale, enogastronomico, altro
   budget_range VARCHAR(50), -- €, per categorizzare
@@ -81,6 +83,21 @@ CREATE TABLE IF NOT EXISTS payments (
 );
 
 -- ============================================
+-- PAYMENT LOGS TABLE (log pagamenti telegram)
+-- ============================================
+CREATE TABLE IF NOT EXISTS logs_pagamenti (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  client_id UUID NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+  amount DECIMAL(10, 2) NOT NULL,
+  description VARCHAR(255),
+  stripe_payment_intent_id VARCHAR(255),
+  status VARCHAR(50) DEFAULT 'pending', -- pending, succeeded, failed
+  metadata JSONB, -- Stores additional data: telegram_chat_id, payment_url, sms_error, etc
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- ============================================
 -- INVOICES TABLE (fatture)
 -- ============================================
 CREATE TABLE IF NOT EXISTS invoices (
@@ -129,11 +146,12 @@ CREATE TABLE IF NOT EXISTS availability (
 -- ============================================
 CREATE TABLE IF NOT EXISTS communication_log (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  client_id UUID NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+  client_id UUID REFERENCES clients(id) ON DELETE CASCADE,
   communication_type VARCHAR(50), -- email, sms, whatsapp, call
   subject VARCHAR(255),
   message TEXT,
   status VARCHAR(50), -- sent, failed, opened, clicked
+  metadata JSONB, -- Stores additional data: telegram_chat_id, twilio_message_id, etc
   sent_at TIMESTAMP DEFAULT NOW(),
   created_at TIMESTAMP DEFAULT NOW()
 );
@@ -156,6 +174,7 @@ CREATE TABLE IF NOT EXISTS booking_analytics (
 -- ============================================
 CREATE INDEX idx_clients_email ON clients(email);
 CREATE INDEX idx_clients_phone ON clients(phone);
+CREATE INDEX idx_clients_slug ON clients(slug);
 CREATE INDEX idx_events_client_id ON events(client_id);
 CREATE INDEX idx_events_date ON events(event_date);
 CREATE INDEX idx_bookings_client_id ON bookings(client_id);
@@ -163,6 +182,8 @@ CREATE INDEX idx_bookings_event_id ON bookings(event_id);
 CREATE INDEX idx_bookings_status ON bookings(booking_status);
 CREATE INDEX idx_payments_booking_id ON payments(booking_id);
 CREATE INDEX idx_payments_status ON payments(status);
+CREATE INDEX idx_logs_pagamenti_client_id ON logs_pagamenti(client_id);
+CREATE INDEX idx_logs_pagamenti_status ON logs_pagamenti(status);
 CREATE INDEX idx_invoices_client_id ON invoices(client_id);
 CREATE INDEX idx_communication_client_id ON communication_log(client_id);
 
