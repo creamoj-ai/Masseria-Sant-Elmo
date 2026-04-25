@@ -226,6 +226,106 @@ SMTP_PASS=your-password
 
 ---
 
+## 🤖 Telegram Bot ("Telecomando")
+
+### Quick Start: Send SMS Commands from Telegram
+
+This project includes a Telegram bot that acts as a mobile-first command center to send SMS messages without accessing the web dashboard.
+
+#### Setup Instructions
+
+1. **Get Your Telegram Bot Token**
+   ```bash
+   # Open Telegram and chat with @BotFather
+   # Send: /newbot
+   # Follow the instructions
+   # Copy your bot token (looks like: 1234567890:ABCdefGHIjklMNOpqrsTUVwxyz)
+   ```
+
+2. **Get Your Telegram Chat ID**
+   ```bash
+   # Open Telegram and chat with your bot
+   # Send any message
+   # Visit: https://api.telegram.org/bot{TOKEN}/getUpdates
+   # Look for "chat": { "id": YOUR_CHAT_ID }
+   # Or use @userinfobot to get your ID
+   ```
+
+3. **Get Twilio Credentials**
+   ```bash
+   # Sign up: https://www.twilio.com
+   # Go to Account Settings → API Keys & Tokens
+   # Copy: Account SID, Auth Token
+   # Buy a phone number or use existing virtual number
+   ```
+
+4. **Configure Environment Variables** (`.env.local`)
+   ```env
+   # Telegram Bot
+   TELEGRAM_BOT_TOKEN=your_bot_token_here
+   TELEGRAM_AUTHORIZED_CHAT_ID=your_chat_id_here
+   TELEGRAM_WEBHOOK_SECRET=optional_secret_for_extra_security
+
+   # Twilio SMS Gateway
+   TWILIO_ACCOUNT_SID=your_account_sid
+   TWILIO_AUTH_TOKEN=your_auth_token
+   TWILIO_PHONE_NUMBER=+1234567890
+   ```
+
+5. **Set Up Telegram Webhook**
+   - Deploy the app first (or use ngrok locally)
+   - Run this command with your actual domain:
+   ```bash
+   curl -X POST https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/setWebhook \
+     -H "Content-Type: application/json" \
+     -d '{"url":"https://your-domain.com/api/telegram/webhook"}'
+   ```
+
+6. **Test the Bot**
+   - Open Telegram and chat with your bot
+   - Try: `/help` (see available commands)
+   - Try: `/sms +393737902538 Test message here`
+   - Check that recipient receives SMS
+
+#### Available Commands
+
+- **/sms [number] [message]** - Send SMS to any phone number
+  - Format: `/sms +393737902538 Ciao! Come stai?`
+  - Supports Italian numbers with auto-normalization
+  - Max 160 characters per message (SMS limit)
+  - Returns confirmation with message ID
+
+- **/help** - Show available commands and usage
+
+#### Security Features
+
+- ✅ **Chat ID Verification**: Only your authorized Telegram account can use the bot
+- ✅ **Phone Number Validation**: Validates format before sending SMS
+- ✅ **Country Whitelist**: Restricts SMS to Italian numbers (+39) by default to prevent unexpected charges
+- ✅ **Communication Logging**: All SMS are logged in `communication_log` table (legal audit trail)
+- ✅ **Error Handling**: Clear error messages on Telegram for validation failures
+
+#### SMS Cost Management
+
+- Twilio rates vary by country (~€0.05-0.15 per SMS in EU)
+- Monitor usage in Twilio Dashboard
+- Set up billing alerts in Twilio to avoid surprises
+- Currently restricted to +39 (Italy) - contact to enable other countries
+
+#### API Endpoint
+
+- **POST** `/api/telegram/webhook` - Telegram webhook receiver
+- **GET** `/api/telegram/webhook` - Health check
+
+#### Architecture
+
+The Telegram bot system consists of:
+1. **Telegram Helper** (`src/lib/telegram.ts`) - Message sending, command parsing, authorization
+2. **Twilio Helper** (`src/lib/twilio.ts`) - SMS sending, phone number normalization
+3. **Webhook Handler** (`src/app/api/telegram/webhook/route.ts`) - Receives Telegram updates, routes commands
+
+---
+
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
