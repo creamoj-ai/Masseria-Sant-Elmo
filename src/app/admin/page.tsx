@@ -72,6 +72,7 @@ export default function AdminDashboard() {
     { id: 'dashboard', label: 'Dashboard', icon: '📊' },
     { id: 'bookings', label: 'Prenotazioni', icon: '📅' },
     { id: 'clients', label: 'Clienti', icon: '👥' },
+    { id: 'whatsapp', label: 'WhatsApp', icon: '💬' },
     { id: 'payments', label: 'Pagamenti', icon: '💳' },
     { id: 'analytics', label: 'Analitiche', icon: '📈' },
     { id: 'settings', label: 'Impostazioni', icon: '⚙️' },
@@ -484,6 +485,147 @@ export default function AdminDashboard() {
                     {totalBookings > 0 ? Math.round(totalGuests / totalBookings) : 0}
                   </p>
                   <p className="text-sm text-gray-600">ospiti per prenotazione</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* WHATSAPP TAB */}
+          {activeTab === 'whatsapp' && (
+            <div className="h-full flex bg-white rounded-lg border border-gray-200 overflow-hidden">
+              {/* LEFT SIDEBAR - CONTACTS */}
+              <div className="w-80 border-r border-gray-200 flex flex-col">
+                {/* HEADER */}
+                <div className="border-b border-gray-200 p-4">
+                  <h2 className="text-xl font-light mb-4">💬 WhatsApp Chat</h2>
+                  <input
+                    type="text"
+                    placeholder="Cerca contatto..."
+                    className="w-full px-3 py-2 bg-gray-100 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                  />
+                </div>
+
+                {/* FILTERS */}
+                <div className="p-3 border-b border-gray-200 flex gap-2 bg-gray-50">
+                  <button className="flex-1 px-3 py-2 rounded-lg text-xs font-light bg-black text-white transition">
+                    Tutti
+                  </button>
+                  <button className="flex-1 px-3 py-2 rounded-lg text-xs font-light bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
+                    👤 Clienti
+                  </button>
+                  <button className="flex-1 px-3 py-2 rounded-lg text-xs font-light bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
+                    🏪 Fornitori
+                  </button>
+                </div>
+
+                {/* CONTACTS LIST */}
+                <div className="flex-1 overflow-y-auto">
+                  {[
+                    { name: 'Marco Rossi', phone: '+39 333 1234567', type: 'client', unread: 2, avatar: '👤', lastMsg: 'Confermato!' },
+                    { name: 'Caffetteria Leopardi', phone: '+39 392 5555555', type: 'supplier', unread: 1, avatar: '🏪', lastMsg: 'Pronto per lunedì' },
+                    { name: 'Sofia Bianchi', phone: '+39 333 9876543', type: 'client', unread: 0, avatar: '👩', lastMsg: 'Grazie!' },
+                    { name: 'Florist Studio', phone: '+39 392 6666666', type: 'supplier', unread: 0, avatar: '🌸', lastMsg: 'Nuova collezione' },
+                  ].map((contact, i) => (
+                    <div key={i} className="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl">{contact.avatar}</span>
+                          <div>
+                            <p className="font-light text-sm text-gray-900">{contact.name}</p>
+                            <p className="text-xs text-gray-500">{contact.phone}</p>
+                          </div>
+                        </div>
+                        {contact.unread > 0 && (
+                          <span className="bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                            {contact.unread}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs text-gray-600 truncate flex-1">{contact.lastMsg}</p>
+                        <span className={`ml-2 px-2 py-1 rounded text-xs font-light ${
+                          contact.type === 'client' ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'
+                        }`}>
+                          {contact.type === 'client' ? '👤 Cliente' : '🏪 Fornitore'}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* FOOTER STATS */}
+                <div className="p-4 border-t border-gray-200 bg-gray-50">
+                  <div className="grid grid-cols-2 gap-4 text-center text-sm">
+                    <div>
+                      <p className="text-lg font-light text-gray-900">4</p>
+                      <p className="text-xs text-gray-600">Contatti</p>
+                    </div>
+                    <div>
+                      <p className="text-lg font-light text-green-600">3</p>
+                      <p className="text-xs text-gray-600">Non letti</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* RIGHT SIDE - CHAT */}
+              <div className="flex-1 flex flex-col">
+                {/* CHAT HEADER */}
+                <div className="border-b border-gray-200 p-6 flex justify-between items-center bg-gray-50">
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl">👤</span>
+                    <div>
+                      <h3 className="text-lg font-light text-gray-900">Marco Rossi</h3>
+                      <p className="text-sm text-gray-600">+39 333 1234567</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="px-3 py-1 rounded-full text-sm font-light bg-blue-100 text-blue-700">
+                      👤 Cliente
+                    </span>
+                    <button className="p-2 hover:bg-white rounded-lg transition">☎️</button>
+                    <button className="p-2 hover:bg-white rounded-lg transition">ℹ️</button>
+                  </div>
+                </div>
+
+                {/* MESSAGES */}
+                <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-white">
+                  <div className="flex justify-start">
+                    <div className="max-w-xs px-4 py-3 rounded-lg bg-gray-200 text-gray-900 rounded-bl-none">
+                      <p className="text-sm font-light">Ciao! Vorrei prenotare per sabato</p>
+                      <p className="text-xs text-gray-600 mt-1">10:30</p>
+                    </div>
+                  </div>
+                  <div className="flex justify-end">
+                    <div className="max-w-xs px-4 py-3 rounded-lg bg-green-500 text-white rounded-br-none">
+                      <p className="text-sm font-light">Perfetto! Ti aspettiamo!</p>
+                      <p className="text-xs text-green-100 mt-1">10:35 ✓✓</p>
+                    </div>
+                  </div>
+                  <div className="flex justify-start">
+                    <div className="max-w-xs px-4 py-3 rounded-lg bg-gray-200 text-gray-900 rounded-bl-none">
+                      <p className="text-sm font-light">Confermato per sabato! 🎉</p>
+                      <p className="text-xs text-gray-600 mt-1">10:40</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* INPUT AREA */}
+                <div className="border-t border-gray-200 p-4 bg-white">
+                  <div className="flex gap-3">
+                    <button className="px-3 py-2 text-xl hover:bg-gray-100 rounded-lg transition">
+                      😊
+                    </button>
+                    <input
+                      type="text"
+                      placeholder="Scrivi un messaggio..."
+                      className="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
+                    <button className="px-6 py-3 bg-green-500 text-white rounded-lg font-light hover:bg-green-600 transition">
+                      📤 Invia
+                    </button>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">Usa Enter per inviare</p>
                 </div>
               </div>
             </div>
