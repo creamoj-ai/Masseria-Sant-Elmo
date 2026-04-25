@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS events (
   event_time TIME,
   guest_count INT,
   status VARCHAR(50) DEFAULT 'pending', -- pending, confirmed, completed, cancelled
-  venue VARCHAR(100) DEFAULT 'Masseria Sant\'Elmo', -- sempre questa per adesso
+  venue VARCHAR(100) DEFAULT 'Masseria Sant''Elmo', -- sempre questa per adesso
   catering_partner VARCHAR(255), -- Caffetteria Leopardi, etc
   notes TEXT,
   total_price DECIMAL(10, 2),
