@@ -5,17 +5,17 @@ import { useScrollAnimation } from '@/lib/useScrollAnimation';
 
 const HERO_SLIDES = [
   {
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&h=900&fit=crop',
+    image: 'https://images.unsplash.com/photo-1469022563149-aa64dbd37dae?w=1400&h=900&fit=crop',
     title: 'Masseria Sant\'Elmo',
     subtitle: 'Nel cuore del Parco Nazionale del Vesuvio'
   },
   {
-    image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1400&h=900&fit=crop',
+    image: 'https://images.unsplash.com/photo-1519915212116-7cfef71f9a3a?w=1400&h=900&fit=crop',
     title: 'Spazi esclusivi',
     subtitle: 'Cupola geodetica 14x20m con vista panoramica'
   },
   {
-    image: 'https://images.unsplash.com/photo-1464207687429-7505649dae38?w=1400&h=900&fit=crop',
+    image: 'https://images.unsplash.com/photo-1536148895-20bc4ba6abfa?w=1400&h=900&fit=crop',
     title: 'Esperienze uniche',
     subtitle: 'Ogni dettaglio curato con passione'
   }
@@ -175,12 +175,12 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=500&h=500&fit=crop',
-              'https://images.unsplash.com/photo-1464207687429-7505649dae38?w=500&h=500&fit=crop',
-              'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=500&fit=crop',
-              'https://images.unsplash.com/photo-1571896349842-659f2c4724d4?w=500&h=500&fit=crop',
-              'https://images.unsplash.com/photo-1519167758481-83f19106c17f?w=500&h=500&fit=crop',
-              'https://images.unsplash.com/photo-1430768881559-25149a3f61f1?w=500&h=500&fit=crop',
+              'https://images.unsplash.com/photo-1519915212116-7cfef71f9a3a?w=500&h=500&fit=crop', // Banqueting elegante outdoor
+              'https://images.unsplash.com/photo-1469022563149-aa64dbd37dae?w=500&h=500&fit=crop', // Campo lavanda tramonto
+              'https://images.unsplash.com/photo-1536148895-20bc4ba6abfa?w=500&h=500&fit=crop', // Tavolo cena lusso candele
+              'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=500&h=500&fit=crop', // Bar elegante rustico
+              'https://images.unsplash.com/photo-1517457373614-b7152f800fd1?w=500&h=500&fit=crop', // Accoglienza/benvenuto elegante
+              'https://images.unsplash.com/photo-1583259429470-3c4ee1704656?w=500&h=500&fit=crop', // Workshop/evento outdoor lavanda
             ].map((image, index) => (
               <div
                 key={index}
@@ -244,8 +244,8 @@ export default function Home() {
                 La struttura dispone di una cupola geodetica di 14x20m con vista panoramica. Il nostro campo di lavanda e l'alambicco creano un'atmosfera autentica.
               </p>
             </div>
-            <div className="h-96 bg-cover bg-center"
-              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1519046904884-53103b34b206?w=600&h=700&fit=crop")'}}
+            <div className="h-96 bg-cover bg-center rounded-lg shadow-lg"
+              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1469022563149-aa64dbd37dae?w=600&h=700&fit=crop")'}}
             ></div>
           </div>
 
@@ -352,8 +352,8 @@ export default function Home() {
       <section ref={aboutSection.ref} className={`py-32 px-6 lg:px-8 transition-all duration-700 ${aboutSection.isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-20 items-center">
-            <div className="h-96 bg-cover bg-center order-2 md:order-1"
-              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1464207687429-7505649dae38?w=600&h=700&fit=crop")'}}
+            <div className="h-96 bg-cover bg-center order-2 md:order-1 rounded-lg shadow-lg"
+              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=600&h=700&fit=crop")'}}
             ></div>
             <div className="order-1 md:order-2">
               <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-8 font-light">Esperienza</p>
