@@ -1,8 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useScrollAnimation } from '@/lib/useScrollAnimation';
+
+const HERO_SLIDES = [
+  {
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&h=900&fit=crop',
+    title: 'Masseria Sant\'Elmo',
+    subtitle: 'Nel cuore del Parco Nazionale del Vesuvio'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1400&h=900&fit=crop',
+    title: 'Spazi esclusivi',
+    subtitle: 'Cupola geodetica 14x20m con vista panoramica'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1464207687429-7505649dae38?w=1400&h=900&fit=crop',
+    title: 'Esperienze uniche',
+    subtitle: 'Ogni dettaglio curato con passione'
+  }
+];
 
 export default function Home() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -14,6 +35,22 @@ export default function Home() {
     notes: ''
   });
   const [showConfirmation, setShowConfirmation] = useState(false);
+
+  // Scroll animations
+  const locationSection = useScrollAnimation();
+  const gallerySection = useScrollAnimation();
+  const servicesSection = useScrollAnimation();
+  const aboutSection = useScrollAnimation();
+  const testimonialsSection = useScrollAnimation();
+  const bookingSection = useScrollAnimation();
+
+  // Auto-advance hero carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -63,32 +100,141 @@ export default function Home() {
         </div>
       </header>
 
-      {/* HERO SECTION - FULL WIDTH IMAGE */}
-      <section className="h-screen bg-cover bg-center relative flex items-center justify-center"
-        style={{backgroundImage: 'url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop")'}}
-      >
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative z-10 text-center text-white max-w-2xl mx-auto px-6">
-          <h1 className="text-6xl md:text-7xl font-light mb-8 leading-tight tracking-tight">
-            Masseria Sant'Elmo
-          </h1>
-          <p className="text-xl font-light mb-12 tracking-wide">
-            Nel cuore del Parco Nazionale del Vesuvio
-          </p>
-          <a href="#booking" className="inline-block bg-black text-white px-12 py-4 rounded-full text-sm font-light hover:bg-gray-800 transition">
-            Scopri di più
-          </a>
+      {/* HERO CAROUSEL */}
+      <section className="relative h-screen overflow-hidden">
+        {/* Slides Container */}
+        <div className="relative w-full h-full">
+          {HERO_SLIDES.map((slide, index) => (
+            <div
+              key={index}
+              className="absolute inset-0 transition-opacity duration-1000"
+              style={{ opacity: index === currentSlide ? 1 : 0 }}
+              data-no-transition
+            >
+              <div
+                className="w-full h-full bg-cover bg-center"
+                style={{ backgroundImage: `url("${slide.image}")` }}
+              >
+                <div className="absolute inset-0 bg-black/25"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Content Overlay */}
+        <div className="absolute inset-0 flex items-center justify-center z-10">
+          <div className="text-center text-white max-w-3xl mx-auto px-6">
+            <h1 className="text-6xl md:text-8xl font-light mb-6 leading-tight tracking-tight" style={{fontFamily: 'var(--font-playfair)'}}>
+              {HERO_SLIDES[currentSlide].title}
+            </h1>
+            <div className="h-1 w-16 bg-white/80 mx-auto mb-8"></div>
+            <p className="text-lg md:text-xl font-light mb-12 tracking-wide">
+              {HERO_SLIDES[currentSlide].subtitle}
+            </p>
+            <a href="#booking" className="inline-block bg-white text-black px-12 py-4 text-sm font-light hover:bg-gray-200 transition">
+              Scopri di più
+            </a>
+          </div>
+        </div>
+
+        {/* Carousel Indicators */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex gap-3">
+          {HERO_SLIDES.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all ${
+                index === currentSlide ? 'bg-white w-8' : 'bg-white/50 hover:bg-white/75'
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Navigation Arrows */}
+        <button
+          onClick={() => setCurrentSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)}
+          className="absolute left-8 top-1/2 transform -translate-y-1/2 z-20 text-white hover:opacity-70 transition text-3xl"
+        >
+          ‹
+        </button>
+        <button
+          onClick={() => setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length)}
+          className="absolute right-8 top-1/2 transform -translate-y-1/2 z-20 text-white hover:opacity-70 transition text-3xl"
+        >
+          ›
+        </button>
+      </section>
+
+      {/* GALLERY SECTION */}
+      <section ref={gallerySection.ref} className="py-32 px-6 lg:px-8 bg-gray-50/40">
+        <div className="max-w-7xl mx-auto">
+          <p className={`text-xs uppercase tracking-[0.4em] text-gray-500 mb-8 font-light transition-all duration-700 ${gallerySection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>Gallery</p>
+          <h2 className={`text-6xl font-light mb-16 leading-tight transition-all duration-700 delay-100 ${gallerySection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{fontFamily: 'var(--font-playfair)'}}>
+            Scopri gli spazi
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=500&h=500&fit=crop',
+              'https://images.unsplash.com/photo-1464207687429-7505649dae38?w=500&h=500&fit=crop',
+              'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=500&fit=crop',
+              'https://images.unsplash.com/photo-1571896349842-659f2c4724d4?w=500&h=500&fit=crop',
+              'https://images.unsplash.com/photo-1519167758481-83f19106c17f?w=500&h=500&fit=crop',
+              'https://images.unsplash.com/photo-1430768881559-25149a3f61f1?w=500&h=500&fit=crop',
+            ].map((image, index) => (
+              <div
+                key={index}
+                onClick={() => setSelectedImage(image)}
+                className={`group relative h-64 bg-cover bg-center cursor-pointer overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-500 transform hover:scale-105 ${
+                  gallerySection.isVisible
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 translate-y-8'
+                }`}
+                style={{
+                  backgroundImage: `url("${image}")`,
+                  transitionDelay: gallerySection.isVisible ? `${index * 100}ms` : '0ms',
+                }}
+              >
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-300"></div>
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <span className="text-white text-3xl">🔍</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* LOCATION SECTION */}
-      <section id="location" className="py-32 px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
-          <p className="text-sm uppercase tracking-[0.3em] text-gray-600 mb-16">La Location</p>
+      {/* Lightbox */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 animate-fade-in"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-4xl w-full h-auto" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={selectedImage}
+              alt="Full view"
+              className="w-full h-auto rounded-lg"
+            />
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 text-white text-4xl hover:opacity-70 transition"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
 
-          <div className="grid md:grid-cols-2 gap-20 items-center mb-32">
+      {/* LOCATION SECTION */}
+      <section id="location" ref={locationSection.ref} className={`py-32 px-6 lg:px-8 bg-white transition-all duration-700 ${locationSection.isVisible ? 'opacity-100' : 'opacity-0'}`}>
+        <div className="max-w-5xl mx-auto">
+          <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-16 font-light">La Location</p>
+
+          <div className="grid md:grid-cols-2 gap-24 items-center mb-32">
             <div>
-              <h2 className="text-5xl font-light mb-12 leading-tight">
+              <h2 className="text-6xl font-light mb-12 leading-tight" style={{fontFamily: 'var(--font-playfair)'}}>
                 Un piccolo paradiso nel cuore della natura
               </h2>
               <p className="text-lg font-light text-gray-700 mb-8 leading-relaxed">
@@ -151,11 +297,11 @@ export default function Home() {
       </section>
 
       {/* SERVICES SECTION */}
-      <section id="servizi" className="py-32 px-6 lg:px-8 bg-gray-50">
+      <section id="servizi" ref={servicesSection.ref} className={`py-32 px-6 lg:px-8 bg-gray-50/40 transition-all duration-700 ${servicesSection.isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="max-w-5xl mx-auto">
-          <p className="text-sm uppercase tracking-[0.3em] text-gray-600 mb-16">Servizi</p>
+          <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-16 font-light">Servizi</p>
 
-          <h2 className="text-5xl font-light mb-32 leading-tight max-w-2xl">
+          <h2 className="text-6xl font-light mb-32 leading-tight max-w-2xl" style={{fontFamily: 'var(--font-playfair)'}}>
             Esperienze straordinarie personalizzate
           </h2>
 
@@ -177,10 +323,25 @@ export default function Home() {
                 desc: 'Viaggio sensoriale tra lavanda e cucina locale'
               }
             ].map((service, i) => (
-              <div key={i} className="border-t border-gray-300 pt-12">
-                <h3 className="text-2xl font-light mb-4">{service.title}</h3>
-                <p className="text-gray-600 text-sm mb-8 leading-relaxed">{service.desc}</p>
-                <p className="text-sm font-light">{service.price}</p>
+              <div
+                key={i}
+                className={`group border-b-4 border-transparent hover:border-[#C9A876] shadow-md hover:shadow-xl bg-white hover:bg-gray-50 px-8 py-8 rounded transition-all duration-300 cursor-pointer transform hover:scale-105 ${
+                  servicesSection.isVisible
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 translate-y-8'
+                }`}
+                style={{
+                  transitionDelay: servicesSection.isVisible ? `${i * 100}ms` : '0ms',
+                }}
+              >
+                <div className="text-4xl mb-4">
+                  {i === 0 && '💒'}
+                  {i === 1 && '🏢'}
+                  {i === 2 && '🍷'}
+                </div>
+                <h3 className="text-2xl font-light mb-4 group-hover:text-[#C9A876] transition-colors" style={{fontFamily: 'var(--font-playfair)'}}>{service.title}</h3>
+                <p className="text-gray-600 text-sm mb-8 leading-relaxed group-hover:text-gray-700 transition-colors">{service.desc}</p>
+                <p className="text-sm font-light text-gray-500 group-hover:text-[#C9A876] transition-colors font-semibold">{service.price}</p>
               </div>
             ))}
           </div>
@@ -188,15 +349,15 @@ export default function Home() {
       </section>
 
       {/* ABOUT SECTION */}
-      <section className="py-32 px-6 lg:px-8">
+      <section ref={aboutSection.ref} className={`py-32 px-6 lg:px-8 transition-all duration-700 ${aboutSection.isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-20 items-center">
             <div className="h-96 bg-cover bg-center order-2 md:order-1"
               style={{backgroundImage: 'url("https://images.unsplash.com/photo-1464207687429-7505649dae38?w=600&h=700&fit=crop")'}}
             ></div>
             <div className="order-1 md:order-2">
-              <p className="text-sm uppercase tracking-[0.3em] text-gray-600 mb-8">Esperienza</p>
-              <h2 className="text-5xl font-light mb-12 leading-tight">
+              <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-8 font-light">Esperienza</p>
+              <h2 className="text-6xl font-light mb-12 leading-tight" style={{fontFamily: 'var(--font-playfair)'}}>
                 Ogni dettaglio è curato con passione
               </h2>
               <p className="text-lg font-light text-gray-700 mb-8 leading-relaxed">
@@ -210,96 +371,152 @@ export default function Home() {
         </div>
       </section>
 
+      {/* TESTIMONIALS SECTION */}
+      <section ref={testimonialsSection.ref} className={`py-32 px-6 lg:px-8 bg-gray-50/40 transition-all duration-700 ${testimonialsSection.isVisible ? 'opacity-100' : 'opacity-0'}`}>
+        <div className="max-w-5xl mx-auto">
+          <p className={`text-xs uppercase tracking-[0.4em] text-gray-500 mb-8 font-light transition-all duration-700 ${testimonialsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>Testimonianze</p>
+          <h2 className={`text-6xl font-light mb-16 leading-tight transition-all duration-700 delay-100 ${testimonialsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{fontFamily: 'var(--font-playfair)'}}>
+            Storie di momenti indimenticabili
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                name: 'Marco & Elisa',
+                event: 'Matrimonio Giugno 2024',
+                text: 'Un giorno perfetto. La location è semplicemente magica, il team ha curato ogni dettaglio con amore.',
+                rating: 5
+              },
+              {
+                name: 'Andrea Rossi',
+                event: 'Corporate Event Maggio 2024',
+                text: 'Team building indimenticabile nel cuore della natura. I nostri collaboratori ancora ne parlano.',
+                rating: 5
+              },
+              {
+                name: 'Famiglia Bianchi',
+                event: 'Degustazione Luglio 2024',
+                text: 'Esperienza sensoriale incredibile. La lavanda, i profumi, la cucina locale... semplicemente sublime.',
+                rating: 5
+              }
+            ].map((testimonial, index) => (
+              <div
+                key={index}
+                className={`bg-white rounded-lg p-8 shadow-md hover:shadow-xl transition-all duration-300 border-t-4 border-[#C9A876] transform hover:-translate-y-2 ${
+                  testimonialsSection.isVisible
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 translate-y-8'
+                }`}
+                style={{
+                  transitionDelay: testimonialsSection.isVisible ? `${index * 100}ms` : '0ms',
+                }}
+              >
+                <div className="flex gap-1 mb-6">
+                  {Array.from({ length: testimonial.rating }).map((_, i) => (
+                    <span key={i} className="text-lg">⭐</span>
+                  ))}
+                </div>
+                <p className="text-gray-700 mb-6 italic leading-relaxed">"{testimonial.text}"</p>
+                <div>
+                  <p className="font-semibold text-gray-900">{testimonial.name}</p>
+                  <p className="text-sm text-gray-500">{testimonial.event}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* BOOKING SECTION */}
-      <section id="booking" className="py-32 px-6 lg:px-8 bg-gray-50">
+      <section id="booking" ref={bookingSection.ref} className={`py-32 px-6 lg:px-8 bg-white transition-all duration-700 ${bookingSection.isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="max-w-3xl mx-auto">
-          <p className="text-sm uppercase tracking-[0.3em] text-gray-600 mb-8">Prenotazioni</p>
-          <h2 className="text-5xl font-light mb-16 leading-tight">
+          <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-8 font-light">Prenotazioni</p>
+          <h2 className="text-6xl font-light mb-16 leading-tight" style={{fontFamily: 'var(--font-playfair)'}}>
             Inizia il tuo evento
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <label className="text-xs uppercase tracking-[0.2em] text-gray-600 block mb-3">Nome</label>
+                <label className="text-xs uppercase tracking-[0.3em] text-gray-500 block mb-4 font-light">Nome</label>
                 <input
                   type="text"
                   name="first_name"
                   value={formData.first_name}
                   onChange={handleInputChange}
-                  className="w-full bg-transparent border-b border-gray-300 pb-3 text-lg font-light focus:outline-none focus:border-black transition"
+                  className="w-full bg-transparent border-b border-gray-200 pb-3 text-lg font-light focus:outline-none focus:border-black transition"
                   required
                 />
               </div>
               <div>
-                <label className="text-xs uppercase tracking-[0.2em] text-gray-600 block mb-3">Cognome</label>
+                <label className="text-xs uppercase tracking-[0.3em] text-gray-500 block mb-4 font-light">Cognome</label>
                 <input
                   type="text"
                   name="last_name"
                   value={formData.last_name}
                   onChange={handleInputChange}
-                  className="w-full bg-transparent border-b border-gray-300 pb-3 text-lg font-light focus:outline-none focus:border-black transition"
+                  className="w-full bg-transparent border-b border-gray-200 pb-3 text-lg font-light focus:outline-none focus:border-black transition"
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-xs uppercase tracking-[0.2em] text-gray-600 block mb-3">Email</label>
+              <label className="text-xs uppercase tracking-[0.3em] text-gray-500 block mb-4 font-light">Email</label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className="w-full bg-transparent border-b border-gray-300 pb-3 text-lg font-light focus:outline-none focus:border-black transition"
+                className="w-full bg-transparent border-b border-gray-200 pb-3 text-lg font-light focus:outline-none focus:border-black transition"
                 required
               />
             </div>
 
             <div>
-              <label className="text-xs uppercase tracking-[0.2em] text-gray-600 block mb-3">Telefono</label>
+              <label className="text-xs uppercase tracking-[0.3em] text-gray-500 block mb-4 font-light">Telefono</label>
               <input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                className="w-full bg-transparent border-b border-gray-300 pb-3 text-lg font-light focus:outline-none focus:border-black transition"
+                className="w-full bg-transparent border-b border-gray-200 pb-3 text-lg font-light focus:outline-none focus:border-black transition"
                 required
               />
             </div>
 
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <label className="text-xs uppercase tracking-[0.2em] text-gray-600 block mb-3">Data evento</label>
+                <label className="text-xs uppercase tracking-[0.3em] text-gray-500 block mb-4 font-light">Data evento</label>
                 <input
                   type="date"
                   name="event_date"
                   value={formData.event_date}
                   onChange={handleInputChange}
-                  className="w-full bg-transparent border-b border-gray-300 pb-3 text-lg font-light focus:outline-none focus:border-black transition"
+                  className="w-full bg-transparent border-b border-gray-200 pb-3 text-lg font-light focus:outline-none focus:border-black transition"
                   required
                 />
               </div>
               <div>
-                <label className="text-xs uppercase tracking-[0.2em] text-gray-600 block mb-3">Ospiti</label>
+                <label className="text-xs uppercase tracking-[0.3em] text-gray-500 block mb-4 font-light">Ospiti</label>
                 <input
                   type="number"
                   name="guest_count"
                   value={formData.guest_count}
                   onChange={handleInputChange}
-                  className="w-full bg-transparent border-b border-gray-300 pb-3 text-lg font-light focus:outline-none focus:border-black transition"
+                  className="w-full bg-transparent border-b border-gray-200 pb-3 text-lg font-light focus:outline-none focus:border-black transition"
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-xs uppercase tracking-[0.2em] text-gray-600 block mb-3">Tipo evento</label>
+              <label className="text-xs uppercase tracking-[0.3em] text-gray-500 block mb-4 font-light">Tipo evento</label>
               <select
                 name="event_type"
                 value={formData.event_type}
                 onChange={handleInputChange}
-                className="w-full bg-transparent border-b border-gray-300 pb-3 text-lg font-light focus:outline-none focus:border-black transition"
+                className="w-full bg-transparent border-b border-gray-200 pb-3 text-lg font-light focus:outline-none focus:border-black transition"
               >
                 <option value="matrimonio">Matrimonio</option>
                 <option value="corporate">Corporate</option>
@@ -308,20 +525,20 @@ export default function Home() {
             </div>
 
             <div>
-              <label className="text-xs uppercase tracking-[0.2em] text-gray-600 block mb-3">Note (facoltativo)</label>
+              <label className="text-xs uppercase tracking-[0.3em] text-gray-500 block mb-4 font-light">Note (facoltativo)</label>
               <textarea
                 name="notes"
                 value={formData.notes}
                 onChange={handleInputChange}
                 rows={3}
-                className="w-full bg-transparent border-b border-gray-300 pb-3 text-lg font-light focus:outline-none focus:border-black transition resize-none"
+                className="w-full bg-transparent border-b border-gray-200 pb-3 text-lg font-light focus:outline-none focus:border-black transition resize-none"
               ></textarea>
             </div>
 
-            <div className="pt-8">
+            <div className="pt-12">
               <button
                 type="submit"
-                className="bg-black text-white px-12 py-4 rounded-full text-sm font-light hover:bg-gray-800 transition"
+                className="bg-black text-white px-12 py-4 text-sm font-light hover:bg-gray-900 hover:shadow-lg transition"
               >
                 Invia richiesta
               </button>
@@ -331,10 +548,10 @@ export default function Home() {
       </section>
 
       {/* NEWSLETTER SECTION */}
-      <section className="py-32 px-6 lg:px-8">
+      <section className="py-32 px-6 lg:px-8 bg-gray-50/40">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-sm uppercase tracking-[0.3em] text-gray-600 mb-8">Rimani Connesso</p>
-          <h2 className="text-5xl font-light mb-8 leading-tight">
+          <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-8 font-light">Rimani Connesso</p>
+          <h2 className="text-6xl font-light mb-8 leading-tight" style={{fontFamily: 'var(--font-playfair)'}}>
             Esclusiva anticipazioni e offerte stagionali
           </h2>
           <p className="text-lg font-light text-gray-700 mb-12 leading-relaxed max-w-2xl mx-auto">
@@ -345,12 +562,12 @@ export default function Home() {
             <input
               type="email"
               placeholder="Inserisci la tua email"
-              className="flex-1 bg-transparent border-b border-gray-300 pb-3 text-sm font-light focus:outline-none focus:border-black transition"
+              className="flex-1 bg-transparent border-b border-gray-200 pb-3 text-sm font-light focus:outline-none focus:border-black transition"
               required
             />
             <button
               type="submit"
-              className="bg-black text-white px-8 py-3 rounded-full text-sm font-light hover:bg-gray-800 transition whitespace-nowrap"
+              className="bg-black text-white px-8 py-3 text-sm font-light hover:bg-gray-900 transition whitespace-nowrap"
             >
               Iscriviti
             </button>
@@ -361,25 +578,25 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className="py-16 px-6 lg:px-8 border-t border-gray-100">
+      <footer className="py-20 px-6 lg:px-8 border-t border-gray-200 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-3 gap-12 mb-16">
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-gray-600 mb-4">Essenze di Natura</p>
-              <p className="text-sm text-gray-700">Masseria Sant'Elmo, Parco Nazionale del Vesuvio</p>
+              <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-4 font-light">Essenze di Natura</p>
+              <p className="text-sm text-gray-600 font-light">Masseria Sant'Elmo, Parco Nazionale del Vesuvio</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-gray-600 mb-4">Contatti</p>
-              <p className="text-sm text-gray-700">☎ +39 373 790 2538</p>
-              <p className="text-sm text-gray-700">✉ info@essenzedinaturaevents.it</p>
+              <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-4 font-light">Contatti</p>
+              <p className="text-sm text-gray-600 font-light hover:text-gray-900 transition">☎ +39 373 790 2538</p>
+              <p className="text-sm text-gray-600 font-light hover:text-gray-900 transition">✉ info@essenzedinaturaevents.it</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-gray-600 mb-4">Stagione</p>
-              <p className="text-sm text-gray-700">Marzo — Ottobre</p>
-              <p className="text-sm text-gray-700">Su prenotazione</p>
+              <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-4 font-light">Stagione</p>
+              <p className="text-sm text-gray-600 font-light">Marzo — Ottobre</p>
+              <p className="text-sm text-gray-600 font-light">Su prenotazione</p>
             </div>
           </div>
-          <div className="border-t border-gray-100 pt-8 text-center text-xs text-gray-600">
+          <div className="border-t border-gray-200 pt-8 text-center text-xs text-gray-500 font-light">
             <p>&copy; 2025 Essenze di Natura. All rights reserved.</p>
           </div>
         </div>
