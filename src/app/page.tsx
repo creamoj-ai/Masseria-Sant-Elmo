@@ -570,6 +570,7 @@ export default function Home() {
           <h2 className="text-6xl font-light mb-8 leading-tight" style={{fontFamily: 'var(--font-playfair)'}}>
             Esclusiva anticipazioni e offerte stagionali
           </h2>
+          {/* Latest version - force rebuild */}
           <p className="text-lg font-light text-gray-700 mb-12 leading-relaxed max-w-2xl mx-auto">
             Ricevi preview in anteprima degli eventi, consigli culinari dal nostro team e offerte speciali riservate ai nostri iscritti.
           </p>
