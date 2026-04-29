@@ -5,17 +5,17 @@ import { useScrollAnimation } from '@/lib/useScrollAnimation';
 
 const HERO_SLIDES = [
   {
-    image: 'https://images.unsplash.com/photo-1469022563149-aa64dbd37dae?w=1400&h=900&fit=crop',
+    image: 'https://images.unsplash.com/photo-1493857671505-72967e2e2760?w=1400&h=900&fit=crop',
     title: 'Masseria Sant\'Elmo',
     subtitle: 'Nel cuore del Parco Nazionale del Vesuvio'
   },
   {
-    image: 'https://images.unsplash.com/photo-1519915212116-7cfef71f9a3a?w=1400&h=900&fit=crop',
+    image: 'https://images.unsplash.com/photo-1519167758481-83f19106c17f?w=1400&h=900&fit=crop',
     title: 'Spazi esclusivi',
     subtitle: 'Cupola geodetica 14x20m con vista panoramica'
   },
   {
-    image: 'https://images.unsplash.com/photo-1536148895-20bc4ba6abfa?w=1400&h=900&fit=crop',
+    image: 'https://images.unsplash.com/photo-1551632440-7a46b2e6006d?w=1400&h=900&fit=crop',
     title: 'Esperienze uniche',
     subtitle: 'Ogni dettaglio curato con passione'
   }
@@ -175,12 +175,12 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              'https://images.unsplash.com/photo-1519915212116-7cfef71f9a3a?w=500&h=500&fit=crop', // Banqueting elegante outdoor
-              'https://images.unsplash.com/photo-1469022563149-aa64dbd37dae?w=500&h=500&fit=crop', // Campo lavanda tramonto
-              'https://images.unsplash.com/photo-1536148895-20bc4ba6abfa?w=500&h=500&fit=crop', // Tavolo cena lusso candele
-              'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=500&h=500&fit=crop', // Bar elegante rustico
-              'https://images.unsplash.com/photo-1517457373614-b7152f800fd1?w=500&h=500&fit=crop', // Accoglienza/benvenuto elegante
-              'https://images.unsplash.com/photo-1583259429470-3c4ee1704656?w=500&h=500&fit=crop', // Workshop/evento outdoor lavanda
+              'https://images.unsplash.com/photo-1519167758481-83f19106c17f?w=500&h=500&fit=crop', // Tavolo ricevimento elegante
+              'https://images.unsplash.com/photo-1555598519-2ea0157e7594?w=500&h=500&fit=crop', // Outdoor garden party
+              'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=500&fit=crop', // Smile welcome
+              'https://images.unsplash.com/photo-1567521464027-f127ff144326?w=500&h=500&fit=crop', // Lavender field
+              'https://images.unsplash.com/photo-1551632440-7a46b2e6006d?w=500&h=500&fit=crop', // Elegant dinner table
+              'https://images.unsplash.com/photo-1493857671505-72967e2e2760?w=500&h=500&fit=crop', // Landscape natural
             ].map((image, index) => (
               <div
                 key={index}
@@ -245,7 +245,7 @@ export default function Home() {
               </p>
             </div>
             <div className="h-96 bg-cover bg-center rounded-lg shadow-lg"
-              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1469022563149-aa64dbd37dae?w=600&h=700&fit=crop")'}}
+              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1567521464027-f127ff144326?w=600&h=700&fit=crop")'}}
             ></div>
           </div>
 
@@ -353,7 +353,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-20 items-center">
             <div className="h-96 bg-cover bg-center order-2 md:order-1 rounded-lg shadow-lg"
-              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=600&h=700&fit=crop")'}}
+              style={{backgroundImage: 'url("https://images.unsplash.com/photo-1551632440-7a46b2e6006d?w=600&h=700&fit=crop")'}}
             ></div>
             <div className="order-1 md:order-2">
               <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-8 font-light">Esperienza</p>
