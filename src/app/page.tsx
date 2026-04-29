@@ -5,19 +5,19 @@ import { useScrollAnimation } from '@/lib/useScrollAnimation';
 
 const HERO_SLIDES = [
   {
-    image: '/images/luxury-glamping.png',
+    image: '/images/masseria-main.jpg',
     title: 'Masseria Sant\'Elmo',
     subtitle: 'Nel cuore del Parco Nazionale del Vesuvio'
   },
   {
-    image: '/images/glamping-tent.webp',
+    image: '/images/masseria-vesuvio-dome.jpg',
     title: 'Spazi esclusivi',
     subtitle: 'Cupola geodetica 14x20m con vista panoramica'
   },
   {
-    image: '/images/spa-room.webp',
+    image: '/images/masseria-vesuvio.jpg',
     title: 'Esperienze uniche',
-    subtitle: 'Ogni dettaglio curato con passione'
+    subtitle: 'Campi di lavanda e natura incontaminata'
   }
 ];
 
@@ -175,12 +175,12 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              '/images/glamping-tent.webp', // Glamping lusso
-              '/images/spa-room.webp', // Spa room elegante
-              '/images/essential-oils.jpg', // Essenze lavanda
-              '/images/luxury-glamping.png', // Luxury experience
-              'https://images.unsplash.com/photo-1519167758481-83f19106c17f?w=500&h=500&fit=crop', // Tavolo ricevimento
-              'https://images.unsplash.com/photo-1551632440-7a46b2e6006d?w=500&h=500&fit=crop', // Dinner elegante
+              '/images/masseria-main.jpg', // Facciata principale
+              '/images/masseria-facade.jpg', // Vista architettura
+              '/images/masseria-doors.jpg', // Dettagli porte
+              '/images/masseria-vesuvio-dome.jpg', // Cupola geodetica
+              '/images/masseria-vesuvio.jpg', // Campo lavanda + Vesuvio
+              '/images/masseria-details.jpg', // Dettagli costruzione
             ].map((image, index) => (
               <div
                 key={index}
@@ -245,7 +245,7 @@ export default function Home() {
               </p>
             </div>
             <div className="h-96 bg-cover bg-center rounded-lg shadow-lg"
-              style={{backgroundImage: 'url("/images/luxury-glamping.png")'}}
+              style={{backgroundImage: 'url("/images/masseria-vesuvio.jpg")'}}
             ></div>
           </div>
 
@@ -297,35 +297,39 @@ export default function Home() {
       </section>
 
       {/* SERVICES SECTION */}
-      <section id="servizi" ref={servicesSection.ref} className={`py-32 px-6 lg:px-8 bg-gray-50/40 transition-all duration-700 ${servicesSection.isVisible ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="max-w-5xl mx-auto">
-          <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-16 font-light">Servizi</p>
+      <section id="servizi" ref={servicesSection.ref} className={`py-32 px-6 lg:px-8 bg-white transition-all duration-700 ${servicesSection.isVisible ? 'opacity-100' : 'opacity-0'}`}>
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-24">
+            <p className="text-xs uppercase tracking-[0.4em] text-gray-400 mb-6 font-light">Servizi</p>
+            <h2 className="text-6xl font-light leading-tight max-w-3xl" style={{fontFamily: 'var(--font-playfair)'}}>
+              Esperienze straordinarie personalizzate
+            </h2>
+          </div>
 
-          <h2 className="text-6xl font-light mb-32 leading-tight max-w-2xl" style={{fontFamily: 'var(--font-playfair)'}}>
-            Esperienze straordinarie personalizzate
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-12">
+          <div className="grid md:grid-cols-3 gap-8">
             {[
               {
                 title: 'Matrimoni & Cerimonie',
                 price: '€5.000+',
-                desc: 'Il giorno più importante circondati dalla natura del Vesuvio'
+                desc: 'Il giorno più importante circondati dalla natura del Vesuvio',
+                icon: '✨'
               },
               {
                 title: 'Corporate Events',
                 price: '€3.500+',
-                desc: 'Team-building e rigenerazione nel cuore della natura'
+                desc: 'Team-building e rigenerazione nel cuore della natura',
+                icon: '🌿'
               },
               {
                 title: 'Degustazioni',
                 price: '€50/pp',
-                desc: 'Viaggio sensoriale tra lavanda e cucina locale'
+                desc: 'Viaggio sensoriale tra lavanda e cucina locale',
+                icon: '🌾'
               }
             ].map((service, i) => (
               <div
                 key={i}
-                className={`group border-b-4 border-transparent hover:border-[#C9A876] shadow-md hover:shadow-xl bg-white hover:bg-gray-50 px-8 py-8 rounded transition-all duration-300 cursor-pointer transform hover:scale-105 ${
+                className={`group relative bg-white border border-gray-100 hover:border-gray-300 px-8 py-12 transition-all duration-500 cursor-pointer ${
                   servicesSection.isVisible
                     ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-8'
@@ -334,14 +338,26 @@ export default function Home() {
                   transitionDelay: servicesSection.isVisible ? `${i * 100}ms` : '0ms',
                 }}
               >
-                <div className="text-4xl mb-4">
-                  {i === 0 && '💒'}
-                  {i === 1 && '🏢'}
-                  {i === 2 && '🍷'}
+                {/* Subtle top border accent on hover */}
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C9A876] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div className="text-5xl mb-6 transition-transform duration-500 group-hover:scale-110 origin-left">
+                  {service.icon}
                 </div>
-                <h3 className="text-2xl font-light mb-4 group-hover:text-[#C9A876] transition-colors" style={{fontFamily: 'var(--font-playfair)'}}>{service.title}</h3>
-                <p className="text-gray-600 text-sm mb-8 leading-relaxed group-hover:text-gray-700 transition-colors">{service.desc}</p>
-                <p className="text-sm font-light text-gray-500 group-hover:text-[#C9A876] transition-colors font-semibold">{service.price}</p>
+
+                <h3 className="text-2xl font-light mb-4 group-hover:text-[#C9A876] transition-colors duration-300" style={{fontFamily: 'var(--font-playfair)'}}>
+                  {service.title}
+                </h3>
+
+                <p className="text-gray-500 text-sm mb-8 leading-relaxed group-hover:text-gray-700 transition-colors duration-300 font-light">
+                  {service.desc}
+                </p>
+
+                <div className="pt-4 border-t border-gray-100 group-hover:border-[#C9A876]/30 transition-colors duration-300">
+                  <p className="text-sm font-light text-[#C9A876] group-hover:text-[#B89966] transition-colors duration-300">
+                    {service.price}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -353,7 +369,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-20 items-center">
             <div className="h-96 bg-cover bg-center order-2 md:order-1 rounded-lg shadow-lg"
-              style={{backgroundImage: 'url("/images/spa-room.webp")'}}
+              style={{backgroundImage: 'url("/images/masseria-facade.jpg")'}}
             ></div>
             <div className="order-1 md:order-2">
               <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-8 font-light">Esperienza</p>
