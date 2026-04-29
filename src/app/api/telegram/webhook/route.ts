@@ -13,17 +13,19 @@ import {
 } from '@/lib/telegram';
 import { generatePaymentLink, formatPaymentSMS, isStripeConfigured } from '@/lib/stripe';
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+function getSupabaseClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+}
 
 /**
  * Handle Telegram webhook updates
  * Telegram sends POST requests to this endpoint when users message the bot
  */
 export async function POST(request: NextRequest) {
+  const supabase = getSupabaseClient();
   try {
     // Verify Telegram webhook authenticity (optional but recommended)
     const telegramSecret = request.headers.get('x-telegram-bot-api-secret-token');
@@ -78,17 +80,17 @@ export async function POST(request: NextRequest) {
 
     // /sms command
     if (userText.startsWith('/sms ')) {
-      return handleSmsCommand(chatId, userText);
+      return handleSmsCommand(chatId, userText, supabase);
     }
 
     // /avvisa command
     if (userText.startsWith('/avvisa ')) {
-      return handleAvvisaCommand(chatId, userText);
+      return handleAvvisaCommand(chatId, userText, supabase);
     }
 
     // /pagamento command
     if (userText.startsWith('/pagamento ')) {
-      return handlePagamentoCommand(chatId, userText);
+      return handlePagamentoCommand(chatId, userText, supabase);
     }
 
     // Unknown command - send help
@@ -108,7 +110,7 @@ export async function POST(request: NextRequest) {
  * Handle /sms command
  * Format: /sms +39123456789 Message text
  */
-async function handleSmsCommand(chatId: number, userText: string) {
+async function handleSmsCommand(chatId: number, userText: string, supabase: ReturnType<typeof getSupabaseClient>) {
   try {
     // Verify Twilio is configured
     if (!isTwilioConfigured()) {
@@ -249,7 +251,7 @@ async function handleSmsCommand(chatId: number, userText: string) {
  * Handle /avvisa command
  * Format: /avvisa @slug Message text
  */
-async function handleAvvisaCommand(chatId: number, userText: string) {
+async function handleAvvisaCommand(chatId: number, userText: string, supabase: ReturnType<typeof getSupabaseClient>) {
   try {
     // Verify Twilio is configured
     if (!isTwilioConfigured()) {
@@ -384,7 +386,7 @@ async function handleAvvisaCommand(chatId: number, userText: string) {
  * Handle /pagamento command
  * Format: /pagamento @slug amount description
  */
-async function handlePagamentoCommand(chatId: number, userText: string) {
+async function handlePagamentoCommand(chatId: number, userText: string, supabase: ReturnType<typeof getSupabaseClient>) {
   try {
     // Verify Stripe is configured
     if (!isStripeConfigured()) {

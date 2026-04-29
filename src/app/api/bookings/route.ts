@@ -1,12 +1,15 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+function getSupabaseClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+}
 
 export async function POST(req: NextRequest) {
+  const supabase = getSupabaseClient();
   try {
     const body = await req.json();
     const { 
@@ -90,6 +93,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
+  const supabase = getSupabaseClient();
   try {
     const { data, error } = await supabase
       .from('bookings')

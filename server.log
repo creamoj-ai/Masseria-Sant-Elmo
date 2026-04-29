@@ -1,0 +1,19 @@
+
+> essenze-di-natura-website@0.1.0 dev
+> next dev
+
+⚠ Port 3000 is in use by process 14260, using available port 3004 instead.
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3004
+- Network:       http://192.168.1.137:3004
+- Environments: .env.local
+✓ Ready in 1269ms
+⨯ Another next dev server is already running.
+
+- Local:        http://localhost:3003
+- PID:          21072
+- Dir:          C:\Users\itjob\Masseria-Sant-Elmo
+- Log:          .next\dev\logs\next-development.log
+
+Run taskkill /PID 21072 /F to stop it.
+[?25h
