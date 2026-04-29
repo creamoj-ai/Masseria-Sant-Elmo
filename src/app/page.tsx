@@ -103,7 +103,7 @@ export default function Home() {
             ></div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-12">
+          <div className="grid md:grid-cols-3 gap-12 mb-20">
             <div>
               <p className="text-5xl font-light text-gray-900 mb-4">375m²</p>
               <p className="text-sm uppercase tracking-[0.2em] text-gray-600">Spazio coperto</p>
@@ -115,6 +115,36 @@ export default function Home() {
             <div>
               <p className="text-5xl font-light text-gray-900 mb-4">Mar-Ott</p>
               <p className="text-sm uppercase tracking-[0.2em] text-gray-600">Stagione</p>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-2xl font-light mb-8 text-gray-900">Servizi & Amenità</h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="flex items-center gap-3">
+                <span className="text-lg">🌳</span>
+                <p className="text-sm text-gray-700">Giardino privato e spazio esterno</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-lg">🍳</span>
+                <p className="text-sm text-gray-700">Cucina attrezzata e area catering</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-lg">📡</span>
+                <p className="text-sm text-gray-700">Wi-Fi e connessione stabile</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-lg">🔊</span>
+                <p className="text-sm text-gray-700">Impianto audio e illuminazione scenica</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-lg">🚗</span>
+                <p className="text-sm text-gray-700">Parcheggio privato ampio</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-lg">🏛️</span>
+                <p className="text-sm text-gray-700">Cupola geodetica 14x20m panoramica</p>
+              </div>
             </div>
           </div>
         </div>
@@ -297,6 +327,36 @@ export default function Home() {
               </button>
             </div>
           </form>
+        </div>
+      </section>
+
+      {/* NEWSLETTER SECTION */}
+      <section className="py-32 px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-sm uppercase tracking-[0.3em] text-gray-600 mb-8">Rimani Connesso</p>
+          <h2 className="text-5xl font-light mb-8 leading-tight">
+            Esclusiva anticipazioni e offerte stagionali
+          </h2>
+          <p className="text-lg font-light text-gray-700 mb-12 leading-relaxed max-w-2xl mx-auto">
+            Ricevi preview in anteprima degli eventi, consigli culinari dal nostro team e offerte speciali riservate ai nostri iscritti.
+          </p>
+
+          <form className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto" onSubmit={(e) => { e.preventDefault(); alert('Newsletter iscrizione: coming soon'); }}>
+            <input
+              type="email"
+              placeholder="Inserisci la tua email"
+              className="flex-1 bg-transparent border-b border-gray-300 pb-3 text-sm font-light focus:outline-none focus:border-black transition"
+              required
+            />
+            <button
+              type="submit"
+              className="bg-black text-white px-8 py-3 rounded-full text-sm font-light hover:bg-gray-800 transition whitespace-nowrap"
+            >
+              Iscriviti
+            </button>
+          </form>
+
+          <p className="text-xs text-gray-500 mt-6">Non condividiamo mai la tua email. Puoi annullare l'iscrizione in qualsiasi momento.</p>
         </div>
       </section>
 
