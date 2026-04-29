@@ -296,7 +296,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SERVICES SECTION */}
+      {/* SERVICES SECTION - UPDATED ELEGANT DESIGN */}
       <section id="servizi" ref={servicesSection.ref} className={`py-32 px-6 lg:px-8 bg-white transition-all duration-700 ${servicesSection.isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="max-w-6xl mx-auto">
           <div className="mb-24">
