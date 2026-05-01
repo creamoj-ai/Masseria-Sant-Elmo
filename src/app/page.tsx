@@ -384,14 +384,14 @@ export default function Home() {
                 {
                   category: 'Matrimoni Intimi',
                   price: '€3.500 - €5.000',
-                  description: '20-30 ospiti | 4 ore',
+                  description: '20-30 ospiti',
                   details: ['Spazio esclusivo', 'Open bar premium', 'Servizio bar e camerieri', 'Setup decorativo'],
                   icon: '💍'
                 },
                 {
                   category: 'Matrimoni Eleganti',
                   price: '€6.000 - €10.000',
-                  description: '40-70 ospiti | 8 ore',
+                  description: '40-70 ospiti',
                   details: ['Spazio completo', 'Menu personalizzato chef', 'Catering premium', 'DJ e intrattenimento', 'Coordinamento completo'],
                   icon: '✨'
                 },
