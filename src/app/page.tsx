@@ -24,6 +24,7 @@ const HERO_SLIDES = [
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -82,10 +83,80 @@ export default function Home() {
         </div>
       )}
 
+      {/* MENU OVERLAY */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 bg-black/30 z-30"
+          onClick={() => setMenuOpen(false)}
+        />
+      )}
+
+      {/* DRAWER MENU - LEFT */}
+      <div
+        className={`fixed left-0 top-0 bottom-0 w-80 bg-panna border-r border-oro-vintage/20 z-40 transition-transform duration-300 overflow-y-auto ${
+          menuOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div className="p-8 space-y-12 pt-24">
+          {/* Location */}
+          <div>
+            <p className="text-xs uppercase tracking-widest text-verde-salvia/60 mb-4 font-light">Location</p>
+            <p className="text-sm font-light text-verde-salvia">Parco Nazionale</p>
+            <p className="text-sm font-light text-verde-salvia-dark">del Vesuvio</p>
+            <p className="text-xs text-verde-salvia/50 font-light mt-3">30km da Napoli</p>
+          </div>
+
+          {/* Spazi */}
+          <div className="space-y-4">
+            <p className="text-xs uppercase tracking-widest text-verde-salvia/60 font-light">Spazi</p>
+            <div className="space-y-3">
+              <div>
+                <p className="text-3xl font-light text-verde-salvia">375</p>
+                <p className="text-xs text-verde-salvia/60 font-light">m² coperto</p>
+              </div>
+              <div>
+                <p className="text-3xl font-light text-verde-salvia">400+</p>
+                <p className="text-xs text-verde-salvia/60 font-light">ospiti</p>
+              </div>
+              <div>
+                <p className="text-sm font-light text-verde-salvia">Mar — Ott</p>
+                <p className="text-xs text-verde-salvia/60 font-light">stagione</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Servizi */}
+          <div className="space-y-4">
+            <p className="text-xs uppercase tracking-widest text-verde-salvia/60 font-light">Servizi</p>
+            <div className="space-y-2 text-sm font-light text-verde-salvia-dark">
+              <p>🌳 Giardino privato</p>
+              <p>🍳 Cucina catering</p>
+              <p>📡 WiFi stabile</p>
+              <p>🎤 Audio & luci</p>
+            </div>
+          </div>
+
+          {/* Contatti */}
+          <div className="border-t border-oro-vintage/20 pt-8">
+            <p className="text-xs uppercase tracking-widest text-verde-salvia/60 mb-4 font-light">Contatti</p>
+            <p className="text-sm font-light text-verde-salvia-dark">+39 373 790 2538</p>
+            <p className="text-xs text-verde-salvia/60 font-light mt-2">info@essenzedinaturaevents.it</p>
+          </div>
+        </div>
+      </div>
+
       {/* HEADER */}
       <header className="sticky top-0 z-50 bg-panna border-b border-panna-dark/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="text-verde-salvia hover:text-oro-vintage transition text-2xl font-light"
+          >
+            {menuOpen ? '✕' : '☰'}
+          </button>
+
           <h1 className="text-sm sm:text-base font-light tracking-widest text-verde-salvia">ESSENZE DI NATURA</h1>
+
           <nav className="hidden md:flex gap-12 text-xs sm:text-sm">
             <a href="#gallery" className="text-verde-salvia hover:text-oro-vintage transition font-light">Spazi</a>
             <a href="#pricing" className="text-verde-salvia hover:text-oro-vintage transition font-light">Prezzi</a>
