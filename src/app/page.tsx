@@ -740,64 +740,45 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PARTNER SECTION - SCROLLING LOGO CAROUSEL (MASSERIAMOROSITA STYLE) */}
-      <section className="py-24 px-6 lg:px-8 bg-white overflow-hidden">
+      {/* PARTNER SECTION - SCROLLING CARDS GRID */}
+      <section className="py-24 px-6 lg:px-8 bg-white">
         <style>{`
-          @keyframes scroll-logos {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+          @keyframes slideRight {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
           }
-          .partner-carousel {
-            animation: scroll-logos 20s linear infinite;
-          }
-          .partner-carousel:hover {
-            animation-play-state: paused;
+          .partner-card {
+            animation: slideRight 0.6s ease-out forwards;
           }
         `}</style>
         <div className="max-w-7xl mx-auto">
-          {/* Scrolling Logo Carousel */}
-          <div className="overflow-hidden">
-            <div className="partner-carousel flex gap-12 lg:gap-20 items-center py-8">
-              {/* First set of logos */}
-              {[
-                { name: 'Terra e Sapori', logo: '/logos/terra-e-sapori.svg' },
-                { name: 'Flora Vesuviana', logo: '/logos/flora-vesuviana.svg' },
-                { name: 'Lacryma Christi Wine', logo: '/logos/lacryma-christi.svg' },
-                { name: 'Vesuvio Photography', logo: '/logos/vesuvio-photography.svg' },
-                { name: 'Sound & Light Prod.', logo: '/logos/sound-light.svg' },
-                { name: 'Dolci Tradizioni', logo: '/logos/dolci-tradizioni.svg' }
-              ].map((partner, i) => (
-                <div
-                  key={`first-${i}`}
-                  className="flex-shrink-0 h-20 w-20 lg:h-24 lg:w-24 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0 cursor-pointer"
-                  title={partner.name}
-                >
-                  <img src={partner.logo} alt={partner.name} className="w-full h-full object-contain" />
-                </div>
-              ))}
-
-              {/* Duplicate set for seamless loop */}
-              {[
-                { name: 'Terra e Sapori', logo: '/logos/terra-e-sapori.svg' },
-                { name: 'Flora Vesuviana', logo: '/logos/flora-vesuviana.svg' },
-                { name: 'Lacryma Christi Wine', logo: '/logos/lacryma-christi.svg' },
-                { name: 'Vesuvio Photography', logo: '/logos/vesuvio-photography.svg' },
-                { name: 'Sound & Light Prod.', logo: '/logos/sound-light.svg' },
-                { name: 'Dolci Tradizioni', logo: '/logos/dolci-tradizioni.svg' }
-              ].map((partner, i) => (
-                <div
-                  key={`second-${i}`}
-                  className="flex-shrink-0 h-20 w-20 lg:h-24 lg:w-24 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0 cursor-pointer"
-                  title={partner.name}
-                >
-                  <img src={partner.logo} alt={partner.name} className="w-full h-full object-contain" />
-                </div>
-              ))}
-            </div>
+          {/* Grid of Partner Cards - Scrolling Effect */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            {[
+              { name: 'Terra e Sapori', logo: '/logos/terra-e-sapori.svg', delay: 0 },
+              { name: 'Flora Vesuviana', logo: '/logos/flora-vesuviana.svg', delay: 100 },
+              { name: 'Lacryma Christi Wine', logo: '/logos/lacryma-christi.svg', delay: 200 },
+              { name: 'Vesuvio Photography', logo: '/logos/vesuvio-photography.svg', delay: 300 },
+              { name: 'Sound & Light Prod.', logo: '/logos/sound-light.svg', delay: 400 },
+              { name: 'Dolci Tradizioni', logo: '/logos/dolci-tradizioni.svg', delay: 500 }
+            ].map((partner, i) => (
+              <div
+                key={i}
+                className="partner-card aspect-square bg-white border border-gray-100 rounded-lg p-4 flex items-center justify-center opacity-70 hover:opacity-100 hover:border-gray-300 transition-all duration-300 cursor-pointer grayscale hover:grayscale-0"
+                style={{ animationDelay: `${partner.delay}ms` }}
+                title={partner.name}
+              >
+                <img src={partner.logo} alt={partner.name} className="w-3/4 h-3/4 object-contain" />
+              </div>
+            ))}
           </div>
 
-          {/* Hint */}
-          <p className="text-xs text-gray-500 text-center mt-6 font-light">Hover per fermare lo scorrimento</p>
+          {/* CTA */}
+          <div className="text-center mt-12">
+            <a href="#booking" className="inline-block border border-gray-300 text-gray-700 px-10 py-3 text-sm font-light hover:bg-gray-50 transition">
+              Contattaci per consigliamenti partner
+            </a>
+          </div>
         </div>
       </section>
 
