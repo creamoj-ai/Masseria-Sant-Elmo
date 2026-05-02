@@ -335,32 +335,51 @@ export default function Home() {
         </div>
       </section>
 
-      {/* GALLERY SECTION */}
-      <section id="virtual-tour" ref={gallerySection.ref} className="py-32 px-6 lg:px-8 bg-gray-50/40">
+      {/* GALLERY SECTION - MASONRY LAYOUT */}
+      <section id="virtual-tour" ref={gallerySection.ref} className="py-32 px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <p className={`text-xs uppercase tracking-[0.4em] text-gray-500 mb-8 font-light transition-all duration-700 ${gallerySection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>Gallery</p>
           <h2 className={`text-6xl font-light mb-16 leading-tight transition-all duration-700 delay-100 ${gallerySection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{fontFamily: 'var(--font-playfair)'}}>
             Scopri gli spazi
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Masonry Grid Layout */}
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
             {GALLERY_IMAGES.map((item, index) => (
               <div
                 key={index}
                 onClick={() => setSelectedImageIndex(index)}
-                className={`group relative h-64 bg-cover bg-center cursor-pointer overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-500 transform hover:scale-105 ${
+                className={`group relative cursor-pointer overflow-hidden break-inside-avoid transition-all duration-500 ${
                   gallerySection.isVisible
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-8'
+                    ? 'opacity-100'
+                    : 'opacity-0'
                 }`}
                 style={{
-                  backgroundImage: `url("${item.image}")`,
-                  transitionDelay: gallerySection.isVisible ? `${index * 100}ms` : '0ms',
+                  transitionDelay: gallerySection.isVisible ? `${index * 80}ms` : '0ms',
                 }}
               >
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-300"></div>
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  <span className="text-white text-3xl">🔍</span>
+                {/* Image */}
+                <div
+                  className="relative w-full h-auto bg-cover bg-center overflow-hidden"
+                  style={{
+                    backgroundImage: `url("${item.image}")`,
+                    aspectRatio: index % 2 === 0 ? '3/4' : '4/3'
+                  }}
+                >
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300"></div>
+
+                  {/* Caption - appears on hover */}
+                  <div className="absolute inset-0 flex flex-col items-end justify-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <p className="text-white text-sm font-light text-right leading-relaxed">
+                      {item.caption}
+                    </p>
+                  </div>
+
+                  {/* Zoom Icon */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <span className="text-white text-4xl">+</span>
+                  </div>
                 </div>
               </div>
             ))}
