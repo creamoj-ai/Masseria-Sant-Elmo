@@ -24,12 +24,31 @@ const HERO_SLIDES = [
 ];
 
 const GALLERY_IMAGES = [
-  { image: '/images/masseria-main.jpg', caption: 'Facciata principale - 375m² coperto' },
-  { image: '/images/masseria-facade.jpg', caption: 'Architettura elegante - Vista laterale' },
-  { image: '/images/masseria-doors.jpg', caption: 'Dettagli artigianali - Porte in legno' },
-  { image: '/images/masseria-vesuvio-dome.jpg', caption: 'Cupola geodetica 14x20m - Vista panoramica Vesuvio' },
-  { image: '/images/masseria-vesuvio.jpg', caption: 'Campi di lavanda - Atmosfera autentica e natura' },
-  { image: '/images/masseria-details.jpg', caption: 'Dettagli costruzione - Pietra naturale' }
+  {
+    image: '/images/masseria-main.jpg',
+    caption: 'Benvenuti in Masseria Sant\'Elmo\nUna location esclusiva, un ambiente elegante ma familiare, creata per chi cerca un\'atmosfera tranquilla tra natura, buon cibo, design e bellezza.',
+    size: 'large'
+  },
+  {
+    image: '/images/masseria-vesuvio-dome.jpg',
+    caption: 'Cupola Geodetica Panoramica\n14x20m di spazio esclusivo con vista mozzafiato sul Vesuvio. Un\'esperienza unica nel cuore del parco nazionale.',
+    size: 'medium'
+  },
+  {
+    image: '/images/masseria-vesuvio.jpg',
+    caption: 'Campi di Lavanda\nImmersi nella natura incontaminata, circondati dal profumo della lavanda campana e dalla magia del paesaggio.',
+    size: 'medium'
+  },
+  {
+    image: '/images/masseria-facade.jpg',
+    caption: 'Architettura & Design\nOgni dettaglio è stato curato con passione. Spazi eleganti che raccontano storie di tradizione e modernità.',
+    size: 'medium'
+  },
+  {
+    image: '/images/masseria-doors.jpg',
+    caption: 'Dettagli Artigianali\nI dettagli in legno, la pietra naturale, ogni elemento è stato scelto per creare un\'atmosfera autentica e accogliente.',
+    size: 'small'
+  }
 ];
 
 export default function Home() {
@@ -335,7 +354,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* GALLERY SECTION - MASONRY LAYOUT */}
+      {/* GALLERY SECTION - OPTIMIZED LAYOUT */}
       <section id="virtual-tour" ref={gallerySection.ref} className="py-32 px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <p className={`text-xs uppercase tracking-[0.4em] text-gray-500 mb-8 font-light transition-all duration-700 ${gallerySection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>Gallery</p>
@@ -343,42 +362,59 @@ export default function Home() {
             Scopri gli spazi
           </h2>
 
-          {/* Masonry Grid Layout */}
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-            {GALLERY_IMAGES.map((item, index) => (
+          {/* Optimized Grid Layout - 5 Images */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Large image - spans 2 rows on desktop */}
+            <div
+              key={0}
+              onClick={() => setSelectedImageIndex(0)}
+              className={`group relative cursor-pointer overflow-hidden lg:col-span-2 lg:row-span-2 transition-all duration-500 ${
+                gallerySection.isVisible ? 'opacity-100' : 'opacity-0'
+              }`}
+              style={{
+                transitionDelay: gallerySection.isVisible ? '0ms' : '0ms',
+              }}
+            >
               <div
-                key={index}
-                onClick={() => setSelectedImageIndex(index)}
-                className={`group relative cursor-pointer overflow-hidden break-inside-avoid transition-all duration-500 ${
-                  gallerySection.isVisible
-                    ? 'opacity-100'
-                    : 'opacity-0'
+                className="relative w-full h-64 lg:h-full bg-cover bg-center overflow-hidden"
+                style={{ backgroundImage: `url("${GALLERY_IMAGES[0].image}")` }}
+              >
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300"></div>
+                <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <p className="text-white text-sm font-light leading-relaxed whitespace-pre-wrap">
+                    {GALLERY_IMAGES[0].caption}
+                  </p>
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <span className="text-white text-4xl">+</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Medium/Small images - right side */}
+            {GALLERY_IMAGES.slice(1).map((item, index) => (
+              <div
+                key={index + 1}
+                onClick={() => setSelectedImageIndex(index + 1)}
+                className={`group relative cursor-pointer overflow-hidden transition-all duration-500 ${
+                  gallerySection.isVisible ? 'opacity-100' : 'opacity-0'
                 }`}
                 style={{
-                  transitionDelay: gallerySection.isVisible ? `${index * 80}ms` : '0ms',
+                  transitionDelay: gallerySection.isVisible ? `${(index + 1) * 100}ms` : '0ms',
                 }}
               >
-                {/* Image */}
                 <div
-                  className="relative w-full h-auto bg-cover bg-center overflow-hidden"
-                  style={{
-                    backgroundImage: `url("${item.image}")`,
-                    aspectRatio: index % 2 === 0 ? '3/4' : '4/3'
-                  }}
+                  className="relative w-full h-48 bg-cover bg-center overflow-hidden"
+                  style={{ backgroundImage: `url("${item.image}")` }}
                 >
-                  {/* Overlay */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300"></div>
-
-                  {/* Caption - appears on hover */}
-                  <div className="absolute inset-0 flex flex-col items-end justify-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                    <p className="text-white text-sm font-light text-right leading-relaxed">
+                  <div className="absolute inset-0 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <p className="text-white text-xs font-light leading-tight whitespace-pre-wrap">
                       {item.caption}
                     </p>
                   </div>
-
-                  {/* Zoom Icon */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                    <span className="text-white text-4xl">+</span>
+                    <span className="text-white text-3xl">+</span>
                   </div>
                 </div>
               </div>
