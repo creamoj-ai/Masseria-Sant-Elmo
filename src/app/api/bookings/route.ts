@@ -77,16 +77,41 @@ export async function POST(req: NextRequest) {
     // 4. TODO: Send confirmation email
     console.log('Email to be sent:', email, first_name);
 
+    // Generate user-friendly booking ID
+    const userFriendlyId = `MASSERIA-${String(bookingData.id).padStart(6, '0')}`;
+
     return NextResponse.json({
       success: true,
+      bookingId: userFriendlyId,
       booking_id: bookingData.id,
       client_id: clientData.id,
       message: 'Prenotazione creata con successo!',
     });
   } catch (error) {
     console.error('Booking error:', error);
+
+    // Determine specific error message based on error type
+    let errorMessage = 'Errore durante la creazione della prenotazione.';
+
+    if (error instanceof Error) {
+      if (error.message.includes('clients_email_key')) {
+        errorMessage = 'Questa email è già registrata. Accedi o contattaci.';
+      } else if (error.message.includes('clients')) {
+        errorMessage = 'Errore nei dati cliente. Verifica i campi.';
+      } else if (error.message.includes('events')) {
+        errorMessage = 'Errore nella creazione dell\'evento.';
+      } else if (error.message.includes('bookings')) {
+        errorMessage = 'Errore nella creazione della prenotazione.';
+      } else if (error.message.includes('PGRST')) {
+        errorMessage = 'Errore di connessione al database.';
+      }
+    }
+
     return NextResponse.json(
-      { error: 'Errore nella creazione della prenotazione' },
+      {
+        error: errorMessage,
+        code: 'BOOKING_ERROR'
+      },
       { status: 500 }
     );
   }
