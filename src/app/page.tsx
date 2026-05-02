@@ -437,38 +437,47 @@ export default function Home() {
         </div>
       )}
 
-      {/* LUNA VIRTUAL ASSISTANT SECTION */}
-      <section className="py-32 px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50/40">
-        <div className="max-w-2xl mx-auto">
-          {/* Header */}
+      {/* PARTNER CAROUSEL SECTION */}
+      <section className="py-24 px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-light mb-6 leading-tight" style={{fontFamily: 'var(--font-playfair)'}}>
-              Chiedi a Luna
+            <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-4 font-light">Partner di Fiducia</p>
+            <h2 className="text-4xl md:text-5xl font-light mb-4 leading-tight" style={{fontFamily: 'var(--font-playfair)'}}>
+              Fornitori eccellenti per il tuo evento
             </h2>
-            <p className="text-lg font-light text-gray-700">
-              Domande sul tuo evento? Luna è qui per te.
-            </p>
           </div>
 
-          {/* Video Container - Vertical Format */}
-          <div className="flex justify-center mb-12">
-            <div className="w-full max-w-sm bg-black rounded-lg overflow-hidden shadow-2xl" style={{ aspectRatio: '9 / 16' }}>
-              <video
-                src="https://resource2.heygen.ai/video/transcode/cf1f054526f94714ac9d87b4a7c1a651/vFhpKkRD7AG8Gfc8En1fdDkYwcxUOxv8v/720x1280_nocap.mp4"
-                controls
-                className="w-full h-full object-cover"
-                poster="/images/masseria-main.jpg"
-              />
-            </div>
+          {/* Partner Grid - 6 Partner */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+            {[
+              { name: 'Terra e Sapori', category: 'Catering', icon: '🍽️' },
+              { name: 'Flora Vesuviana', category: 'Fiorista', icon: '🌸' },
+              { name: 'Lacryma Christi Wine', category: 'Vini Locali', icon: '🍷' },
+              { name: 'Vesuvio Photography', category: 'Fotografia', icon: '📷' },
+              { name: 'Sound & Light Prod.', category: 'DJ & Intrattenimento', icon: '🎵' },
+              { name: 'Dolci Tradizioni', category: 'Pasticceria', icon: '🎂' }
+            ].map((partner, i) => (
+              <div
+                key={i}
+                className="flex flex-col items-center text-center p-6 rounded-lg border border-gray-100 hover:border-gray-300 hover:shadow-md transition-all duration-300 group cursor-pointer"
+              >
+                <div className="text-5xl mb-4 transition-transform duration-300 group-hover:scale-110">
+                  {partner.icon}
+                </div>
+                <h3 className="font-light text-gray-900 mb-2 text-sm">
+                  {partner.name}
+                </h3>
+                <p className="text-xs text-gray-500 font-light">
+                  {partner.category}
+                </p>
+              </div>
+            ))}
           </div>
 
           {/* CTA */}
-          <div className="text-center">
-            <a
-              href="#booking"
-              className="inline-block bg-black text-white px-12 py-4 text-sm font-light hover:bg-gray-900 hover:shadow-lg transition"
-            >
-              💬 Chiedi a Luna
+          <div className="text-center mt-16">
+            <a href="#booking" className="inline-block border border-gray-300 text-gray-700 px-10 py-3 text-sm font-light hover:bg-gray-50 transition">
+              Contattaci per consigliamenti partner
             </a>
           </div>
         </div>
@@ -553,7 +562,7 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 title: 'Matrimoni & Cerimonie',
@@ -572,6 +581,24 @@ export default function Home() {
                 price: '€50/pp',
                 desc: 'Viaggio sensoriale tra lavanda e cucina locale',
                 icon: '🌾'
+              },
+              {
+                title: 'Wellness & Yoga',
+                price: '€40/pp',
+                desc: 'Ritiri rigeneranti nel cuore della natura con lezioni di yoga',
+                icon: '🧘'
+              },
+              {
+                title: 'Photoshoots & Content',
+                price: '€800+',
+                desc: 'Location perfetta per shooting fotografici e creazione contenuti',
+                icon: '📸'
+              },
+              {
+                title: 'Team Building',
+                price: '€2.500+',
+                desc: 'Esperienze coinvolgenti per coesione e motivazione del team',
+                icon: '👥'
               }
             ].map((service, i) => (
               <div
@@ -619,6 +646,43 @@ export default function Home() {
           <div className="mt-16 text-center">
             <a href="#booking" className="inline-block border border-black text-black px-10 py-3 text-sm font-light hover:bg-black hover:text-white transition">
               Visualizza Preventivo
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* LUNA VIRTUAL ASSISTANT SECTION */}
+      <section className="py-32 px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50/40">
+        <div className="max-w-2xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-light mb-6 leading-tight" style={{fontFamily: 'var(--font-playfair)'}}>
+              Chiedi a Luna
+            </h2>
+            <p className="text-lg font-light text-gray-700">
+              Domande sul tuo evento? Luna è qui per te.
+            </p>
+          </div>
+
+          {/* Video Container - Vertical Format */}
+          <div className="flex justify-center mb-12">
+            <div className="w-full max-w-sm bg-black rounded-lg overflow-hidden shadow-2xl" style={{ aspectRatio: '9 / 16' }}>
+              <video
+                src="https://resource2.heygen.ai/video/transcode/cf1f054526f94714ac9d87b4a7c1a651/vFhpKkRD7AG8Gfc8En1fdDkYwcxUOxv8v/720x1280_nocap.mp4"
+                controls
+                className="w-full h-full object-cover"
+                poster="/images/masseria-main.jpg"
+              />
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="text-center">
+            <a
+              href="#booking"
+              className="inline-block bg-black text-white px-12 py-4 text-sm font-light hover:bg-gray-900 hover:shadow-lg transition"
+            >
+              💬 Chiedi a Luna
             </a>
           </div>
         </div>
