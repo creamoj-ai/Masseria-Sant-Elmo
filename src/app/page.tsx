@@ -744,22 +744,22 @@ export default function Home() {
       <section className="py-24 px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           {/* Horizontal Logo Carousel */}
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto pb-4">
             <div className="flex gap-12 lg:gap-20 justify-center items-center min-w-min py-8">
               {[
-                { name: 'Terra e Sapori', logo: '🍽️' },
-                { name: 'Flora Vesuviana', logo: '🌸' },
-                { name: 'Lacryma Christi Wine', logo: '🍷' },
-                { name: 'Vesuvio Photography', logo: '📷' },
-                { name: 'Sound & Light Prod.', logo: '🎵' },
-                { name: 'Dolci Tradizioni', logo: '🎂' }
+                { name: 'Terra e Sapori', logo: '/logos/terra-e-sapori.svg' },
+                { name: 'Flora Vesuviana', logo: '/logos/flora-vesuviana.svg' },
+                { name: 'Lacryma Christi Wine', logo: '/logos/lacryma-christi.svg' },
+                { name: 'Vesuvio Photography', logo: '/logos/vesuvio-photography.svg' },
+                { name: 'Sound & Light Prod.', logo: '/logos/sound-light.svg' },
+                { name: 'Dolci Tradizioni', logo: '/logos/dolci-tradizioni.svg' }
               ].map((partner, i) => (
                 <div
                   key={i}
-                  className="flex-shrink-0 h-20 w-20 lg:h-24 lg:w-24 flex items-center justify-center text-5xl lg:text-6xl opacity-70 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
+                  className="flex-shrink-0 h-20 w-20 lg:h-24 lg:w-24 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
                   title={partner.name}
                 >
-                  {partner.logo}
+                  <img src={partner.logo} alt={partner.name} className="w-full h-full object-contain" />
                 </div>
               ))}
             </div>

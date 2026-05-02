@@ -1,0 +1,19 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#666" stroke-width="2"/>
+  <g transform="translate(100, 100)">
+    <!-- Stem -->
+    <line x1="0" y1="30" x2="0" y2="-20" stroke="#666" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Petals -->
+    <ellipse cx="0" cy="-25" rx="8" ry="12" fill="none" stroke="#666" stroke-width="2.5"/>
+    <ellipse cx="15" cy="-18" rx="8" ry="12" fill="none" stroke="#666" stroke-width="2.5" transform="rotate(72 0 0)"/>
+    <ellipse cx="15" cy="-18" rx="8" ry="12" fill="none" stroke="#666" stroke-width="2.5" transform="rotate(144 0 0)"/>
+    <ellipse cx="15" cy="-18" rx="8" ry="12" fill="none" stroke="#666" stroke-width="2.5" transform="rotate(216 0 0)"/>
+    <ellipse cx="15" cy="-18" rx="8" ry="12" fill="none" stroke="#666" stroke-width="2.5" transform="rotate(288 0 0)"/>
+    <!-- Center -->
+    <circle cx="0" cy="-20" r="5" fill="#666"/>
+    <!-- Leaf left -->
+    <path d="M -8 0 Q -18 -10 -15 -25" fill="none" stroke="#666" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Leaf right -->
+    <path d="M 8 0 Q 18 -10 15 -25" fill="none" stroke="#666" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+</svg>
