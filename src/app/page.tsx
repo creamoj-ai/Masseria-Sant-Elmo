@@ -193,7 +193,9 @@ export default function Home() {
                 style={{
                   backgroundImage: `url("${image}")`,
                   transitionDelay: gallerySection.isVisible ? `${index * 100}ms` : '0ms',
+                  backgroundAttachment: index > 2 ? 'initial' : 'initial',
                 }}
+                loading="lazy"
               >
                 <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-300"></div>
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
@@ -246,6 +248,7 @@ export default function Home() {
             </div>
             <div className="h-96 bg-cover bg-center rounded-lg shadow-lg"
               style={{backgroundImage: 'url("/images/masseria-vesuvio.jpg")'}}
+              loading="lazy"
             ></div>
           </div>
 
@@ -370,6 +373,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-20 items-center">
             <div className="h-96 bg-cover bg-center order-2 md:order-1 rounded-lg shadow-lg"
               style={{backgroundImage: 'url("/images/masseria-facade.jpg")'}}
+              loading="lazy"
             ></div>
             <div className="order-1 md:order-2">
               <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-8 font-light">Esperienza</p>
