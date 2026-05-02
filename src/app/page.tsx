@@ -431,7 +431,7 @@ export default function Home() {
 
       {/* LUNA VIRTUAL ASSISTANT SECTION */}
       <section className="py-32 px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50/40">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-light mb-6 leading-tight" style={{fontFamily: 'var(--font-playfair)'}}>
@@ -442,9 +442,9 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Video Container */}
-          <div className="relative w-full bg-black rounded-lg overflow-hidden shadow-2xl mb-12">
-            <div className="aspect-video">
+          {/* Video Container - Vertical Format */}
+          <div className="flex justify-center mb-12">
+            <div className="w-full max-w-sm bg-black rounded-lg overflow-hidden shadow-2xl" style={{ aspectRatio: '9 / 16' }}>
               <video
                 src="https://resource2.heygen.ai/video/transcode/cf1f054526f94714ac9d87b4a7c1a651/vFhpKkRD7AG8Gfc8En1fdDkYwcxUOxv8v/720x1280_nocap.mp4"
                 controls
