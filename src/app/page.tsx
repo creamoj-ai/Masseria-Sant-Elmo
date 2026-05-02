@@ -199,7 +199,7 @@ export default function Home() {
       {/* MINIMALIST HEADER */}
       <header className="sticky top-0 z-50 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 flex justify-between items-center">
-          <h1 className="text-xl font-light tracking-widest">ESSENZE DI NATURA</h1>
+          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="text-xl font-light tracking-widest hover:opacity-70 transition cursor-pointer">ESSENZE DI NATURA</a>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-12 text-sm items-center">
