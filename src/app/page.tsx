@@ -266,7 +266,7 @@ export default function Home() {
                   mobileMenu.classList.toggle('hidden');
                 }
               }}
-              className="text-2xl hover:text-gray-600 transition"
+              className="text-2xl text-black hover:text-gray-600 transition cursor-pointer"
               aria-label="Toggle menu"
             >
               ☰
@@ -313,15 +313,6 @@ export default function Home() {
         {/* Content Overlay */}
         <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
           <div className="text-center text-white max-w-3xl mx-auto px-6 flex-1 flex flex-col justify-center">
-            {/* Countdown Urgency */}
-            <div className={`mb-12 transition-all duration-500 ${slideTextVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-              <div className="bg-red-600/80 backdrop-blur-sm inline-block px-6 py-3 rounded-full">
-                <p className="text-xs font-light tracking-wider">
-                  ⏰ OFFERTA LIMITATA: {timeLeft.days}g {timeLeft.hours}h {timeLeft.minutes}m rimanenti
-                </p>
-              </div>
-            </div>
-
             {/* Title */}
             <h1 className={`text-6xl md:text-8xl font-light mb-6 leading-tight tracking-tight transition-all duration-700 ${slideTextVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{fontFamily: 'var(--font-playfair)'}}>
               {HERO_SLIDES[currentSlide].title}
