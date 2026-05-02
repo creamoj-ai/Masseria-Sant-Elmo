@@ -260,14 +260,9 @@ export default function Home() {
               <a href="#booking" className="inline-block bg-white text-black px-12 py-4 text-sm font-light hover:bg-gray-200 hover:shadow-lg transition">
                 ✓ Prenota la tua data
               </a>
-              <button
-                onClick={() => {
-                  document.getElementById('virtual-tour')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="inline-block bg-white/20 border border-white text-white px-12 py-4 text-sm font-light hover:bg-white/30 transition"
-              >
+              <a href="#virtual-tour" className="inline-block bg-white/20 border border-white text-white px-12 py-4 text-sm font-light hover:bg-white/30 transition">
                 🎬 Guarda il tour virtuale
-              </button>
+              </a>
             </div>
 
             {/* Social Proof */}
