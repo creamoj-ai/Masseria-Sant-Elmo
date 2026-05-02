@@ -463,7 +463,7 @@ export default function AdminDashboard() {
                   <p className="text-sm uppercase tracking-[0.2em] text-gray-600">Pagamenti Completati</p>
                 </div>
               </div>
-              <p className="text-gray-600">La gestione dei pagamenti sarà integrata con Stripe</p>
+              <p className="text-gray-600">Sistema di gestione pagamenti in configurazione</p>
             </div>
           )}
 
@@ -682,11 +682,11 @@ export default function AdminDashboard() {
                   <h3 className="text-xl font-light mb-4">Integrazioni</h3>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center p-4 border border-gray-200 rounded">
-                      <span className="font-light">Stripe</span>
+                      <span className="font-light">Supabase</span>
                       <span className="text-sm text-green-600">✓ Connesso</span>
                     </div>
                     <div className="flex justify-between items-center p-4 border border-gray-200 rounded">
-                      <span className="font-light">Supabase</span>
+                      <span className="font-light">Twilio SMS</span>
                       <span className="text-sm text-green-600">✓ Connesso</span>
                     </div>
                     <div className="flex justify-between items-center p-4 border border-gray-200 rounded">
