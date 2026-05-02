@@ -23,9 +23,18 @@ const HERO_SLIDES = [
   }
 ];
 
+const GALLERY_IMAGES = [
+  { image: '/images/masseria-main.jpg', caption: 'Facciata principale - 375m² coperto' },
+  { image: '/images/masseria-facade.jpg', caption: 'Architettura elegante - Vista laterale' },
+  { image: '/images/masseria-doors.jpg', caption: 'Dettagli artigianali - Porte in legno' },
+  { image: '/images/masseria-vesuvio-dome.jpg', caption: 'Cupola geodetica 14x20m - Vista panoramica Vesuvio' },
+  { image: '/images/masseria-vesuvio.jpg', caption: 'Campi di lavanda - Atmosfera autentica e natura' },
+  { image: '/images/masseria-details.jpg', caption: 'Dettagli costruzione - Pietra naturale' }
+];
+
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -58,6 +67,24 @@ export default function Home() {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
+
+  // Keyboard navigation for lightbox
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedImageIndex === null) return;
+
+      if (e.key === 'Escape') {
+        setSelectedImageIndex(null);
+      } else if (e.key === 'ArrowLeft') {
+        setSelectedImageIndex((prev) => prev === null ? null : (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
+      } else if (e.key === 'ArrowRight') {
+        setSelectedImageIndex((prev) => prev === null ? null : (prev + 1) % GALLERY_IMAGES.length);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImageIndex]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -309,24 +336,17 @@ export default function Home() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              '/images/masseria-main.jpg', // Facciata principale
-              '/images/masseria-facade.jpg', // Vista architettura
-              '/images/masseria-doors.jpg', // Dettagli porte
-              '/images/masseria-vesuvio-dome.jpg', // Cupola geodetica
-              '/images/masseria-vesuvio.jpg', // Campo lavanda + Vesuvio
-              '/images/masseria-details.jpg', // Dettagli costruzione
-            ].map((image, index) => (
+            {GALLERY_IMAGES.map((item, index) => (
               <div
                 key={index}
-                onClick={() => setSelectedImage(image)}
+                onClick={() => setSelectedImageIndex(index)}
                 className={`group relative h-64 bg-cover bg-center cursor-pointer overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-500 transform hover:scale-105 ${
                   gallerySection.isVisible
                     ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-8'
                 }`}
                 style={{
-                  backgroundImage: `url("${image}")`,
+                  backgroundImage: `url("${item.image}")`,
                   transitionDelay: gallerySection.isVisible ? `${index * 100}ms` : '0ms',
                 }}
               >
@@ -340,24 +360,71 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Lightbox */}
-      {selectedImage && (
+      {/* Lightbox - Enhanced with Navigation */}
+      {selectedImageIndex !== null && (
         <div
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 animate-fade-in"
-          onClick={() => setSelectedImage(null)}
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedImageIndex(null)}
         >
-          <div className="relative max-w-4xl w-full h-auto" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={selectedImage}
-              alt="Full view"
-              className="w-full h-auto rounded-lg"
-            />
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 text-white text-4xl hover:opacity-70 transition"
-            >
-              ✕
-            </button>
+          <div className="relative w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+            {/* Image Container */}
+            <div className="relative bg-black rounded-lg overflow-hidden">
+              <img
+                src={GALLERY_IMAGES[selectedImageIndex].image}
+                alt={GALLERY_IMAGES[selectedImageIndex].caption}
+                className="w-full h-auto transition-opacity duration-300"
+              />
+
+              {/* Caption Below Image */}
+              <div className="bg-black/80 px-8 py-6 text-white text-center border-t border-white/10">
+                <p className="text-lg font-light tracking-wide">{GALLERY_IMAGES[selectedImageIndex].caption}</p>
+              </div>
+
+              {/* Counter */}
+              <div className="absolute top-6 right-6 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm font-light">
+                {selectedImageIndex + 1} / {GALLERY_IMAGES.length}
+              </div>
+
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedImageIndex(null)}
+                className="absolute top-6 left-6 text-white text-4xl hover:opacity-70 transition font-light"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Navigation Arrows */}
+            {GALLERY_IMAGES.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedImageIndex((prev) => (prev === null ? 0 : (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length));
+                  }}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 -translate-x-16 text-white text-4xl hover:opacity-70 transition font-light hover:scale-125 active:scale-100 z-10"
+                  aria-label="Previous image"
+                >
+                  ‹
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedImageIndex((prev) => (prev === null ? 0 : (prev + 1) % GALLERY_IMAGES.length));
+                  }}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 translate-x-16 text-white text-4xl hover:opacity-70 transition font-light hover:scale-125 active:scale-100 z-10"
+                  aria-label="Next image"
+                >
+                  ›
+                </button>
+              </>
+            )}
+
+            {/* Keyboard Hint */}
+            <div className="mt-6 text-center text-white/60 text-sm font-light">
+              <p>Usa frecce ← → o tastiera per navigare • ESC per chiudere</p>
+            </div>
           </div>
         </div>
       )}
