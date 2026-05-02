@@ -740,12 +740,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PARTNER SECTION - LOGO SHOWCASE (MASSERIAMOROSITA STYLE) */}
-      <section className="py-24 px-6 lg:px-8 bg-white">
+      {/* PARTNER SECTION - SCROLLING LOGO CAROUSEL (MASSERIAMOROSITA STYLE) */}
+      <section className="py-24 px-6 lg:px-8 bg-white overflow-hidden">
+        <style>{`
+          @keyframes scroll-logos {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .partner-carousel {
+            animation: scroll-logos 20s linear infinite;
+          }
+          .partner-carousel:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
         <div className="max-w-7xl mx-auto">
-          {/* Horizontal Logo Carousel */}
-          <div className="overflow-x-auto pb-4">
-            <div className="flex gap-12 lg:gap-20 justify-center items-center min-w-min py-8">
+          {/* Scrolling Logo Carousel */}
+          <div className="overflow-hidden">
+            <div className="partner-carousel flex gap-12 lg:gap-20 items-center py-8">
+              {/* First set of logos */}
               {[
                 { name: 'Terra e Sapori', logo: '/logos/terra-e-sapori.svg' },
                 { name: 'Flora Vesuviana', logo: '/logos/flora-vesuviana.svg' },
@@ -755,8 +768,26 @@ export default function Home() {
                 { name: 'Dolci Tradizioni', logo: '/logos/dolci-tradizioni.svg' }
               ].map((partner, i) => (
                 <div
-                  key={i}
-                  className="flex-shrink-0 h-20 w-20 lg:h-24 lg:w-24 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
+                  key={`first-${i}`}
+                  className="flex-shrink-0 h-20 w-20 lg:h-24 lg:w-24 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0 cursor-pointer"
+                  title={partner.name}
+                >
+                  <img src={partner.logo} alt={partner.name} className="w-full h-full object-contain" />
+                </div>
+              ))}
+
+              {/* Duplicate set for seamless loop */}
+              {[
+                { name: 'Terra e Sapori', logo: '/logos/terra-e-sapori.svg' },
+                { name: 'Flora Vesuviana', logo: '/logos/flora-vesuviana.svg' },
+                { name: 'Lacryma Christi Wine', logo: '/logos/lacryma-christi.svg' },
+                { name: 'Vesuvio Photography', logo: '/logos/vesuvio-photography.svg' },
+                { name: 'Sound & Light Prod.', logo: '/logos/sound-light.svg' },
+                { name: 'Dolci Tradizioni', logo: '/logos/dolci-tradizioni.svg' }
+              ].map((partner, i) => (
+                <div
+                  key={`second-${i}`}
+                  className="flex-shrink-0 h-20 w-20 lg:h-24 lg:w-24 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0 cursor-pointer"
                   title={partner.name}
                 >
                   <img src={partner.logo} alt={partner.name} className="w-full h-full object-contain" />
@@ -765,8 +796,8 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Hint for mobile */}
-          <p className="text-xs text-gray-500 text-center mt-4 md:hidden font-light">← Scorri i partner →</p>
+          {/* Hint */}
+          <p className="text-xs text-gray-500 text-center mt-6 font-light">Hover per fermare lo scorrimento</p>
         </div>
       </section>
 
