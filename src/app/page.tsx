@@ -35,8 +35,6 @@ const GALLERY_IMAGES = [
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
-  const [slideTextVisible, setSlideTextVisible] = useState(true);
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -62,48 +60,11 @@ export default function Home() {
   const testimonialsSection = useScrollAnimation();
   const bookingSection = useScrollAnimation();
 
-  // Auto-advance hero carousel with fade-in animation
+  // Auto-advance hero carousel
   useEffect(() => {
-    setSlideTextVisible(false);
-    const textTimer = setTimeout(() => setSlideTextVisible(true), 100);
-
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
     }, 5000);
-    return () => {
-      clearInterval(interval);
-      clearTimeout(textTimer);
-    };
-  }, []);
-
-  // Carousel slide change animation
-  useEffect(() => {
-    setSlideTextVisible(false);
-    const timer = setTimeout(() => setSlideTextVisible(true), 200);
-    return () => clearTimeout(timer);
-  }, [currentSlide]);
-
-  // Countdown urgency timer
-  useEffect(() => {
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 30);
-
-    const updateCountdown = () => {
-      const now = new Date();
-      const diff = targetDate.getTime() - now.getTime();
-
-      if (diff > 0) {
-        setTimeLeft({
-          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((diff % (1000 * 60)) / 1000)
-        });
-      }
-    };
-
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -310,45 +271,12 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Content Overlay */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-          <div className="text-center text-white max-w-3xl mx-auto px-6 flex-1 flex flex-col justify-center">
-            {/* Title */}
-            <h1 className={`text-6xl md:text-8xl font-light mb-6 leading-tight tracking-tight transition-all duration-700 ${slideTextVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{fontFamily: 'var(--font-playfair)'}}>
-              {HERO_SLIDES[currentSlide].title}
-            </h1>
-
-            {/* Divider */}
-            <div className={`h-1 w-16 bg-white/80 mx-auto mb-8 transition-all duration-700 delay-100 ${slideTextVisible ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'}`}></div>
-
-            {/* Subtitle */}
-            <p className={`text-lg md:text-xl font-light mb-12 tracking-wide transition-all duration-700 delay-200 ${slideTextVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-              {HERO_SLIDES[currentSlide].subtitle}
-            </p>
-
-            {/* CTAs */}
-            <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-700 delay-300 ${slideTextVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-              <a href="#booking" className="inline-block bg-white text-black px-12 py-4 text-sm font-light hover:bg-gray-200 hover:shadow-lg transition">
-                ✓ Prenota la tua data
-              </a>
-              <a href="#virtual-tour" className="inline-block bg-white/20 border border-white text-white px-12 py-4 text-sm font-light hover:bg-white/30 transition">
-                🎬 Guarda il tour virtuale
-              </a>
-            </div>
-
-            {/* Social Proof */}
-            <p className={`text-white/80 text-sm mt-8 font-light transition-all duration-700 delay-400 ${slideTextVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-              ✓ Oltre 120 eventi organizzati nel 2024 | ⭐ 4.9/5 valutazione
-            </p>
-          </div>
-
-          {/* Scroll Indicator */}
-          <div className="absolute bottom-8 z-20 flex flex-col items-center animate-bounce">
-            <span className="text-white/60 text-sm mb-2">Scorri per scoprire</span>
-            <svg className="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-          </div>
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center animate-bounce">
+          <span className="text-white/60 text-sm mb-2">Scorri per scoprire</span>
+          <svg className="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
         </div>
 
         {/* Carousel Indicators */}
@@ -377,6 +305,34 @@ export default function Home() {
         >
           ›
         </button>
+      </section>
+
+      {/* WELCOME SECTION - BELOW CAROUSEL */}
+      <section className="py-24 px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl md:text-6xl font-light mb-8 leading-tight" style={{fontFamily: 'var(--font-playfair)'}}>
+            {HERO_SLIDES[currentSlide].title}
+          </h1>
+          <div className="h-1 w-16 bg-gray-300 mx-auto mb-8"></div>
+          <p className="text-lg md:text-xl font-light text-gray-700 mb-12 tracking-wide">
+            {HERO_SLIDES[currentSlide].subtitle}
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#booking" className="inline-block bg-black text-white px-12 py-4 text-sm font-light hover:bg-gray-900 hover:shadow-lg transition">
+              ✓ Prenota la tua data
+            </a>
+            <a href="#virtual-tour" className="inline-block bg-gray-100 text-black px-12 py-4 text-sm font-light hover:bg-gray-200 transition">
+              🎬 Guarda il tour virtuale
+            </a>
+          </div>
+
+          {/* Social Proof */}
+          <p className="text-gray-600 text-sm mt-12 font-light">
+            ✓ Oltre 120 eventi organizzati nel 2024 | ⭐ 4.9/5 valutazione
+          </p>
+        </div>
       </section>
 
       {/* GALLERY SECTION */}
