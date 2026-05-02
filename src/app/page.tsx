@@ -173,12 +173,53 @@ export default function Home() {
       <header className="sticky top-0 z-50 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 flex justify-between items-center">
           <h1 className="text-xl font-light tracking-widest">ESSENZE DI NATURA</h1>
-          <nav className="hidden md:flex gap-12 text-sm">
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex gap-12 text-sm items-center">
             <a href="#location" className="hover:text-gray-600 transition">Location</a>
             <a href="#servizi" className="hover:text-gray-600 transition">Servizi</a>
             <a href="#booking" className="hover:text-gray-600 transition">Prenota</a>
+            {/* Desktop Quick Contact */}
+            <a href="tel:+393737902538" className="text-gray-600 hover:text-black transition text-lg" title="Chiama">
+              📞
+            </a>
+            <a href="https://wa.me/393737902538" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-black transition text-lg" title="WhatsApp">
+              💬
+            </a>
           </nav>
-          <button className="md:hidden">☰</button>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center gap-4">
+            <a href="tel:+393737902538" className="text-gray-600 hover:text-black transition text-lg">
+              📞
+            </a>
+            <button
+              onClick={() => {
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (mobileMenu) {
+                  mobileMenu.classList.toggle('hidden');
+                }
+              }}
+              className="text-2xl hover:text-gray-600 transition"
+              aria-label="Toggle menu"
+            >
+              ☰
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Menu */}
+        <div id="mobile-menu" className="hidden md:hidden border-t border-gray-100 bg-white">
+          <nav className="max-w-7xl mx-auto px-6 py-4 space-y-3 flex flex-col">
+            <a href="#location" className="text-sm hover:text-gray-600 transition py-2">Location</a>
+            <a href="#servizi" className="text-sm hover:text-gray-600 transition py-2">Servizi</a>
+            <a href="#booking" className="text-sm hover:text-gray-600 transition py-2">Prenota</a>
+            <div className="border-t border-gray-100 pt-3 flex gap-3">
+              <a href="https://wa.me/393737902538?text=Ciao!%20Sono%20interessato%20a%20una%20prenotazione." target="_blank" rel="noopener noreferrer" className="flex-1 text-center text-sm bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
+                💬 WhatsApp
+              </a>
+            </div>
+          </nav>
         </div>
       </header>
 
@@ -213,9 +254,26 @@ export default function Home() {
             <p className="text-lg md:text-xl font-light mb-12 tracking-wide">
               {HERO_SLIDES[currentSlide].subtitle}
             </p>
-            <a href="#booking" className="inline-block bg-white text-black px-12 py-4 text-sm font-light hover:bg-gray-200 transition">
-              Scopri di più
-            </a>
+
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="#booking" className="inline-block bg-white text-black px-12 py-4 text-sm font-light hover:bg-gray-200 hover:shadow-lg transition">
+                ✓ Prenota la tua data
+              </a>
+              <button
+                onClick={() => {
+                  document.getElementById('virtual-tour')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="inline-block bg-white/20 border border-white text-white px-12 py-4 text-sm font-light hover:bg-white/30 transition"
+              >
+                🎬 Guarda il tour virtuale
+              </button>
+            </div>
+
+            {/* Social Proof */}
+            <p className="text-white/80 text-sm mt-8 font-light">
+              ✓ Oltre 120 eventi organizzati nel 2024 | ⭐ 4.9/5 valutazione
+            </p>
           </div>
         </div>
 
@@ -248,7 +306,7 @@ export default function Home() {
       </section>
 
       {/* GALLERY SECTION */}
-      <section ref={gallerySection.ref} className="py-32 px-6 lg:px-8 bg-gray-50/40">
+      <section id="virtual-tour" ref={gallerySection.ref} className="py-32 px-6 lg:px-8 bg-gray-50/40">
         <div className="max-w-7xl mx-auto">
           <p className={`text-xs uppercase tracking-[0.4em] text-gray-500 mb-8 font-light transition-all duration-700 ${gallerySection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>Gallery</p>
           <h2 className={`text-6xl font-light mb-16 leading-tight transition-all duration-700 delay-100 ${gallerySection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{fontFamily: 'var(--font-playfair)'}}>
@@ -435,13 +493,26 @@ export default function Home() {
                   {service.desc}
                 </p>
 
-                <div className="pt-4 border-t border-gray-100 group-hover:border-[#C9A876]/30 transition-colors duration-300">
+                <div className="pt-4 border-t border-gray-100 group-hover:border-[#C9A876]/30 transition-colors duration-300 flex justify-between items-center">
                   <p className="text-sm font-light text-[#C9A876] group-hover:text-[#B89966] transition-colors duration-300">
                     {service.price}
                   </p>
+                  <a
+                    href="#booking"
+                    className="text-xs font-light text-[#C9A876] hover:text-[#B89966] underline transition-colors"
+                  >
+                    Richiedi →
+                  </a>
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Secondary CTA */}
+          <div className="mt-16 text-center">
+            <a href="#booking" className="inline-block border border-black text-black px-10 py-3 text-sm font-light hover:bg-black hover:text-white transition">
+              Visualizza Preventivo
+            </a>
           </div>
         </div>
       </section>
