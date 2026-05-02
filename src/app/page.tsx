@@ -456,52 +456,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* PARTNER CAROUSEL SECTION */}
-      <section className="py-24 px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-4 font-light">Partner di Fiducia</p>
-            <h2 className="text-4xl md:text-5xl font-light mb-4 leading-tight" style={{fontFamily: 'var(--font-playfair)'}}>
-              Fornitori eccellenti per il tuo evento
-            </h2>
-          </div>
-
-          {/* Partner Grid - 6 Partner */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
-            {[
-              { name: 'Terra e Sapori', category: 'Catering', icon: '🍽️' },
-              { name: 'Flora Vesuviana', category: 'Fiorista', icon: '🌸' },
-              { name: 'Lacryma Christi Wine', category: 'Vini Locali', icon: '🍷' },
-              { name: 'Vesuvio Photography', category: 'Fotografia', icon: '📷' },
-              { name: 'Sound & Light Prod.', category: 'DJ & Intrattenimento', icon: '🎵' },
-              { name: 'Dolci Tradizioni', category: 'Pasticceria', icon: '🎂' }
-            ].map((partner, i) => (
-              <div
-                key={i}
-                className="flex flex-col items-center text-center p-6 rounded-lg border border-gray-100 hover:border-gray-300 hover:shadow-md transition-all duration-300 group cursor-pointer"
-              >
-                <div className="text-5xl mb-4 transition-transform duration-300 group-hover:scale-110">
-                  {partner.icon}
-                </div>
-                <h3 className="font-light text-gray-900 mb-2 text-sm">
-                  {partner.name}
-                </h3>
-                <p className="text-xs text-gray-500 font-light">
-                  {partner.category}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* CTA */}
-          <div className="text-center mt-16">
-            <a href="#booking" className="inline-block border border-gray-300 text-gray-700 px-10 py-3 text-sm font-light hover:bg-gray-50 transition">
-              Contattaci per consigliamenti partner
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* LOCATION SECTION */}
       <section id="location" ref={locationSection.ref} className={`py-32 px-6 lg:px-8 bg-white transition-all duration-700 ${locationSection.isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="max-w-5xl mx-auto">
@@ -783,6 +737,63 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* PARTNER CAROUSEL SECTION - HORIZONTAL SCROLL WITH B&W IMAGES */}
+      <section className="py-32 px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="mb-16">
+            <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-4 font-light">Partner di Fiducia</p>
+            <h2 className="text-6xl font-light leading-tight" style={{fontFamily: 'var(--font-playfair)'}}>
+              Fornitori eccellenti per il tuo evento
+            </h2>
+          </div>
+
+          {/* Horizontal Carousel with Overflow */}
+          <div className="overflow-x-auto pb-4 scrollbar-hide">
+            <div className="flex gap-6 min-w-min">
+              {[
+                { name: 'Terra e Sapori', category: 'Catering', image: '/images/masseria-main.jpg' },
+                { name: 'Flora Vesuviana', category: 'Fiorista', image: '/images/masseria-facade.jpg' },
+                { name: 'Lacryma Christi Wine', category: 'Vini Locali', image: '/images/masseria-vesuvio.jpg' },
+                { name: 'Vesuvio Photography', category: 'Fotografia', image: '/images/masseria-vesuvio-dome.jpg' },
+                { name: 'Sound & Light Prod.', category: 'DJ & Intrattenimento', image: '/images/masseria-doors.jpg' },
+                { name: 'Dolci Tradizioni', category: 'Pasticceria', image: '/images/masseria-details.jpg' }
+              ].map((partner, i) => (
+                <div
+                  key={i}
+                  className="group relative flex-shrink-0 w-72 h-96 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
+                >
+                  {/* B&W Blurred Background Image */}
+                  <div
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                    style={{
+                      backgroundImage: `url("${partner.image}")`,
+                      filter: 'grayscale(100%) blur(8px)',
+                    }}
+                  />
+
+                  {/* Dark Overlay */}
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-300"></div>
+
+                  {/* Content - Bottom Positioned */}
+                  <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
+                    <h3 className="text-xl font-light mb-2 group-hover:text-[#C9A876] transition-colors">
+                      {partner.name}
+                    </h3>
+                    <p className="text-sm font-light text-white/80">
+                      {partner.category}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Hint for scrolling on mobile */}
+          <p className="text-xs text-gray-500 mt-6 font-light text-center md:hidden">← Scorri lateralmente →</p>
         </div>
       </section>
 
