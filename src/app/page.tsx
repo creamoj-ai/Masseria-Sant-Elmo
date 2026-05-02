@@ -429,6 +429,43 @@ export default function Home() {
         </div>
       )}
 
+      {/* LUNA VIRTUAL ASSISTANT SECTION */}
+      <section className="py-32 px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50/40">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-light mb-6 leading-tight" style={{fontFamily: 'var(--font-playfair)'}}>
+              Chiedi a Luna
+            </h2>
+            <p className="text-lg font-light text-gray-700">
+              Domande sul tuo evento? Luna è qui per te.
+            </p>
+          </div>
+
+          {/* Video Container */}
+          <div className="relative w-full bg-black rounded-lg overflow-hidden shadow-2xl mb-12">
+            <div className="aspect-video">
+              <video
+                src="https://resource2.heygen.ai/video/transcode/cf1f054526f94714ac9d87b4a7c1a651/vFhpKkRD7AG8Gfc8En1fdDkYwcxUOxv8v/720x1280_nocap.mp4"
+                controls
+                className="w-full h-full object-cover"
+                poster="/images/masseria-main.jpg"
+              />
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="text-center">
+            <a
+              href="#booking"
+              className="inline-block bg-black text-white px-12 py-4 text-sm font-light hover:bg-gray-900 hover:shadow-lg transition"
+            >
+              💬 Chiedi a Luna
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* LOCATION SECTION */}
       <section id="location" ref={locationSection.ref} className={`py-32 px-6 lg:px-8 bg-white transition-all duration-700 ${locationSection.isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="max-w-5xl mx-auto">
