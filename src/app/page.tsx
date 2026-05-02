@@ -216,7 +216,7 @@ export default function Home() {
           </nav>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-4">
+          <div className="md:hidden flex items-center gap-6">
             <a href="tel:+393737902538" className="text-gray-600 hover:text-black transition text-lg">
               📞
             </a>
@@ -227,7 +227,7 @@ export default function Home() {
                   mobileMenu.classList.toggle('hidden');
                 }
               }}
-              className="text-2xl text-black hover:text-gray-600 transition cursor-pointer"
+              className="text-3xl text-black hover:text-gray-800 transition cursor-pointer p-2 hover:bg-gray-100 rounded-lg"
               aria-label="Toggle menu"
             >
               ☰
