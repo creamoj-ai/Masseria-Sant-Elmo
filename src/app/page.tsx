@@ -25,6 +25,7 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [lunaModalOpen, setLunaModalOpen] = useState(false);
 
   const [formData, setFormData] = useState({
     first_name: '',
@@ -143,9 +144,9 @@ export default function Home() {
       {/* HERO CTAs */}
       <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-panna border-b border-oro-vintage/20">
         <div className="max-w-2xl mx-auto flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="/luna" className="px-8 py-4 bg-oro-vintage text-nero rounded font-semibold hover:scale-105 hover:shadow-lg transition duration-300">
+          <button onClick={() => setLunaModalOpen(true)} className="px-8 py-4 bg-oro-vintage text-nero rounded font-semibold hover:scale-105 hover:shadow-lg transition duration-300">
             ✨ Chiedi a LUNA
-          </a>
+          </button>
           <a href="https://wa.me/393737902538" className="px-8 py-4 border-2 border-oro-vintage text-oro-vintage rounded hover:bg-oro-vintage hover:text-nero transition duration-300">
             💬 Contatta su WhatsApp
           </a>
@@ -456,6 +457,40 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* LUNA MODAL */}
+      {lunaModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="relative w-full max-w-2xl bg-nero rounded-2xl shadow-2xl overflow-hidden">
+            {/* Close Button */}
+            <button
+              onClick={() => setLunaModalOpen(false)}
+              className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center bg-oro-vintage text-nero rounded-full hover:bg-oro-vintage/90 transition font-bold text-lg"
+            >
+              ✕
+            </button>
+
+            {/* Luna Video */}
+            <div className="relative w-full bg-gradient-to-b from-nero to-verde-salvia/10 flex items-center justify-center p-4" style={{aspectRatio: '16/9'}}>
+              <div className="w-full max-w-sm bg-gradient-to-b from-nero to-verde-salvia/10 rounded-lg overflow-hidden" style={{aspectRatio: '9/16'}}>
+                <video
+                  src="https://resource2.heygen.ai/video/transcode/cf1f054526f94714ac9d87b4a7c1a651/vFhpKkRD7AG8Gfc8En1fdDkYwcxUOxv8v/720x1280_nocap.mp4"
+                  controls
+                  autoPlay
+                  className="w-full h-full object-cover"
+                  poster="/images/masseria-main.jpg"
+                />
+              </div>
+            </div>
+
+            {/* Luna Info */}
+            <div className="p-6 text-center">
+              <h3 className="text-2xl font-light text-oro-vintage mb-2" style={{fontFamily: 'var(--font-playfair)'}}>Benvenuto da LUNA</h3>
+              <p className="text-sm text-panna/70 font-light">Il tuo Avatar Virtuale - Assistente 24/7 per esperienze straordinarie</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
