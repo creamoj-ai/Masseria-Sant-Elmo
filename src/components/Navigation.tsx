@@ -25,27 +25,15 @@ export default function Navigation() {
             <Link href="/" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
               Home
             </Link>
-            <Link href="/masseria" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
-              Masseria
-            </Link>
-            <Link href="/masseria/gallery" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
-              Galleria
-            </Link>
-            <Link href="/cucina" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
-              Cucina
-            </Link>
-            <Link href="/shop" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
-              Shop
-            </Link>
-            <Link href="/avatar-luna" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
-              Avatar Luna
-            </Link>
-            <Link href="/contatti" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
-              Contatti
-            </Link>
-            <Link href="/booking" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
+            <a href="#gallery" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
+              Spazi
+            </a>
+            <a href="#pricing" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
+              Prezzi
+            </a>
+            <a href="#booking" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
               Prenota
-            </Link>
+            </a>
           </nav>
 
           {/* Info */}
@@ -74,15 +62,15 @@ export default function Navigation() {
           </Link>
 
           <nav className="hidden md:flex gap-12 text-xs sm:text-sm">
-            <Link href="/masseria" className="text-verde-salvia hover:text-oro-vintage transition font-light">
-              Masseria
-            </Link>
-            <Link href="/cucina" className="text-verde-salvia hover:text-oro-vintage transition font-light">
-              Cucina
-            </Link>
-            <Link href="/booking" className="text-verde-salvia hover:text-oro-vintage transition font-light">
+            <a href="#gallery" className="text-verde-salvia hover:text-oro-vintage transition font-light">
+              Spazi
+            </a>
+            <a href="#pricing" className="text-verde-salvia hover:text-oro-vintage transition font-light">
+              Prezzi
+            </a>
+            <a href="#booking" className="text-verde-salvia hover:text-oro-vintage transition font-light">
               Prenota
-            </Link>
+            </a>
           </nav>
         </div>
       </header>

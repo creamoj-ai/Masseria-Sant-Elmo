@@ -24,7 +24,6 @@ const HERO_SLIDES = [
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -39,8 +38,8 @@ export default function Home() {
   });
 
   const gallerySection = useScrollAnimation();
-  const pricingSection = useScrollAnimation();
   const testimonialsSection = useScrollAnimation();
+  const [partnersScrollIndex, setPartnersScrollIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -83,87 +82,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* MENU OVERLAY */}
-      {menuOpen && (
-        <div
-          className="fixed inset-0 bg-black/30 z-30"
-          onClick={() => setMenuOpen(false)}
-        />
-      )}
-
-      {/* DRAWER MENU - LEFT */}
-      <div
-        className={`fixed left-0 top-0 bottom-0 w-80 bg-panna border-r border-oro-vintage/20 z-40 transition-transform duration-300 overflow-y-auto ${
-          menuOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        <div className="p-8 space-y-12 pt-24">
-          {/* Location */}
-          <div>
-            <p className="text-xs uppercase tracking-widest text-verde-salvia/60 mb-4 font-light">Location</p>
-            <p className="text-sm font-light text-verde-salvia">Parco Nazionale</p>
-            <p className="text-sm font-light text-verde-salvia-dark">del Vesuvio</p>
-            <p className="text-xs text-verde-salvia/50 font-light mt-3">30km da Napoli</p>
-          </div>
-
-          {/* Spazi */}
-          <div className="space-y-4">
-            <p className="text-xs uppercase tracking-widest text-verde-salvia/60 font-light">Spazi</p>
-            <div className="space-y-3">
-              <div>
-                <p className="text-3xl font-light text-verde-salvia">375</p>
-                <p className="text-xs text-verde-salvia/60 font-light">m² coperto</p>
-              </div>
-              <div>
-                <p className="text-3xl font-light text-verde-salvia">400+</p>
-                <p className="text-xs text-verde-salvia/60 font-light">ospiti</p>
-              </div>
-              <div>
-                <p className="text-sm font-light text-verde-salvia">Mar — Ott</p>
-                <p className="text-xs text-verde-salvia/60 font-light">stagione</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Servizi */}
-          <div className="space-y-4">
-            <p className="text-xs uppercase tracking-widest text-verde-salvia/60 font-light">Servizi</p>
-            <div className="space-y-2 text-sm font-light text-verde-salvia-dark">
-              <p>🌳 Giardino privato</p>
-              <p>🍳 Cucina catering</p>
-              <p>📡 WiFi stabile</p>
-              <p>🎤 Audio & luci</p>
-            </div>
-          </div>
-
-          {/* Contatti */}
-          <div className="border-t border-oro-vintage/20 pt-8">
-            <p className="text-xs uppercase tracking-widest text-verde-salvia/60 mb-4 font-light">Contatti</p>
-            <p className="text-sm font-light text-verde-salvia-dark">+39 373 790 2538</p>
-            <p className="text-xs text-verde-salvia/60 font-light mt-2">info@essenzedinaturaevents.it</p>
-          </div>
-        </div>
-      </div>
-
-      {/* HEADER */}
-      <header className="sticky top-0 z-50 bg-panna border-b border-panna-dark/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="text-verde-salvia hover:text-oro-vintage transition text-2xl font-light"
-          >
-            {menuOpen ? '✕' : '☰'}
-          </button>
-
-          <h1 className="text-sm sm:text-base font-light tracking-widest text-verde-salvia">ESSENZE DI NATURA</h1>
-
-          <nav className="hidden md:flex gap-12 text-xs sm:text-sm">
-            <a href="#gallery" className="text-verde-salvia hover:text-oro-vintage transition font-light">Spazi</a>
-            <a href="#pricing" className="text-verde-salvia hover:text-oro-vintage transition font-light">Prezzi</a>
-            <a href="#booking" className="text-verde-salvia hover:text-oro-vintage transition font-light">Prenota</a>
-          </nav>
-        </div>
-      </header>
 
       {/* HERO CAROUSEL */}
       <section className="relative h-screen overflow-hidden">
@@ -282,153 +200,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* PRICING */}
-      <section id="pricing" ref={pricingSection.ref} className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-panna-dark/5">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-16 max-w-2xl">
-            <p className="text-xs uppercase tracking-widest text-verde-salvia/60 mb-6 font-light">Investimento</p>
-            <h2 className="text-5xl md:text-6xl font-light leading-tight text-verde-salvia mb-6" style={{fontFamily: 'var(--font-playfair)'}}>
-              Scopri il prezzo del tuo evento
-            </h2>
-            <p className="text-lg font-light text-verde-salvia-dark/70">
-              Ogni matrimonio è unico. Il prezzo personalizzato dipende dai dettagli che immaginiamo insieme.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            {[
-              {
-                category: 'Matrimoni Intimi',
-                price: '€3.500',
-                guests: '20-30 ospiti',
-                icon: '💍'
-              },
-              {
-                category: 'Matrimoni Eleganti',
-                price: '€6.000',
-                guests: '40-70 ospiti',
-                icon: '✨'
-              },
-              {
-                category: '3-Day Experience',
-                price: '€12.000+',
-                guests: 'Weekend',
-                icon: '👑'
-              },
-              {
-                category: 'Corporate',
-                price: '€2.500',
-                guests: 'Team-building',
-                icon: '🌿'
-              }
-            ].map((item, idx) => (
-              <div
-                key={idx}
-                className={`group border-t border-oro-vintage/40 hover:border-oro-vintage/80 transition-all duration-300 py-6 ${
-                  pricingSection.isVisible
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-8'
-                }`}
-                style={{
-                  transitionDelay: pricingSection.isVisible ? `${idx * 100}ms` : '0ms',
-                }}
-              >
-                <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-lg font-light text-verde-salvia mb-2" style={{fontFamily: 'var(--font-playfair)'}}>
-                  {item.category}
-                </h3>
-                <p className="text-2xl font-light text-oro-vintage mb-3">{item.price}</p>
-                <p className="text-xs uppercase tracking-widest text-verde-salvia/60 font-light">{item.guests}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Booking Form */}
-          <div className="max-w-2xl mx-auto" id="booking">
-            <div className="mb-12">
-              <h3 className="text-3xl font-light text-verde-salvia mb-2" style={{fontFamily: 'var(--font-playfair)'}}>
-                Richiedi preventivo
-              </h3>
-              <p className="text-sm text-verde-salvia-dark/70 font-light">Risponderemo entro 24 ore con un'offerta personalizzata.</p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                <div>
-                  <input
-                    type="text"
-                    name="first_name"
-                    placeholder="Nome"
-                    value={formData.first_name}
-                    onChange={handleInputChange}
-                    className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition"
-                    required
-                  />
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    name="last_name"
-                    placeholder="Cognome"
-                    value={formData.last_name}
-                    onChange={handleInputChange}
-                    className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition"
-                    required
-                  />
-                </div>
-              </div>
-
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition"
-                required
-              />
-
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Telefono"
-                value={formData.phone}
-                onChange={handleInputChange}
-                className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition"
-                required
-              />
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                <input
-                  type="date"
-                  name="event_date"
-                  value={formData.event_date}
-                  onChange={handleInputChange}
-                  className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark focus:outline-none focus:border-verde-salvia transition"
-                  required
-                />
-                <select
-                  name="event_type"
-                  value={formData.event_type}
-                  onChange={handleInputChange}
-                  className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark focus:outline-none focus:border-verde-salvia transition"
-                >
-                  <option value="matrimonio">Matrimonio</option>
-                  <option value="corporate">Corporate</option>
-                  <option value="enogastronomico">Degustazione</option>
-                </select>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-verde-salvia text-panna py-3 text-sm font-light hover:bg-verde-salvia-dark transition duration-300"
-              >
-                Invia Richiesta
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
 
       {/* TESTIMONIALS */}
       <section ref={testimonialsSection.ref} className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8">
@@ -492,6 +263,38 @@ export default function Home() {
             <p className="text-center text-verde-salvia-dark/70 font-light">
               ✓ <strong>100+ coppie felici dal 2023</strong>
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* PARTNER CAROUSEL */}
+      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-panna">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-xs uppercase tracking-widest text-verde-salvia/60 mb-6 font-light">Partner Esclusivi</p>
+            <h2 className="text-4xl md:text-5xl font-light leading-tight text-verde-salvia" style={{fontFamily: 'var(--font-playfair)'}}>
+              Professionisti scelti con cura
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center">
+            {[
+              { name: 'Terra e Sapori', icon: '🍽️', desc: 'Catering' },
+              { name: 'Flora Vesuviana', icon: '🌸', desc: 'Fiori' },
+              { name: 'Lacryma Christi', icon: '🍷', desc: 'Vini' },
+              { name: 'Vesuvio Photography', icon: '📷', desc: 'Fotografia' },
+              { name: 'Sound & Light', icon: '🎵', desc: 'DJ' },
+              { name: 'Dolci Tradizioni', icon: '🎂', desc: 'Pasticceria' }
+            ].map((partner, idx) => (
+              <div
+                key={idx}
+                className="flex flex-col items-center gap-3 p-6 rounded-lg hover:bg-white/50 transition-all duration-300 group"
+              >
+                <div className="text-5xl group-hover:scale-110 transition-transform duration-300">{partner.icon}</div>
+                <p className="text-sm font-light text-verde-salvia text-center">{partner.name}</p>
+                <p className="text-xs text-verde-salvia/60 font-light">{partner.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
