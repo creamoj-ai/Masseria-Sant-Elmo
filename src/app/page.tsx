@@ -267,9 +267,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PARTNER CAROUSEL */}
+      {/* PARTNER CAROUSEL - AUTO SCROLL */}
       <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-panna">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-xs uppercase tracking-widest text-verde-salvia/60 mb-6 font-light">Partner Esclusivi</p>
             <h2 className="text-4xl md:text-5xl font-light leading-tight text-verde-salvia" style={{fontFamily: 'var(--font-playfair)'}}>
@@ -277,24 +277,46 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center">
-            {[
-              { name: 'Terra e Sapori', icon: '🍽️', desc: 'Catering' },
-              { name: 'Flora Vesuviana', icon: '🌸', desc: 'Fiori' },
-              { name: 'Lacryma Christi', icon: '🍷', desc: 'Vini' },
-              { name: 'Vesuvio Photography', icon: '📷', desc: 'Fotografia' },
-              { name: 'Sound & Light', icon: '🎵', desc: 'DJ' },
-              { name: 'Dolci Tradizioni', icon: '🎂', desc: 'Pasticceria' }
-            ].map((partner, idx) => (
-              <div
-                key={idx}
-                className="flex flex-col items-center gap-3 p-6 rounded-lg hover:bg-white/50 transition-all duration-300 group"
-              >
-                <div className="text-5xl group-hover:scale-110 transition-transform duration-300">{partner.icon}</div>
-                <p className="text-sm font-light text-verde-salvia text-center">{partner.name}</p>
-                <p className="text-xs text-verde-salvia/60 font-light">{partner.desc}</p>
-              </div>
-            ))}
+          <style>{`
+            @keyframes scroll-left {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-100%); }
+            }
+            .partners-scroll {
+              animation: scroll-left 30s linear infinite;
+            }
+            .partners-scroll:hover {
+              animation-play-state: paused;
+            }
+          `}</style>
+
+          <div className="overflow-hidden">
+            <div className="partners-scroll flex gap-8 w-max">
+              {[
+                { name: 'Terra e Sapori', icon: '🍽️', desc: 'Catering' },
+                { name: 'Flora Vesuviana', icon: '🌸', desc: 'Fiori' },
+                { name: 'Lacryma Christi', icon: '🍷', desc: 'Vini' },
+                { name: 'Vesuvio Photography', icon: '📷', desc: 'Fotografia' },
+                { name: 'Sound & Light', icon: '🎵', desc: 'DJ' },
+                { name: 'Dolci Tradizioni', icon: '🎂', desc: 'Pasticceria' },
+                // Duplicate for seamless loop
+                { name: 'Terra e Sapori', icon: '🍽️', desc: 'Catering' },
+                { name: 'Flora Vesuviana', icon: '🌸', desc: 'Fiori' },
+                { name: 'Lacryma Christi', icon: '🍷', desc: 'Vini' },
+                { name: 'Vesuvio Photography', icon: '📷', desc: 'Fotografia' },
+                { name: 'Sound & Light', icon: '🎵', desc: 'DJ' },
+                { name: 'Dolci Tradizioni', icon: '🎂', desc: 'Pasticceria' }
+              ].map((partner, idx) => (
+                <div
+                  key={idx}
+                  className="flex flex-col items-center gap-3 p-6 rounded-lg hover:bg-white/50 transition-all duration-300 group flex-shrink-0 w-40"
+                >
+                  <div className="text-5xl group-hover:scale-110 transition-transform duration-300">{partner.icon}</div>
+                  <p className="text-sm font-light text-verde-salvia text-center">{partner.name}</p>
+                  <p className="text-xs text-verde-salvia/60 font-light">{partner.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
