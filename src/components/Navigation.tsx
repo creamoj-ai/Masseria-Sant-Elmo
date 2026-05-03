@@ -28,9 +28,12 @@ export default function Navigation() {
             <a href="#gallery" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
               Spazi
             </a>
-            <a href="#pricing" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
+            <Link href="/prezzi" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
               Prezzi
-            </a>
+            </Link>
+            <Link href="/luna" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
+              Luna ✨
+            </Link>
             <a href="#booking" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
               Prenota
             </a>
@@ -65,9 +68,12 @@ export default function Navigation() {
             <a href="#gallery" className="text-verde-salvia hover:text-oro-vintage transition font-light">
               Spazi
             </a>
-            <a href="#pricing" className="text-verde-salvia hover:text-oro-vintage transition font-light">
+            <Link href="/prezzi" className="text-verde-salvia hover:text-oro-vintage transition font-light">
               Prezzi
-            </a>
+            </Link>
+            <Link href="/luna" className="text-verde-salvia hover:text-oro-vintage transition font-light">
+              Luna ✨
+            </Link>
             <a href="#booking" className="text-verde-salvia hover:text-oro-vintage transition font-light">
               Prenota
             </a>
