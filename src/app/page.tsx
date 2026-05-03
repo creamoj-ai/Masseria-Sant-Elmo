@@ -111,14 +111,6 @@ export default function Home() {
             <p className="text-lg md:text-xl font-light tracking-wide">
               {HERO_SLIDES[currentSlide].subtitle}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center">
-              <a href="/luna" className="px-8 py-3 bg-oro-vintage text-nero rounded font-semibold hover:scale-105 hover:shadow-lg transition">
-                ✨ Chiedi a LUNA
-              </a>
-              <a href="https://wa.me/393737902538" className="px-8 py-3 border-2 border-oro-vintage text-oro-vintage rounded hover:bg-oro-vintage hover:text-nero transition">
-                💬 WhatsApp
-              </a>
-            </div>
           </div>
         </div>
 
@@ -146,6 +138,18 @@ export default function Home() {
         >
           ›
         </button>
+      </section>
+
+      {/* HERO CTAs */}
+      <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-panna border-b border-oro-vintage/20">
+        <div className="max-w-2xl mx-auto flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/luna" className="px-8 py-4 bg-oro-vintage text-nero rounded font-semibold hover:scale-105 hover:shadow-lg transition duration-300">
+            ✨ Chiedi a LUNA
+          </a>
+          <a href="https://wa.me/393737902538" className="px-8 py-4 border-2 border-oro-vintage text-oro-vintage rounded hover:bg-oro-vintage hover:text-nero transition duration-300">
+            💬 Contatta su WhatsApp
+          </a>
+        </div>
       </section>
 
       {/* GALLERY */}
