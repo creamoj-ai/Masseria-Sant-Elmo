@@ -135,50 +135,6 @@ export function parseAvvisaCommand(text: string): {
 }
 
 /**
- * Parse /pagamento command from message text
- * Format: /pagamento @slug amount description
- * @param text - Raw message text from Telegram
- * @returns Parsed command object or null if invalid
- */
-export function parsePagamentoCommand(text: string): {
-  slug?: string;
-  amount?: number;
-  description?: string;
-  error?: string;
-} | null {
-  // Regex pattern: /pagamento [space] [@]slug [space] [number] [space] [description]
-  const pattern = /^\/pagamento\s+@(\w+)\s+([\d.]+)\s+(.+)$/i;
-  const match = text.match(pattern);
-
-  if (!match) {
-    return null;
-  }
-
-  const slug = match[1]?.trim() || '';
-  const amountStr = match[2]?.trim() || '';
-  const description = match[3]?.trim() || '';
-
-  if (!slug || !amountStr || !description) {
-    return {
-      error: 'Invalid format. Use: /pagamento @slug [amount] [description]',
-    };
-  }
-
-  const amount = parseFloat(amountStr);
-  if (isNaN(amount) || amount <= 0) {
-    return {
-      error: 'Amount must be a positive number (e.g., 150 or 150.50)',
-    };
-  }
-
-  return {
-    slug,
-    amount,
-    description,
-  };
-}
-
-/**
  * Format SMS status message for Telegram
  */
 export function formatSmsStatusMessage(status: 'success' | 'error', details: {
@@ -248,14 +204,6 @@ Invia un SMS a un cliente del database usando il suo slug
 
 Esempio:
 \`/avvisa @mario Ciao! Confermiamo per domani?\`
-
----
-
-/pagamento @slug [importo] [descrizione]
-Invia un link Stripe di pagamento via SMS al cliente
-
-Esempio:
-\`/pagamento @mario 150 Soggiorno\`
 
 ---
 

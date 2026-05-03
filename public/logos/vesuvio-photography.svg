@@ -1,0 +1,19 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#666" stroke-width="2"/>
+  <g transform="translate(100, 100)">
+    <!-- Camera body -->
+    <rect x="-28" y="-15" width="56" height="40" rx="4" fill="none" stroke="#666" stroke-width="2.5"/>
+    <!-- Lens outer -->
+    <circle cx="0" cy="10" r="16" fill="none" stroke="#666" stroke-width="2.5"/>
+    <!-- Lens inner -->
+    <circle cx="0" cy="10" r="12" fill="none" stroke="#666" stroke-width="2"/>
+    <!-- Lens center -->
+    <circle cx="0" cy="10" r="7" fill="none" stroke="#666" stroke-width="1.5"/>
+    <!-- Flash -->
+    <rect x="-20" y="-12" width="8" height="6" fill="none" stroke="#666" stroke-width="1.5"/>
+    <!-- Viewfinder -->
+    <rect x="16" y="-8" width="6" height="4" fill="none" stroke="#666" stroke-width="1.5"/>
+    <!-- Top plate detail -->
+    <line x1="-12" y1="-15" x2="-8" y2="-15" stroke="#666" stroke-width="2"/>
+  </g>
+</svg>

@@ -38,9 +38,22 @@ body {
   color: var(--foreground);
 }
 
-/* Smooth transitions */
-* {
-  @apply transition-all duration-300 ease-out;
+/* Targeted transitions - only on interactive elements */
+button, a, [role="button"], .card {
+  transition: background-color 0.3s ease-out,
+              color 0.3s ease-out,
+              border-color 0.3s ease-out,
+              opacity 0.3s ease-out;
+}
+
+/* Transform transitions for hover effects */
+.group:hover [class*="group-hover"] {
+  transition: transform 0.3s ease-out;
+}
+
+/* Smooth opacity for fade animations */
+[data-fade] {
+  transition: opacity 0.3s ease-out;
 }
 
 /* Disable transitions for animations */
