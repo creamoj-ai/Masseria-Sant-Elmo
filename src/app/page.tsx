@@ -321,6 +321,75 @@ export default function Home() {
         </div>
       </section>
 
+      {/* BOOKING FORM SECTION */}
+      <section id="booking" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-panna">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-xs uppercase tracking-widest text-verde-salvia/60 mb-6 font-light">Prenota</p>
+            <h2 className="text-4xl md:text-5xl font-light text-verde-salvia mb-4" style={{fontFamily: 'var(--font-playfair)'}}>
+              Richiedi il tuo preventivo
+            </h2>
+            <p className="text-sm text-verde-salvia-dark/70 font-light">
+              Risponderemo entro 24 ore con un'offerta personalizzata per il tuo evento.
+            </p>
+          </div>
+
+          <form className="space-y-6 bg-panna-dark/5 p-8 rounded-lg">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <input
+                type="text"
+                placeholder="Nome"
+                className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Cognome"
+                className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition"
+                required
+              />
+            </div>
+
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition"
+              required
+            />
+
+            <input
+              type="tel"
+              placeholder="Telefono"
+              className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition"
+              required
+            />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <input
+                type="date"
+                className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark focus:outline-none focus:border-verde-salvia transition"
+                required
+              />
+              <select className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark focus:outline-none focus:border-verde-salvia transition">
+                <option value="matrimonio">Matrimonio</option>
+                <option value="corporate">Corporate</option>
+                <option value="degustazione">Degustazione</option>
+                <option value="wellness">Wellness & Yoga</option>
+                <option value="photoshoot">Photoshoot</option>
+                <option value="team">Team Building</option>
+              </select>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-verde-salvia text-panna py-3 text-sm font-light hover:bg-verde-salvia-dark transition duration-300 rounded"
+            >
+              Invia Richiesta
+            </button>
+          </form>
+        </div>
+      </section>
+
       {/* NEWSLETTER */}
       <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-panna-dark/5">
         <div className="max-w-2xl mx-auto text-center">

@@ -54,13 +54,13 @@ export default function Luna() {
             </p>
           </div>
 
-          {/* Video Container */}
-          <div className="relative w-full bg-gradient-to-b from-nero to-verde-salvia/10 rounded-xl overflow-hidden shadow-2xl mb-12">
-            <div className="aspect-video max-w-2xl mx-auto">
+          {/* Video Container - Portrait */}
+          <div className="relative w-full flex justify-center mb-12">
+            <div className="w-full max-w-sm bg-gradient-to-b from-nero to-verde-salvia/10 rounded-xl overflow-hidden shadow-2xl" style={{aspectRatio: '9/16'}}>
               <video
                 src="https://resource2.heygen.ai/video/transcode/cf1f054526f94714ac9d87b4a7c1a651/vFhpKkRD7AG8Gfc8En1fdDkYwcxUOxv8v/720x1280_nocap.mp4"
                 controls
-                className="w-full h-full object-cover rounded-lg"
+                className="w-full h-full object-cover"
                 poster="/images/masseria-main.jpg"
               />
             </div>
