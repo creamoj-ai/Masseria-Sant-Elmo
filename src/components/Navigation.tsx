@@ -32,7 +32,7 @@ export default function Navigation() {
               Prezzi
             </Link>
             <Link href="/luna" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
-              Luna ✨
+              ✨ Chiedi a LUNA
             </Link>
             <a href="#booking" onClick={() => setMenuOpen(false)} className="block text-sm font-light text-verde-salvia hover:text-oro-vintage transition">
               Prenota
@@ -72,7 +72,7 @@ export default function Navigation() {
               Prezzi
             </Link>
             <Link href="/luna" className="text-verde-salvia hover:text-oro-vintage transition font-light">
-              Luna ✨
+              ✨ Chiedi a LUNA
             </Link>
             <a href="#booking" className="text-verde-salvia hover:text-oro-vintage transition font-light">
               Prenota
