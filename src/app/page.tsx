@@ -145,7 +145,7 @@ export default function Home() {
       </section>
 
       {/* HERO CTAs */}
-      <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-panna border-b border-oro-vintage/20">
+      <section data-cta-section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-panna border-b border-oro-vintage/20">
         <div className="max-w-sm mx-auto flex flex-col items-center justify-center gap-6">
           {/* LUNA Avatar Preview */}
           <button
@@ -598,10 +598,24 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Luna Info */}
-            <div className="p-8 text-center bg-nero/50 backdrop-blur-sm">
-              <h3 className="text-3xl font-light text-oro-vintage mb-3" style={{fontFamily: 'var(--font-playfair)'}}>Benvenuto da LUNA</h3>
-              <p className="text-sm text-panna font-light leading-relaxed">Il tuo Avatar Virtuale - Assistente 24/7 per esperienze straordinarie</p>
+            {/* Luna Info - IMPROVED COLORS */}
+            <div className="p-8 text-center bg-nero">
+              <h3 className="text-4xl font-light text-white mb-4 drop-shadow-lg" style={{fontFamily: 'var(--font-playfair)', textShadow: '0 2px 8px rgba(0,0,0,0.8)'}}>Benvenuto da LUNA</h3>
+              <p className="text-base text-white/95 font-light leading-relaxed mb-8 drop-shadow" style={{textShadow: '0 1px 4px rgba(0,0,0,0.8)'}}>Il tuo Avatar Virtuale - Assistente 24/7 per esperienze straordinarie</p>
+
+              {/* CTA Button - Scroll to LUNA CTA */}
+              <button
+                onClick={() => {
+                  setLunaModalOpen(false);
+                  setLunaMinified(true);
+                  setTimeout(() => {
+                    document.querySelector('[data-cta-section]')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 300);
+                }}
+                className="inline-block px-8 py-3 bg-oro-vintage text-nero rounded-full font-semibold hover:scale-105 hover:shadow-lg transition duration-300"
+              >
+                ✨ Torna a Chiedi a LUNA
+              </button>
             </div>
           </div>
         </div>
