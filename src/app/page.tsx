@@ -10,7 +10,7 @@ const HERO_SLIDES = [
     subtitle: 'Cupola geodetica e campi di lavanda'
   },
   {
-    image: '/images/masseria-main.jpg',
+    image: '/images/masseria-entrata.png',
     title: 'Nel Vesuvio',
     subtitle: '375m² di eleganza'
   },
@@ -217,9 +217,9 @@ export default function Home() {
                 description: 'Masseria Moroseta è prima di tutto un\'azienda agricola immersa nella natura, circondata da alberi di ulivi, alcuni centenari, alberi da frutto e biodiversità biologica.'
               },
               {
-                image: '/images/masseria-details.jpg',
-                title: 'Dettagli Architettonici',
-                description: 'Ogni elemento della struttura è stato curato nei dettagli, dall\'uso di materiali nobili alle finiture eleganti, creando un\'atmosfera di pura bellezza.'
+                image: '/images/cupola-rendering.png',
+                title: 'Cupola Geodetica',
+                description: 'Uno spazio unico in pieno contatto con la natura, con vista panoramica sul Vesuvio. Perfetta per cene esclusive e momenti indimenticabili.'
               },
             ].map((item, index) => (
               <div
