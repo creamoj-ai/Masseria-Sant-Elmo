@@ -58,7 +58,7 @@ export default function Luna() {
           <div className="relative w-full flex justify-center mb-12">
             <div className="w-full max-w-sm bg-gradient-to-b from-nero to-verde-salvia/10 rounded-xl overflow-hidden shadow-2xl" style={{aspectRatio: '9/16'}}>
               <video
-                src="/videos/luna-video.mp4"
+                src="/videos/prova-video-720p.mp4"
                 controls
                 autoPlay
                 className="w-full h-full object-cover"
