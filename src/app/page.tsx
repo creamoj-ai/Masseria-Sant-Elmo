@@ -192,7 +192,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-            {[
+            {(([
               {
                 image: '/images/masseria-main.jpg',
                 title: 'Masseria',
@@ -213,7 +213,7 @@ export default function Home() {
                 title: 'Cupola Geodetica Allestita',
                 description: 'Tour esclusivo della cupola geodetica e dei suoi allestimenti per eventi indimenticabili.'
               },
-            ] as const).map((item, index) => (
+            ] as const)).map((item, index) => (
               <div
                 key={index}
                 className={`transition-all duration-500 ${
