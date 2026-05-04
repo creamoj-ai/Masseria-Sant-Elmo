@@ -637,7 +637,7 @@ export default function Home() {
             <div className="relative w-full bg-nero flex items-center justify-center p-4 sm:p-6" style={{aspectRatio: '16/9'}}>
               <div className="w-full max-w-sm bg-nero rounded-xl overflow-hidden shadow-2xl" style={{aspectRatio: '9/16'}}>
                 <video
-                  src="https://resource2.heygen.ai/video/transcode/cf1f054526f94714ac9d87b4a7c1a651/vFhpKkRD7AG8Gfc8En1fdDkYwcxUOxv8v/720x1280_nocap.mp4"
+                  src="/videos/prova-video-720p.mp4"
                   controls
                   autoPlay
                   className="w-full h-full object-cover"
