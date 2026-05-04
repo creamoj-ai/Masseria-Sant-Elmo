@@ -24,8 +24,11 @@ const HERO_SLIDES = [
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImageData, setSelectedImageData] = useState<any>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [lunaModalOpen, setLunaModalOpen] = useState(false);
+  const [lunaMinified, setLunaMinified] = useState(true);
+  const [whatsappOpen, setWhatsappOpen] = useState(true);
 
   const [formData, setFormData] = useState({
     first_name: '',
@@ -143,13 +146,36 @@ export default function Home() {
 
       {/* HERO CTAs */}
       <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-panna border-b border-oro-vintage/20">
-        <div className="max-w-2xl mx-auto flex flex-col sm:flex-row gap-4 justify-center">
-          <button onClick={() => setLunaModalOpen(true)} className="px-8 py-4 bg-oro-vintage text-nero rounded font-semibold hover:scale-105 hover:shadow-lg transition duration-300">
-            ✨ Chiedi a LUNA
+        <div className="max-w-3xl mx-auto flex justify-center items-center gap-8 flex-wrap">
+          {/* LUNA Avatar Preview */}
+          <button
+            onClick={() => {
+              setLunaMinified(false);
+              setLunaModalOpen(true);
+            }}
+            className="relative w-32 h-44 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition transform hover:scale-105 border-2 border-oro-vintage/30 flex-shrink-0"
+          >
+            <img
+              src="/images/luna-avatar.jpg"
+              alt="LUNA Avatar"
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.currentTarget.parentElement!.style.background = 'linear-gradient(135deg, #D4AF37 0%, #F4E4C1 100%)';
+              }}
+            />
+            <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition duration-300 flex items-center justify-center">
+              <span className="text-4xl opacity-0 hover:opacity-100 transition">▶</span>
+            </div>
           </button>
-          <a href="https://wa.me/393737902538" className="px-8 py-4 border-2 border-oro-vintage text-oro-vintage rounded hover:bg-oro-vintage hover:text-nero transition duration-300">
-            💬 Contatta su WhatsApp
-          </a>
+
+          {/* LUNA Button */}
+          <button onClick={() => {
+            setLunaMinified(false);
+            setLunaModalOpen(true);
+          }} className="flex items-center gap-2 px-8 py-4 bg-oro-vintage text-nero rounded font-semibold hover:scale-105 hover:shadow-lg transition duration-300">
+            <span className="text-2xl">✨</span>
+            <span>Chiedi a LUNA</span>
+          </button>
         </div>
       </section>
 
@@ -208,7 +234,10 @@ export default function Home() {
                 }}
               >
                 <div
-                  onClick={() => setSelectedImage(item.image)}
+                  onClick={() => {
+                    setSelectedImage(item.image);
+                    setSelectedImageData(item);
+                  }}
                   className={`group relative h-72 bg-cover bg-center cursor-pointer overflow-hidden transition-all duration-500 transform hover:scale-105 mb-6`}
                   style={{
                     backgroundImage: `url("${item.image}")`,
@@ -219,8 +248,8 @@ export default function Home() {
                     <span className="text-white text-2xl font-light">↗</span>
                   </div>
                 </div>
-                <div className="px-2">
-                  <h3 className="text-xl font-light text-verde-salvia mb-2" style={{fontFamily: 'var(--font-playfair)'}}>
+                <div className="px-2 text-center">
+                  <h3 className="text-xl font-light text-verde-salvia mb-3" style={{fontFamily: 'var(--font-playfair)'}}>
                     {item.title}
                   </h3>
                   <p className="text-sm text-verde-salvia-dark/70 font-light leading-relaxed">
@@ -236,13 +265,29 @@ export default function Home() {
       {/* Lightbox */}
       {selectedImage && (
         <div
-          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedImage(null)}
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 overflow-y-auto"
+          onClick={() => {
+            setSelectedImage(null);
+            setSelectedImageData(null);
+          }}
         >
-          <div className="relative max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
+          <div className="relative max-w-5xl w-full my-8" onClick={(e) => e.stopPropagation()}>
             <img src={selectedImage} alt="Gallery" className="w-full h-auto" />
+            {selectedImageData && (
+              <div className="bg-nero p-10 text-center">
+                <h3 className="text-3xl md:text-4xl font-light text-white drop-shadow-lg mb-4" style={{fontFamily: 'var(--font-playfair)', textShadow: '0 2px 4px rgba(0,0,0,0.8)'}}>
+                  {selectedImageData.title}
+                </h3>
+                <p className="text-base text-white/90 font-light leading-relaxed max-w-2xl mx-auto drop-shadow" style={{textShadow: '0 1px 3px rgba(0,0,0,0.8)'}}>
+                  {selectedImageData.description}
+                </p>
+              </div>
+            )}
             <button
-              onClick={() => setSelectedImage(null)}
+              onClick={() => {
+                setSelectedImage(null);
+                setSelectedImageData(null);
+              }}
               className="absolute top-4 right-4 text-white/60 hover:text-white transition text-3xl font-light"
             >
               ✕
@@ -294,11 +339,6 @@ export default function Home() {
                   transitionDelay: testimonialsSection.isVisible ? `${index * 100}ms` : '0ms',
                 }}
               >
-                <div className="flex gap-1 mb-6">
-                  {Array.from({ length: testimonial.rating }).map((_, i) => (
-                    <span key={i} className="text-lg">⭐</span>
-                  ))}
-                </div>
                 <p className="text-verde-salvia-dark/80 mb-6 italic leading-relaxed text-base">
                   "{testimonial.text}"
                 </p>
@@ -496,35 +536,72 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* LUNA MODAL */}
+      {/* WHATSAPP POPUP - BOTTOM RIGHT */}
+      {whatsappOpen && (
+        <button
+          onClick={() => {
+            window.open('https://wa.me/393737902538', '_blank');
+          }}
+          className="fixed bottom-6 right-6 z-40 flex items-center justify-center w-16 h-16 bg-[#25D366] hover:bg-[#1fb85c] rounded-full shadow-2xl transition transform hover:scale-125 active:scale-95"
+          title="Contattaci su WhatsApp"
+        >
+          {/* Official WhatsApp Logo */}
+          <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-5.031 1.378c-3.055 2.2-5.002 5.885-5.002 9.748 0 5.143 4.19 9.333 9.333 9.333 1.987 0 3.846-.579 5.431-1.671l.04-.024 4.29.429.429-4.29.024-.04a9.332 9.332 0 001.671-5.431c0-5.143-4.19-9.333-9.333-9.333"/>
+          </svg>
+        </button>
+      )}
+
+      {/* LUNA MINIFIED CHAT BUBBLE */}
+      {lunaMinified && !lunaModalOpen && (
+        <div className="fixed bottom-24 right-6 z-40">
+          <button
+            onClick={() => {
+              setLunaMinified(false);
+              setLunaModalOpen(true);
+            }}
+            className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-oro-vintage to-oro-vintage/80 hover:scale-110 rounded-full shadow-lg transition transform duration-300"
+          >
+            <span className="text-3xl">✨</span>
+          </button>
+          <div className="absolute right-20 bottom-0 bg-nero text-panna p-4 rounded-2xl shadow-xl whitespace-nowrap text-sm font-light opacity-0 hover:opacity-100 transition pointer-events-none">
+            Chat con LUNA
+          </div>
+        </div>
+      )}
+
+      {/* LUNA MODAL - FULL SCREEN */}
       {lunaModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
           <div className="relative w-full max-w-2xl bg-nero rounded-2xl shadow-2xl overflow-hidden">
             {/* Close Button */}
             <button
-              onClick={() => setLunaModalOpen(false)}
+              onClick={() => {
+                setLunaModalOpen(false);
+                setLunaMinified(true);
+              }}
               className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center bg-oro-vintage text-nero rounded-full hover:bg-oro-vintage/90 transition font-bold text-lg"
             >
               ✕
             </button>
 
             {/* Luna Video */}
-            <div className="relative w-full bg-gradient-to-b from-nero to-verde-salvia/10 flex items-center justify-center p-4" style={{aspectRatio: '16/9'}}>
-              <div className="w-full max-w-sm bg-gradient-to-b from-nero to-verde-salvia/10 rounded-lg overflow-hidden" style={{aspectRatio: '9/16'}}>
+            <div className="relative w-full bg-nero flex items-center justify-center p-6" style={{aspectRatio: '16/9'}}>
+              <div className="w-full max-w-sm bg-nero rounded-xl overflow-hidden shadow-2xl" style={{aspectRatio: '9/16'}}>
                 <video
                   src="https://resource2.heygen.ai/video/transcode/cf1f054526f94714ac9d87b4a7c1a651/vFhpKkRD7AG8Gfc8En1fdDkYwcxUOxv8v/720x1280_nocap.mp4"
                   controls
                   autoPlay
                   className="w-full h-full object-cover"
-                  poster="/images/masseria-main.jpg"
+                  poster="/images/luna-avatar.jpg"
                 />
               </div>
             </div>
 
             {/* Luna Info */}
-            <div className="p-6 text-center">
-              <h3 className="text-2xl font-light text-oro-vintage mb-2" style={{fontFamily: 'var(--font-playfair)'}}>Benvenuto da LUNA</h3>
-              <p className="text-sm text-panna/70 font-light">Il tuo Avatar Virtuale - Assistente 24/7 per esperienze straordinarie</p>
+            <div className="p-8 text-center bg-nero/50 backdrop-blur-sm">
+              <h3 className="text-3xl font-light text-oro-vintage mb-3" style={{fontFamily: 'var(--font-playfair)'}}>Benvenuto da LUNA</h3>
+              <p className="text-sm text-panna font-light leading-relaxed">Il tuo Avatar Virtuale - Assistente 24/7 per esperienze straordinarie</p>
             </div>
           </div>
         </div>
