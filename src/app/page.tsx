@@ -606,11 +606,20 @@ export default function Home() {
               {/* CTA Button - Scroll to LUNA CTA + MOBILE RESPONSIVE */}
               <button
                 onClick={() => {
+                  // Close modal
                   setLunaModalOpen(false);
                   setLunaMinified(true);
+
+                  // Scroll to CTA section with delay
                   setTimeout(() => {
-                    document.querySelector('[data-cta-section]')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 300);
+                    const ctaSection = document.querySelector('[data-cta-section]');
+                    if (ctaSection) {
+                      ctaSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                      });
+                    }
+                  }, 500);
                 }}
                 className="w-full sm:w-auto inline-block px-6 sm:px-8 py-3 sm:py-4 bg-oro-vintage text-nero rounded-full font-semibold hover:scale-105 hover:shadow-lg transition duration-300 text-sm sm:text-base"
               >
