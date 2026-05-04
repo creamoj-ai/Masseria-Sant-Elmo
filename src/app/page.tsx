@@ -26,6 +26,8 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedImageData, setSelectedImageData] = useState<any>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  const [selectedVideoData, setSelectedVideoData] = useState<any>(null);
   const [lunaModalOpen, setLunaModalOpen] = useState(false);
   const [lunaMinified, setLunaMinified] = useState(true);
   const [whatsappOpen, setWhatsappOpen] = useState(true);
@@ -206,7 +208,12 @@ export default function Home() {
                 title: 'Uliveto e Orto',
                 description: 'Masseria Moroseta è prima di tutto un\'azienda agricola immersa nella natura, circondata da alberi di ulivi, alcuni centenari, alberi da frutto e biodiversità biologica.'
               },
-            ].map((item, index) => (
+              {
+                video: '/videos/cupola-allestita.mp4',
+                title: 'Cupola Geodetica Allestita',
+                description: 'Tour esclusivo della cupola geodetica e dei suoi allestimenti per eventi indimenticabili.'
+              },
+            ] as const).map((item, index) => (
               <div
                 key={index}
                 className={`transition-all duration-500 ${
@@ -218,21 +225,37 @@ export default function Home() {
                   transitionDelay: gallerySection.isVisible ? `${index * 80}ms` : '0ms',
                 }}
               >
-                <div
-                  onClick={() => {
-                    setSelectedImage(item.image);
-                    setSelectedImageData(item);
-                  }}
-                  className={`group relative h-72 bg-cover bg-center cursor-pointer overflow-hidden transition-all duration-500 transform hover:scale-105 mb-6`}
-                  style={{
-                    backgroundImage: `url("${item.image}")`,
-                  }}
-                >
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300"></div>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                    <span className="text-white text-2xl font-light">↗</span>
+                {'image' in item ? (
+                  <div
+                    onClick={() => {
+                      setSelectedImage(item.image);
+                      setSelectedImageData(item);
+                    }}
+                    className={`group relative h-72 bg-cover bg-center cursor-pointer overflow-hidden transition-all duration-500 transform hover:scale-105 mb-6`}
+                    style={{
+                      backgroundImage: `url("${item.image}")`,
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300"></div>
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <span className="text-white text-2xl font-light">↗</span>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div
+                    onClick={() => {
+                      setSelectedVideo(item.video);
+                      setSelectedVideoData(item);
+                    }}
+                    className={`group relative h-72 bg-black cursor-pointer overflow-hidden transition-all duration-500 transform hover:scale-105 mb-6 flex items-center justify-center`}
+                  >
+                    <video src={item.video} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-all duration-300"></div>
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <span className="text-white text-5xl font-light">▶</span>
+                    </div>
+                  </div>
+                )}
                 <div className="px-2 text-center">
                   <h3 className="text-xl font-light text-verde-salvia mb-3" style={{fontFamily: 'var(--font-playfair)'}}>
                     {item.title}
@@ -274,6 +297,47 @@ export default function Home() {
                 setSelectedImageData(null);
               }}
               className="absolute top-4 right-4 text-white/60 hover:text-white transition text-3xl font-light"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Video Modal */}
+      {selectedVideo && (
+        <div
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 overflow-y-auto"
+          onClick={() => {
+            setSelectedVideo(null);
+            setSelectedVideoData(null);
+          }}
+        >
+          <div className="relative max-w-4xl w-full my-8" onClick={(e) => e.stopPropagation()}>
+            <div className="relative bg-nero rounded-lg overflow-hidden" style={{aspectRatio: '16/9'}}>
+              <video
+                src={selectedVideo}
+                controls
+                autoPlay
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {selectedVideoData && (
+              <div className="bg-nero p-10 text-center">
+                <h3 className="text-3xl md:text-4xl font-light text-white drop-shadow-lg mb-4" style={{fontFamily: 'var(--font-playfair)', textShadow: '0 2px 4px rgba(0,0,0,0.8)'}}>
+                  {selectedVideoData.title}
+                </h3>
+                <p className="text-base text-white/90 font-light leading-relaxed max-w-2xl mx-auto drop-shadow" style={{textShadow: '0 1px 3px rgba(0,0,0,0.8)'}}>
+                  {selectedVideoData.description}
+                </p>
+              </div>
+            )}
+            <button
+              onClick={() => {
+                setSelectedVideo(null);
+                setSelectedVideoData(null);
+              }}
+              className="absolute top-4 right-4 text-white/60 hover:text-white transition text-3xl font-light z-10"
             >
               ✕
             </button>
