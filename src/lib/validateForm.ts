@@ -38,7 +38,7 @@ export const validateField = (name: string, value: string): string => {
       return eventDate < today ? 'La data deve essere futura' : '';
 
     case 'event_type':
-      const validTypes = ['matrimonio', 'corporate', 'enogastronomico'];
+      const validTypes = ['matrimonio', 'corporate', 'degustazione', 'wellness', 'photoshoot', 'team'];
       return validTypes.includes(value) ? '' : 'Tipo di evento non valido';
 
     case 'notes':
