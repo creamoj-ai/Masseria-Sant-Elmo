@@ -42,22 +42,6 @@ export default function AdminDashboard() {
   );
 }
 
-/*  COMMENTED OUT - ORIGINAL COMPLEX LAYOUT
-    <div className="min-h-screen bg-white flex">
-      {/* SIDEBAR */}
-      <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-black text-white transition-all duration-300 flex flex-col border-r border-gray-800`}>
-        {/* LOGO */}
-        <div className="h-20 flex items-center justify-center border-b border-gray-800 gap-3">
-          {sidebarOpen ? (
-            <>
-              <span className="text-3xl">🎯</span>
-              <h2 className="text-xl font-light tracking-widest">ADMIN</h2>
-            </>
-          ) : (
-            <span className="text-2xl">🎯</span>
-          )}
-        </div>
-
         {/* NAVIGATION */}
         <nav className="flex-1 py-8 px-4 space-y-2">
           {navigationItems.map((item) => (

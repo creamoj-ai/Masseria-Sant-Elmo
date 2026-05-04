@@ -140,19 +140,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-
-export async function GET(req: NextRequest) {
-  const supabase = getSupabaseClient();
-  try {
-    const { data, error } = await supabase
-      .from('bookings')
-      .select('*, clients(*), events(*)')
-      .order('created_at', { ascending: false });
-
-    if (error) throw error;
-
-    return NextResponse.json({ bookings: data });
-  } catch (error) {
-    return NextResponse.json({ error: 'Errore nel recupero prenotazioni' }, { status: 500 });
-  }
-}
