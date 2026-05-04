@@ -601,30 +601,21 @@ export default function Home() {
             {/* Luna Info - IMPROVED COLORS + MOBILE RESPONSIVE */}
             <div className="p-6 sm:p-8 text-center bg-nero">
               <h3 className="text-3xl sm:text-4xl font-light text-white mb-3 sm:mb-4 drop-shadow-lg" style={{fontFamily: 'var(--font-playfair)', textShadow: '0 2px 8px rgba(0,0,0,0.8)'}}>Benvenuto da LUNA</h3>
-              <p className="text-sm sm:text-base text-white/95 font-light leading-relaxed mb-6 sm:mb-8 drop-shadow" style={{textShadow: '0 1px 4px rgba(0,0,0,0.8)'}}>Il tuo Avatar Virtuale - Assistente 24/7 per esperienze straordinarie</p>
+              <p className="text-sm sm:text-base text-white font-light leading-relaxed mb-6 sm:mb-8 drop-shadow-lg" style={{textShadow: '0 2px 6px rgba(0,0,0,0.9)'}}>Il tuo Avatar Virtuale - Assistente 24/7 per esperienze straordinarie</p>
 
-              {/* CTA Button - Scroll to LUNA CTA + MOBILE RESPONSIVE */}
-              <button
-                onClick={() => {
-                  // Close modal
+              {/* CTA Button - Navigate to /luna page */}
+              <a
+                href="/luna"
+                onClick={(e) => {
+                  e.preventDefault();
                   setLunaModalOpen(false);
                   setLunaMinified(true);
-
-                  // Scroll to CTA section with delay
-                  setTimeout(() => {
-                    const ctaSection = document.querySelector('[data-cta-section]');
-                    if (ctaSection) {
-                      ctaSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                      });
-                    }
-                  }, 500);
+                  window.location.href = '/luna';
                 }}
-                className="w-full sm:w-auto inline-block px-6 sm:px-8 py-3 sm:py-4 bg-oro-vintage text-nero rounded-full font-semibold hover:scale-105 hover:shadow-lg transition duration-300 text-sm sm:text-base"
+                className="w-full sm:w-auto inline-block px-6 sm:px-8 py-3 sm:py-4 bg-white text-nero rounded-full font-semibold hover:scale-105 hover:shadow-lg transition duration-300 text-sm sm:text-base"
               >
-                ✨ Torna a Chiedi a LUNA
-              </button>
+                ✨ Vai a Chiedi a LUNA
+              </a>
             </div>
           </div>
         </div>
