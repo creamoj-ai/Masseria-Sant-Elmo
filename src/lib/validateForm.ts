@@ -8,7 +8,10 @@ export interface ValidationError {
 }
 
 export const validateField = (name: string, value: string): string => {
-  if (!value || !value.trim()) {
+  // Allow empty values for optional fields
+  const optionalFields = ['notes'];
+
+  if (!optionalFields.includes(name) && (!value || !value.trim())) {
     return 'Campo obbligatorio';
   }
 
