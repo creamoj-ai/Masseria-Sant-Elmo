@@ -204,9 +204,9 @@ export default function Home() {
                 description: 'Uno spazio unico in pieno contatto con la natura, con vista panoramica sul Vesuvio. Perfetta per cene esclusive e momenti indimenticabili.'
               },
               {
-                image: '/images/masseria-vesuvio.jpg',
-                title: 'Uliveto e Orto',
-                description: 'Masseria Moroseta è prima di tutto un\'azienda agricola immersa nella natura, circondata da alberi di ulivi, alcuni centenari, alberi da frutto e biodiversità biologica.'
+                image: '/images/architettura-rustica.jpg',
+                title: 'Architettura Rustica',
+                description: 'Pietra dorata e legno scuro. La Masseria incarna l\'eleganza autentica dell\'architettura meridionale, dove ogni dettaglio raconta la tradizione costruttiva vesuviana.'
               },
               {
                 video: '/videos/cupola-allestita.mp4',
