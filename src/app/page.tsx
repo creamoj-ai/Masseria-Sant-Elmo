@@ -163,31 +163,69 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
             {[
-              '/images/masseria-main.jpg',
-              '/images/masseria-facade.jpg',
-              '/images/masseria-doors.jpg',
-              '/images/masseria-vesuvio-dome.jpg',
-              '/images/masseria-vesuvio.jpg',
-              '/images/masseria-details.jpg',
-            ].map((image, index) => (
+              {
+                image: '/images/masseria-main.jpg',
+                title: 'Masseria',
+                description: 'Una Masseria moderna, un\'ambiente elegante ma al tempo stesso familiare, un luogo creato per chi cerca un\'atmosfera tranquilla in natura, buon cibo, design e bellezza.'
+              },
+              {
+                image: '/images/masseria-facade.jpg',
+                title: 'Stanze',
+                description: 'Sei camere doppio con grande bagno, giardino privato, aria condizionata e riscaldamento automatico a caminetto.'
+              },
+              {
+                image: '/images/masseria-doors.jpg',
+                title: 'Cucina',
+                description: 'La nostra cucina è basata sulla conoscenze delle tradizioni mediterranee, per particolari di profumi, tecniche e ingredienti derivati da vostri viaggio.'
+              },
+              {
+                image: '/images/masseria-vesuvio-dome.jpg',
+                title: 'Cupola Geodetica',
+                description: 'Uno spazio unico in pieno contatto con la natura, con vista panoramica sul Vesuvio. Perfetta per cene esclusive e momenti indimenticabili.'
+              },
+              {
+                image: '/images/masseria-vesuvio.jpg',
+                title: 'Uliveto e Orto',
+                description: 'Masseria Moroseta è prima di tutto un\'azienda agricola immersa nella natura, circondata da alberi di ulivi, alcuni centenari, alberi da frutto e biodiversità biologica.'
+              },
+              {
+                image: '/images/masseria-details.jpg',
+                title: 'Dettagli Architettonici',
+                description: 'Ogni elemento della struttura è stato curato nei dettagli, dall\'uso di materiali nobili alle finiture eleganti, creando un\'atmosfera di pura bellezza.'
+              },
+            ].map((item, index) => (
               <div
                 key={index}
-                onClick={() => setSelectedImage(image)}
-                className={`group relative h-72 bg-cover bg-center cursor-pointer overflow-hidden transition-all duration-500 transform hover:scale-105 ${
+                className={`transition-all duration-500 ${
                   gallerySection.isVisible
                     ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-8'
                 }`}
                 style={{
-                  backgroundImage: `url("${image}")`,
                   transitionDelay: gallerySection.isVisible ? `${index * 80}ms` : '0ms',
                 }}
               >
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300"></div>
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  <span className="text-white text-2xl font-light">↗</span>
+                <div
+                  onClick={() => setSelectedImage(item.image)}
+                  className={`group relative h-72 bg-cover bg-center cursor-pointer overflow-hidden transition-all duration-500 transform hover:scale-105 mb-6`}
+                  style={{
+                    backgroundImage: `url("${item.image}")`,
+                  }}
+                >
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300"></div>
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <span className="text-white text-2xl font-light">↗</span>
+                  </div>
+                </div>
+                <div className="px-2">
+                  <h3 className="text-xl font-light text-verde-salvia mb-2" style={{fontFamily: 'var(--font-playfair)'}}>
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-verde-salvia-dark/70 font-light leading-relaxed">
+                    {item.description}
+                  </p>
                 </div>
               </div>
             ))}
