@@ -16,8 +16,7 @@ export async function GET(req: NextRequest) {
     const { data, error } = await supabase
       .from('bookings')
       .select('*, clients(*), events(*)')
-      .order('created_at', { ascending: false })
-      .timeout(5000); // 5 second timeout
+      .order('created_at', { ascending: false });
 
     if (error) {
       console.error('❌ Supabase error:', error);
