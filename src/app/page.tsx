@@ -146,14 +146,14 @@ export default function Home() {
 
       {/* HERO CTAs */}
       <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-panna border-b border-oro-vintage/20">
-        <div className="max-w-3xl mx-auto flex justify-center items-center gap-8 flex-wrap">
+        <div className="max-w-sm mx-auto flex flex-col items-center justify-center gap-6">
           {/* LUNA Avatar Preview */}
           <button
             onClick={() => {
               setLunaMinified(false);
               setLunaModalOpen(true);
             }}
-            className="relative w-32 h-44 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition transform hover:scale-105 border-2 border-oro-vintage/30 flex-shrink-0"
+            className="relative w-40 h-56 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition transform hover:scale-105 border-3 border-oro-vintage/40 flex-shrink-0"
           >
             <img
               src="/images/luna-avatar.jpg"
@@ -163,16 +163,16 @@ export default function Home() {
                 e.currentTarget.parentElement!.style.background = 'linear-gradient(135deg, #D4AF37 0%, #F4E4C1 100%)';
               }}
             />
-            <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition duration-300 flex items-center justify-center">
-              <span className="text-4xl opacity-0 hover:opacity-100 transition">▶</span>
+            <div className="absolute inset-0 bg-black/0 hover:bg-black/30 transition duration-300 flex items-center justify-center">
+              <span className="text-5xl opacity-0 hover:opacity-100 transition">▶</span>
             </div>
           </button>
 
-          {/* LUNA Button */}
+          {/* LUNA Button - Below Image */}
           <button onClick={() => {
             setLunaMinified(false);
             setLunaModalOpen(true);
-          }} className="flex items-center gap-2 px-8 py-4 bg-oro-vintage text-nero rounded font-semibold hover:scale-105 hover:shadow-lg transition duration-300">
+          }} className="flex items-center gap-3 px-8 py-4 bg-oro-vintage text-nero rounded-full font-semibold hover:scale-110 hover:shadow-lg transition duration-300 border-2 border-oro-vintage/50">
             <span className="text-2xl">✨</span>
             <span>Chiedi a LUNA</span>
           </button>
