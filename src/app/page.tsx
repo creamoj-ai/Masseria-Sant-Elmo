@@ -572,21 +572,21 @@ export default function Home() {
 
       {/* LUNA MODAL - FULL SCREEN */}
       {lunaModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div className="relative w-full max-w-2xl bg-nero rounded-2xl shadow-2xl overflow-hidden">
-            {/* Close Button */}
-            <button
-              onClick={() => {
-                setLunaModalOpen(false);
-                setLunaMinified(true);
-              }}
-              className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center bg-oro-vintage text-nero rounded-full hover:bg-oro-vintage/90 transition font-bold text-lg"
-            >
-              ✕
-            </button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto">
+          {/* Close Button - FIXED for mobile visibility */}
+          <button
+            onClick={() => {
+              setLunaModalOpen(false);
+              setLunaMinified(true);
+            }}
+            className="fixed top-4 right-4 z-50 w-14 h-14 flex items-center justify-center bg-oro-vintage text-nero rounded-full hover:bg-oro-vintage/90 transition font-bold text-2xl shadow-lg hover:scale-110"
+          >
+            ✕
+          </button>
 
+          <div className="relative w-full max-w-2xl bg-nero rounded-2xl shadow-2xl overflow-hidden my-8">
             {/* Luna Video */}
-            <div className="relative w-full bg-nero flex items-center justify-center p-6" style={{aspectRatio: '16/9'}}>
+            <div className="relative w-full bg-nero flex items-center justify-center p-4 sm:p-6" style={{aspectRatio: '16/9'}}>
               <div className="w-full max-w-sm bg-nero rounded-xl overflow-hidden shadow-2xl" style={{aspectRatio: '9/16'}}>
                 <video
                   src="https://resource2.heygen.ai/video/transcode/cf1f054526f94714ac9d87b4a7c1a651/vFhpKkRD7AG8Gfc8En1fdDkYwcxUOxv8v/720x1280_nocap.mp4"
@@ -598,12 +598,12 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Luna Info - IMPROVED COLORS */}
-            <div className="p-8 text-center bg-nero">
-              <h3 className="text-4xl font-light text-white mb-4 drop-shadow-lg" style={{fontFamily: 'var(--font-playfair)', textShadow: '0 2px 8px rgba(0,0,0,0.8)'}}>Benvenuto da LUNA</h3>
-              <p className="text-base text-white/95 font-light leading-relaxed mb-8 drop-shadow" style={{textShadow: '0 1px 4px rgba(0,0,0,0.8)'}}>Il tuo Avatar Virtuale - Assistente 24/7 per esperienze straordinarie</p>
+            {/* Luna Info - IMPROVED COLORS + MOBILE RESPONSIVE */}
+            <div className="p-6 sm:p-8 text-center bg-nero">
+              <h3 className="text-3xl sm:text-4xl font-light text-white mb-3 sm:mb-4 drop-shadow-lg" style={{fontFamily: 'var(--font-playfair)', textShadow: '0 2px 8px rgba(0,0,0,0.8)'}}>Benvenuto da LUNA</h3>
+              <p className="text-sm sm:text-base text-white/95 font-light leading-relaxed mb-6 sm:mb-8 drop-shadow" style={{textShadow: '0 1px 4px rgba(0,0,0,0.8)'}}>Il tuo Avatar Virtuale - Assistente 24/7 per esperienze straordinarie</p>
 
-              {/* CTA Button - Scroll to LUNA CTA */}
+              {/* CTA Button - Scroll to LUNA CTA + MOBILE RESPONSIVE */}
               <button
                 onClick={() => {
                   setLunaModalOpen(false);
@@ -612,7 +612,7 @@ export default function Home() {
                     document.querySelector('[data-cta-section]')?.scrollIntoView({ behavior: 'smooth' });
                   }, 300);
                 }}
-                className="inline-block px-8 py-3 bg-oro-vintage text-nero rounded-full font-semibold hover:scale-105 hover:shadow-lg transition duration-300"
+                className="w-full sm:w-auto inline-block px-6 sm:px-8 py-3 sm:py-4 bg-oro-vintage text-nero rounded-full font-semibold hover:scale-105 hover:shadow-lg transition duration-300 text-sm sm:text-base"
               >
                 ✨ Torna a Chiedi a LUNA
               </button>
