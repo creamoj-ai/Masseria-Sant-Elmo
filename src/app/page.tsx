@@ -232,7 +232,7 @@ export default function Home() {
                 {item.type === 'image' ? (
                   <div
                     onClick={() => {
-                      setSelectedImage(item.image);
+                      setSelectedImage(item.image!);
                       setSelectedImageData(item);
                     }}
                     className={`group relative h-72 bg-cover bg-center cursor-pointer overflow-hidden transition-all duration-500 transform hover:scale-105 mb-6`}
