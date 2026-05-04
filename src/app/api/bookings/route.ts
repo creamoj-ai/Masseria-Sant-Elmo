@@ -8,6 +8,30 @@ function getSupabaseClient() {
   );
 }
 
+export async function GET(req: NextRequest) {
+  try {
+    console.log('📡 GET /api/bookings - Connecting to Supabase...');
+    const supabase = getSupabaseClient();
+
+    const { data, error } = await supabase
+      .from('bookings')
+      .select('*, clients(*), events(*)')
+      .order('created_at', { ascending: false })
+      .timeout(5000); // 5 second timeout
+
+    if (error) {
+      console.error('❌ Supabase error:', error);
+      return NextResponse.json({ error: error.message, bookings: [] }, { status: 500 });
+    }
+
+    console.log('✅ Bookings loaded:', data?.length || 0);
+    return NextResponse.json({ bookings: data || [] });
+  } catch (error) {
+    console.error('❌ API Error:', error);
+    return NextResponse.json({ error: String(error), bookings: [] }, { status: 500 });
+  }
+}
+
 export async function POST(req: NextRequest) {
   const supabase = getSupabaseClient();
   try {

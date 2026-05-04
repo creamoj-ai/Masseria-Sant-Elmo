@@ -2,83 +2,47 @@
 
 import { useEffect, useState } from 'react';
 
-interface Booking {
-  id: string;
-  booking_status: string;
-  event_date: string;
-  guest_count: number;
-  created_at: string;
-  clients: {
-    first_name: string;
-    last_name: string;
-    email: string;
-    phone: string;
-    event_type: string;
-  };
-  events: {
-    event_name: string;
-  };
-}
-
-interface AuditLog {
-  timestamp: string;
-  action: string;
-  user: string;
-  severity: 'high' | 'medium' | 'low';
-}
-
 export default function AdminDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [bookings, setBookings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [privacyMode, setPrivacyMode] = useState(false);
-  const [showAuditLog, setShowAuditLog] = useState(false);
 
   useEffect(() => {
-    fetchBookings();
+    console.log('📡 Fetching bookings...');
+    fetch('/api/bookings')
+      .then(res => {
+        console.log('✅ API Response:', res.status);
+        return res.json();
+      })
+      .then(data => {
+        console.log('📦 Data:', data);
+        setBookings(data.bookings || []);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('❌ Error:', err);
+        setLoading(false);
+      });
   }, []);
 
-  const fetchBookings = async () => {
-    try {
-      const response = await fetch('/api/bookings');
-      const data = await response.json();
-      if (response.ok) {
-        setBookings(data.bookings || []);
-      } else {
-        setError('Errore nel caricamento delle prenotazioni');
-      }
-    } catch (err) {
-      setError('Errore di connessione');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const maskData = (text: string) => {
-    if (!privacyMode) return text;
-    return '█'.repeat(Math.min(text.length, 10));
-  };
-
-  const totalBookings = bookings.length;
-  const totalGuests = bookings.reduce((sum, b) => sum + (b.guest_count || 0), 0);
-  const pendingBookings = bookings.filter(b => b.booking_status === 'pending').length;
-  const confirmedBookings = bookings.filter(b => b.booking_status !== 'pending').length;
-  const estimatedRevenue = totalBookings * 5000;
-
-  const navigationItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: '📊' },
-    { id: 'bookings', label: 'Prenotazioni', icon: '📅' },
-    { id: 'clients', label: 'Clienti', icon: '👥' },
-    { id: 'whatsapp', label: 'WhatsApp', icon: '💬' },
-    { id: 'payments', label: 'Pagamenti', icon: '💳' },
-    { id: 'analytics', label: 'Analitiche', icon: '📈' },
-    { id: 'settings', label: 'Impostazioni', icon: '⚙️' },
-  ];
-
   return (
+    <div className="min-h-screen bg-gradient-to-br from-black to-gray-900 flex items-center justify-center text-white p-8">
+      <div className="max-w-2xl text-center">
+        <h1 className="text-4xl font-light mb-8">🎯 ADMIN DASHBOARD</h1>
+        <div className="space-y-4 bg-gray-800 rounded-lg p-8">
+          <p className="text-xl">Status: {loading ? '⏳ Loading...' : '✅ Ready'}</p>
+          <p className="text-lg">Bookings: {bookings.length}</p>
+          <button onClick={() => window.location.reload()} className="mt-6 px-8 py-3 bg-white text-black rounded-lg font-light hover:bg-gray-100">
+            Reload
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/*  COMMENTED OUT - ORIGINAL COMPLEX LAYOUT
     <div className="min-h-screen bg-white flex">
       {/* SIDEBAR */}
       <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-black text-white transition-all duration-300 flex flex-col border-r border-gray-800`}>
