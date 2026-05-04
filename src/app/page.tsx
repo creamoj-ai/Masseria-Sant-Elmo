@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useScrollAnimation } from '@/lib/useScrollAnimation';
+import { validateField, formatPhoneNumber } from '@/lib/validateForm';
+import { FormError } from '@/components/FormValidation';
 
 const HERO_SLIDES = [
   {
@@ -43,6 +45,9 @@ export default function Home() {
     notes: ''
   });
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
   const gallerySection = useScrollAnimation();
   const testimonialsSection = useScrollAnimation();
   const [partnersScrollIndex, setPartnersScrollIndex] = useState(0);
@@ -55,27 +60,77 @@ export default function Home() {
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+
+    // Apply phone masking
+    const finalValue = name === 'phone' ? formatPhoneNumber(value) : value;
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: finalValue
     });
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: '' });
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+
+    // Mark field as touched
+    setTouched({ ...touched, [name]: true });
+
+    // Validate field
+    const error = validateField(name, value);
+    setErrors({ ...errors, [name]: error });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate all fields
+    const newErrors: Record<string, string> = {};
+    let hasErrors = false;
+
+    Object.entries(formData).forEach(([key, value]) => {
+      const error = validateField(key, value);
+      if (error) {
+        newErrors[key] = error;
+        hasErrors = true;
+      }
+    });
+
+    // Mark all as touched
+    const allTouched = Object.keys(formData).reduce((acc, key) => ({ ...acc, [key]: true }), {});
+    setTouched(allTouched);
+
+    if (hasErrors) {
+      setErrors(newErrors);
+      return;
+    }
+
     try {
       const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
+
       if (response.ok) {
         setShowConfirmation(true);
         setFormData({ first_name: '', last_name: '', email: '', phone: '', event_date: '', guest_count: '', event_type: 'matrimonio', notes: '' });
+        setErrors({});
+        setTouched({});
         setTimeout(() => setShowConfirmation(false), 5000);
+      } else {
+        const data = await response.json();
+        setErrors({ submit: data.error || 'Errore durante l\'invio. Riprova.' });
       }
     } catch (error) {
       console.error('Booking error:', error);
+      setErrors({ submit: 'Errore di connessione. Riprova più tardi.' });
     }
   };
 
@@ -473,43 +528,132 @@ export default function Home() {
             </p>
           </div>
 
-          <form className="space-y-6 bg-panna-dark/5 p-8 rounded-lg">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <input
-                type="text"
-                placeholder="Nome"
-                className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition"
-                required
-              />
-              <input
-                type="text"
-                placeholder="Cognome"
-                className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition"
-                required
-              />
+          <form onSubmit={handleSubmit} className="space-y-6 bg-panna-dark/5 p-8 rounded-lg">
+            {/* Error banner se c'è errore submit */}
+            {errors.submit && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <p className="text-red-800 text-sm font-light">
+                  ⚠️ {errors.submit}
+                </p>
+              </div>
+            )}
+
+            {/* First + Last Name */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <input
+                  type="text"
+                  name="first_name"
+                  value={formData.first_name}
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  placeholder="Nome"
+                  className={`w-full bg-transparent border-b pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition ${
+                    touched.first_name && errors.first_name ? 'border-red-500' : 'border-verde-salvia/30'
+                  }`}
+                  required
+                />
+                <FormError error={errors.first_name} touched={touched.first_name} />
+              </div>
+
+              <div>
+                <input
+                  type="text"
+                  name="last_name"
+                  value={formData.last_name}
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  placeholder="Cognome"
+                  className={`w-full bg-transparent border-b pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition ${
+                    touched.last_name && errors.last_name ? 'border-red-500' : 'border-verde-salvia/30'
+                  }`}
+                  required
+                />
+                <FormError error={errors.last_name} touched={touched.last_name} />
+              </div>
             </div>
 
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition"
-              required
-            />
-
-            <input
-              type="tel"
-              placeholder="Telefono"
-              className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition"
-              required
-            />
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {/* Email */}
+            <div>
               <input
-                type="date"
-                className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark focus:outline-none focus:border-verde-salvia transition"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                onBlur={handleBlur}
+                placeholder="Email"
+                className={`w-full bg-transparent border-b pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition ${
+                  touched.email && errors.email ? 'border-red-500' : 'border-verde-salvia/30'
+                }`}
                 required
               />
-              <select className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark focus:outline-none focus:border-verde-salvia transition">
+              <FormError error={errors.email} touched={touched.email} />
+            </div>
+
+            {/* Phone */}
+            <div>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                onBlur={handleBlur}
+                placeholder="Telefono (es. 373 123 4567)"
+                className={`w-full bg-transparent border-b pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition ${
+                  touched.phone && errors.phone ? 'border-red-500' : 'border-verde-salvia/30'
+                }`}
+                required
+              />
+              <FormError error={errors.phone} touched={touched.phone} />
+            </div>
+
+            {/* Event Date + Guest Count */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <input
+                  type="date"
+                  name="event_date"
+                  value={formData.event_date}
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  min={new Date().toISOString().split('T')[0]}
+                  className={`w-full bg-transparent border-b pb-3 text-sm font-light text-verde-salvia-dark focus:outline-none focus:border-verde-salvia transition ${
+                    touched.event_date && errors.event_date ? 'border-red-500' : 'border-verde-salvia/30'
+                  }`}
+                  required
+                />
+                <FormError error={errors.event_date} touched={touched.event_date} />
+              </div>
+
+              <div>
+                <input
+                  type="number"
+                  name="guest_count"
+                  value={formData.guest_count}
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  placeholder="Numero ospiti"
+                  min="1"
+                  max="400"
+                  className={`w-full bg-transparent border-b pb-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition ${
+                    touched.guest_count && errors.guest_count ? 'border-red-500' : 'border-verde-salvia/30'
+                  }`}
+                  required
+                />
+                <FormError error={errors.guest_count} touched={touched.guest_count} />
+              </div>
+            </div>
+
+            {/* Event Type */}
+            <div>
+              <select
+                name="event_type"
+                value={formData.event_type}
+                onChange={handleInputChange}
+                onBlur={handleBlur}
+                className="w-full bg-transparent border-b border-verde-salvia/30 pb-3 text-sm font-light text-verde-salvia-dark focus:outline-none focus:border-verde-salvia transition"
+                required
+              >
                 <option value="matrimonio">Matrimonio</option>
                 <option value="corporate">Corporate</option>
                 <option value="degustazione">Degustazione</option>
@@ -519,9 +663,25 @@ export default function Home() {
               </select>
             </div>
 
+            {/* Notes (optional) */}
+            <div>
+              <textarea
+                name="notes"
+                value={formData.notes}
+                onChange={handleInputChange}
+                onBlur={handleBlur}
+                placeholder="Note aggiuntive (opzionale)"
+                rows={4}
+                className="w-full bg-transparent border border-verde-salvia/30 rounded p-3 text-sm font-light text-verde-salvia-dark placeholder:text-verde-salvia/40 focus:outline-none focus:border-verde-salvia transition resize-none"
+              />
+              <FormError error={errors.notes} touched={touched.notes} />
+            </div>
+
+            {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-verde-salvia text-panna py-3 text-sm font-light hover:bg-verde-salvia-dark transition duration-300 rounded"
+              className="w-full bg-verde-salvia text-panna py-4 text-sm font-light hover:bg-verde-salvia-dark transition duration-300 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={Object.values(errors).some(e => e !== '')}
             >
               Invia Richiesta
             </button>
