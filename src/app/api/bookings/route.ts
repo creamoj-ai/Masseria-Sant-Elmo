@@ -35,16 +35,20 @@ export async function POST(req: NextRequest) {
   const supabase = getSupabaseClient();
   try {
     const body = await req.json();
-    const { 
-      first_name, 
-      last_name, 
-      email, 
-      phone, 
-      event_type, 
-      event_date, 
+    console.log('📝 POST /api/bookings - Body received:', body);
+
+    const {
+      first_name,
+      last_name,
+      email,
+      phone,
+      event_type,
+      event_date,
       guest_count,
-      notes 
+      notes
     } = body;
+
+    console.log('🔍 Parsed fields:', { first_name, last_name, email, event_type });
 
     // 1. Create/update client
     const { data: clientData, error: clientError } = await supabase
@@ -63,7 +67,11 @@ export async function POST(req: NextRequest) {
       .select()
       .single();
 
-    if (clientError) throw clientError;
+    if (clientError) {
+      console.error('❌ Client upsert error:', clientError);
+      throw clientError;
+    }
+    console.log('✅ Client created/updated:', clientData?.id);
 
     // 2. Create event
     const { data: eventData, error: eventError } = await supabase
@@ -79,7 +87,11 @@ export async function POST(req: NextRequest) {
       .select()
       .single();
 
-    if (eventError) throw eventError;
+    if (eventError) {
+      console.error('❌ Event insert error:', eventError);
+      throw eventError;
+    }
+    console.log('✅ Event created:', eventData?.id);
 
     // 3. Create booking
     const { data: bookingData, error: bookingError } = await supabase
@@ -95,7 +107,11 @@ export async function POST(req: NextRequest) {
       .select()
       .single();
 
-    if (bookingError) throw bookingError;
+    if (bookingError) {
+      console.error('❌ Booking insert error:', bookingError);
+      throw bookingError;
+    }
+    console.log('✅ Booking created:', bookingData?.id);
 
     // 4. TODO: Send confirmation email
     console.log('Email to be sent:', email, first_name);
