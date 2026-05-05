@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useScrollAnimation } from '@/lib/useScrollAnimation';
 import { validateField, formatPhoneNumber } from '@/lib/validateForm';
 import { FormError } from '@/components/FormValidation';
+import BookingCalendar from '@/components/BookingCalendar';
 
 const HERO_SLIDES = [
   {
@@ -512,6 +513,22 @@ export default function Home() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* CALENDAR SECTION */}
+      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-panna-dark/5">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-12 text-center">
+            <p className="text-xs uppercase tracking-widest text-verde-salvia/60 mb-6 font-light">Disponibilità</p>
+            <h2 className="text-4xl md:text-5xl font-light text-verde-salvia mb-4" style={{fontFamily: 'var(--font-playfair)'}}>
+              Quando vuoi celebrare?
+            </h2>
+          </div>
+          <BookingCalendar
+            onDateSelect={(date) => setFormData({...formData, event_date: date})}
+            selectedDate={formData.event_date}
+          />
         </div>
       </section>
 
