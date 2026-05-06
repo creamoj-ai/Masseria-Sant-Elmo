@@ -2,9 +2,22 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { createBrowserClient } from '@supabase/ssr';
 
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+    await supabase.auth.signOut();
+    setMenuOpen(false);
+    router.push('/auth/login');
+  };
 
   return (
     <>
@@ -39,8 +52,18 @@ export default function Navigation() {
             </a>
           </nav>
 
+          {/* Logout */}
+          <div className="border-t border-oro-vintage/20 pt-6">
+            <button
+              onClick={handleLogout}
+              className="w-full px-4 py-2 bg-oro-vintage/10 hover:bg-oro-vintage/20 text-verde-salvia rounded-lg text-sm font-light transition"
+            >
+              Esci
+            </button>
+          </div>
+
           {/* Info */}
-          <div className="border-t border-oro-vintage/20 pt-6 space-y-4">
+          <div className="space-y-4">
             <div>
               <p className="text-xs uppercase tracking-widest text-verde-salvia/60 mb-3 font-light">Contatti</p>
               <p className="text-sm font-light text-verde-salvia-dark">+39 373 790 2538</p>
