@@ -1,10 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-import { verifyAdminAuth } from '@/lib/adminAuth';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+import { verifyAdminAuth, getSupabaseAdminClient } from '@/lib/adminAuth';
 
 export async function GET(request: NextRequest) {
   try {
@@ -21,6 +16,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Fetch stats
+    const supabaseAdmin = getSupabaseAdminClient();
     const { data: bookings, error: bookingsError } = await supabaseAdmin
       .from('bookings')
       .select('id, booking_status, event_date, guest_count');

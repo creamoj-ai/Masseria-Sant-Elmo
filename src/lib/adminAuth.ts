@@ -1,16 +1,28 @@
 import { createClient } from '@supabase/supabase-js';
 import bcrypt from 'bcrypt';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+// Lazy load Supabase client (avoid build-time errors)
+function getSupabaseAdmin() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-// Server-side Supabase client con service role per queries admin
-const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+  if (!supabaseUrl || !supabaseServiceKey) {
+    throw new Error('Missing Supabase environment variables');
+  }
+
+  return createClient(supabaseUrl, supabaseServiceKey);
+}
+
+// Export for use in API routes
+export function getSupabaseAdminClient() {
+  return getSupabaseAdmin();
+}
 
 export async function verifyAdminAuth(userEmail: string | null | undefined) {
   if (!userEmail) return null;
 
   try {
+    const supabaseAdmin = getSupabaseAdmin();
     const { data, error } = await supabaseAdmin
       .from('admin_users')
       .select('email, role, active, password_hash, twofa_enabled, twofa_verified')
@@ -30,6 +42,7 @@ export async function verifyAdminPassword(userEmail: string, password: string) {
   if (!userEmail || !password) return null;
 
   try {
+    const supabaseAdmin = getSupabaseAdmin();
     const { data, error } = await supabaseAdmin
       .from('admin_users')
       .select('email, password_hash, role')
@@ -59,6 +72,7 @@ export async function hashAdminPassword(password: string) {
 
 export async function getAdminStats(userEmail: string) {
   try {
+    const supabaseAdmin = getSupabaseAdmin();
     const { data: bookingsData, error: bookingsError } = await supabaseAdmin
       .from('bookings')
       .select('id, booking_status, event_date')
@@ -103,6 +117,7 @@ export async function logAdminAction(
   result: 'success' | 'failed'
 ) {
   try {
+    const supabaseAdmin = getSupabaseAdmin();
     await supabaseAdmin.from('communication_log').insert({
       communication_type: 'admin_action',
       subject: action,
@@ -121,6 +136,7 @@ export async function logAdminAction(
 
 export async function getAdminUsers() {
   try {
+    const supabaseAdmin = getSupabaseAdmin();
     const { data, error } = await supabaseAdmin
       .from('admin_users')
       .select('*')

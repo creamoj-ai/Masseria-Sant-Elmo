@@ -1,10 +1,5 @@
-import { verifyAdminAuth, hashAdminPassword } from '@/lib/adminAuth';
-import { createClient } from '@supabase/supabase-js';
+import { verifyAdminAuth, hashAdminPassword, getSupabaseAdminClient } from '@/lib/adminAuth';
 import { NextRequest, NextResponse } from 'next/server';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
 export async function POST(request: NextRequest) {
   try {
@@ -45,6 +40,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Update the admin user's password
+    const supabaseAdmin = getSupabaseAdminClient();
     const { error } = await supabaseAdmin
       .from('admin_users')
       .update({ password_hash: passwordHash })

@@ -1,10 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-import { verifyAdminAuth } from '@/lib/adminAuth';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+import { verifyAdminAuth, getSupabaseAdminClient } from '@/lib/adminAuth';
 
 export async function GET(request: NextRequest) {
   try {
@@ -19,6 +14,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Only superadmin can view users' }, { status: 403 });
     }
 
+    const supabaseAdmin = getSupabaseAdminClient();
     const { data, error } = await supabaseAdmin
       .from('admin_users')
       .select('*')
@@ -49,6 +45,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid email' }, { status: 400 });
     }
 
+    const supabaseAdmin = getSupabaseAdminClient();
     const { data, error } = await supabaseAdmin
       .from('admin_users')
       .insert({ email, role, active: true })
@@ -95,6 +92,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Prevent deleting last superadmin
+    const supabaseAdmin = getSupabaseAdminClient();
     const { data: superadmins, error: countError } = await supabaseAdmin
       .from('admin_users')
       .select('id', { count: 'exact' })
