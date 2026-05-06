@@ -1,13 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createBrowserClient } from '@supabase/ssr';
+import { useAuth } from '@/lib/useAuth';
 
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
+  const { authorized, user } = useAuth();
 
   const handleLogout = async () => {
     const supabase = createBrowserClient(
@@ -52,6 +54,20 @@ export default function Navigation() {
             </a>
           </nav>
 
+          {/* Admin Link - Solo se autorizzato */}
+          {authorized && (
+            <div className="border-t border-oro-vintage/20 pt-6 mt-6">
+              <p className="text-xs uppercase tracking-widest text-verde-salvia/60 font-light mb-4">Admin</p>
+              <Link
+                href="/admin"
+                onClick={() => setMenuOpen(false)}
+                className="block text-sm font-light text-oro-vintage hover:text-verde-salvia transition bg-oro-vintage/10 hover:bg-oro-vintage/20 px-4 py-2 rounded-lg"
+              >
+                🔑 Admin Dashboard
+              </Link>
+            </div>
+          )}
+
           {/* Logout */}
           <div className="border-t border-oro-vintage/20 pt-6">
             <button
@@ -87,7 +103,7 @@ export default function Navigation() {
             ESSENZE DI NATURA
           </Link>
 
-          <nav className="hidden md:flex gap-12 text-xs sm:text-sm">
+          <nav className="hidden md:flex gap-12 text-xs sm:text-sm items-center">
             <a href="#gallery" className="text-verde-salvia hover:text-oro-vintage transition font-light">
               Spazi
             </a>
@@ -100,6 +116,11 @@ export default function Navigation() {
             <a href="#booking" className="text-verde-salvia hover:text-oro-vintage transition font-light">
               Prenota
             </a>
+            {authorized && (
+              <Link href="/admin" className="ml-4 px-3 py-2 bg-oro-vintage/10 hover:bg-oro-vintage/20 text-oro-vintage hover:text-verde-salvia rounded text-xs transition font-light">
+                🔑 Admin
+              </Link>
+            )}
           </nav>
         </div>
       </header>
